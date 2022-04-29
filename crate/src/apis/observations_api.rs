@@ -14,6 +14,1180 @@ use reqwest;
 use crate::apis::ResponseContent;
 use super::{Error, configuration};
 
+/// struct for passing parameters to the method [`observations_deleted_get`]
+#[derive(Clone, Debug, Default)]
+pub struct ObservationsDeletedGetParams {
+    /// Deleted at or after this time
+    pub since: String
+}
+
+/// struct for passing parameters to the method [`observations_get`]
+#[derive(Clone, Debug, Default)]
+pub struct ObservationsGetParams {
+    /// Whether or not positional accuracy / coordinate uncertainty has been specified
+    pub acc: Option<bool>,
+    /// Captive or cultivated observations
+    pub captive: Option<bool>,
+    /// Observations whose taxa are endemic to their location
+    pub endemic: Option<bool>,
+    /// Observations that are georeferenced
+    pub geo: Option<bool>,
+    /// Observations with the deprecated `ID, Please!` flag. Note that this will return observations, but that this attribute is no longer used.
+    pub id_please: Option<bool>,
+    /// Observations that have community identifications
+    pub identified: Option<bool>,
+    /// Observations whose taxa are introduced in their location 
+    pub introduced: Option<bool>,
+    /// Observations that show on map tiles
+    pub mappable: Option<bool>,
+    /// Observations whose taxa are native to their location
+    pub native: Option<bool>,
+    /// Observations whose taxa are outside their known ranges
+    pub out_of_range: Option<bool>,
+    /// Observations identified by the curator of a project. If the `project_id` parameter is also specified, this will only consider observations identified by curators of the specified project(s) 
+    pub pcid: Option<bool>,
+    /// Observations with photos
+    pub photos: Option<bool>,
+    /// Observations that have been favorited by at least one user 
+    pub popular: Option<bool>,
+    /// Observations with sounds
+    pub sounds: Option<bool>,
+    /// Observations of active taxon concepts 
+    pub taxon_is_active: Option<bool>,
+    /// Observations whose taxa are threatened in their location 
+    pub threatened: Option<bool>,
+    /// Observations with a `quality_grade` of either `needs_id` or `research`. Equivalent to `quality_grade=needs_id,research` 
+    pub verifiable: Option<bool>,
+    /// License attribute of an observation must not be null
+    pub licensed: Option<bool>,
+    /// License attribute of at least one photo of an observation must not be null
+    pub photo_licensed: Option<bool>,
+    /// Must have this ID
+    pub id: Option<Vec<String>>,
+    /// Must not have this ID
+    pub not_id: Option<Vec<String>>,
+    /// Observation must have this license
+    pub license: Option<Vec<String>>,
+    /// Must have an observation field value with this datatype
+    pub ofv_datatype: Option<Vec<String>>,
+    /// Must have at least one photo with this license
+    pub photo_license: Option<Vec<String>>,
+    /// Must be observed within the place with this ID
+    pub place_id: Option<Vec<i32>>,
+    /// Must be added to the project this ID or slug
+    pub project_id: Option<Vec<String>>,
+    /// Taxon must have this rank
+    pub rank: Option<Vec<String>>,
+    /// Must be affiliated with the iNaturalist network website with this ID 
+    pub site_id: Option<Vec<String>>,
+    /// Must have at least one sound with this license
+    pub sound_license: Option<Vec<String>>,
+    /// Only show observations of these taxa and their descendants
+    pub taxon_id: Option<Vec<String>>,
+    /// Exclude observations of these taxa and their descendants
+    pub without_taxon_id: Option<Vec<String>>,
+    /// Taxon must have a scientific or common name matching this string 
+    pub taxon_name: Option<Vec<String>>,
+    /// User must have this ID or login
+    pub user_id: Option<Vec<String>>,
+    /// User must have this login
+    pub user_login: Option<Vec<String>>,
+    /// Observations identified by a particular user
+    pub ident_user_id: Option<i32>,
+    /// Must be observed within this day of the month
+    pub day: Option<Vec<String>>,
+    /// Must be observed within this month
+    pub month: Option<Vec<String>>,
+    /// Must be observed within this year
+    pub year: Option<Vec<String>>,
+    /// Must have an annotation using this controlled term ID
+    pub term_id: Option<Vec<i32>>,
+    /// Must have an annotation using this controlled value ID. Must be combined with the `term_id` parameter 
+    pub term_value_id: Option<Vec<i32>>,
+    /// Exclude observations with annotations using this controlled value ID. Must be combined with the `term_id` parameter 
+    pub without_term_value_id: Option<Vec<i32>>,
+    /// Must have a positional accuracy above this value (meters)
+    pub acc_above: Option<String>,
+    /// Must have a positional accuracy below this value (meters)
+    pub acc_below: Option<String>,
+    /// Positional accuracy must be below this value (in meters) or be unknown
+    pub acc_below_or_unknown: Option<String>,
+    /// Must be observed on or after this date
+    pub d1: Option<String>,
+    /// Must be observed on or before this date
+    pub d2: Option<String>,
+    /// Must be created at or after this time
+    pub created_d1: Option<String>,
+    /// Must be created at or before this time
+    pub created_d2: Option<String>,
+    /// Must be created on this date
+    pub created_on: Option<String>,
+    /// Must be observed on this date
+    pub observed_on: Option<String>,
+    /// Must not be of a taxon previously observed by this user
+    pub unobserved_by_user_id: Option<i32>,
+    /// Must match the rules of the project with this ID or slug
+    pub apply_project_rules_for: Option<String>,
+    /// Taxon must have this conservation status code. If the `place_id` parameter is also specified, this will only consider statuses specific to that place 
+    pub cs: Option<String>,
+    /// Taxon must have a conservation status from this authority. If the `place_id` parameter is also specified, this will only consider statuses specific to that place 
+    pub csa: Option<String>,
+    /// Taxon must have this IUCN conservation status. If the `place_id` parameter is also specified, this will only consider statuses specific to that place 
+    pub csi: Option<Vec<String>>,
+    /// Must have this geoprivacy setting
+    pub geoprivacy: Option<Vec<String>>,
+    /// Filter observations by the most conservative geoprivacy applied by a conservation status associated with one of the taxa proposed in the current identifications. 
+    pub taxon_geoprivacy: Option<Vec<String>>,
+    /// Taxon must have this rank or lower
+    pub hrank: Option<String>,
+    /// Taxon must have this rank or higher
+    pub lrank: Option<String>,
+    /// Taxon must by within this iconic taxon
+    pub iconic_taxa: Option<Vec<String>>,
+    /// Must have an ID above this value
+    pub id_above: Option<String>,
+    /// Must have an ID below this value
+    pub id_below: Option<String>,
+    /// Identifications must meet these criteria
+    pub identifications: Option<String>,
+    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius) 
+    pub lat: Option<f64>,
+    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius) 
+    pub lng: Option<f64>,
+    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius) 
+    pub radius: Option<String>,
+    /// Must be within this bounding box (*nelat, *nelng, *swlat, *swlng) 
+    pub nelat: Option<f64>,
+    /// Must be within this bounding box (*nelat, *nelng, *swlat, *swlng) 
+    pub nelng: Option<f64>,
+    /// Must be within this bounding box (*nelat, *nelng, *swlat, *swlng) 
+    pub swlat: Option<f64>,
+    /// Must be within this bounding box (*nelat, *nelng, *swlat, *swlng) 
+    pub swlng: Option<f64>,
+    /// Taxon must be in the list with this ID
+    pub list_id: Option<i32>,
+    /// Must not be in the project with this ID or slug
+    pub not_in_project: Option<String>,
+    /// Must not match the rules of the project with this ID or slug
+    pub not_matching_project_rules_for: Option<String>,
+    /// Search observation properties. Can be combined with `search_on`
+    pub q: Option<String>,
+    /// Properties to search on, when combined with `q`. Searches across all properties by default 
+    pub search_on: Option<String>,
+    /// Must have this quality grade
+    pub quality_grade: Option<String>,
+    /// Must be updated since this time
+    pub updated_since: Option<String>,
+    /// See `reviewed`
+    pub viewer_id: Option<String>,
+    /// Observations have been reviewed by the user with ID equal to the value of the `viewer_id` parameter 
+    pub reviewed: Option<bool>,
+    /// Locale preference for taxon common names 
+    pub locale: Option<String>,
+    /// Place preference for regional taxon common names 
+    pub preferred_place_id: Option<i32>,
+    /// Set the `Cache-Control` HTTP header with this value as `max-age`, in seconds. This means subsequent identical requests will be cached on iNaturalist servers, and commonly within web browsers 
+    pub ttl: Option<String>,
+    /// Pagination `page` number
+    pub page: Option<String>,
+    /// Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted 
+    pub per_page: Option<String>,
+    /// Sort order
+    pub order: Option<String>,
+    /// Sort field
+    pub order_by: Option<String>,
+    /// Return only the record IDs
+    pub only_id: Option<bool>
+}
+
+/// struct for passing parameters to the method [`observations_histogram_get`]
+#[derive(Clone, Debug, Default)]
+pub struct ObservationsHistogramGetParams {
+    /// Whether or not positional accuracy / coordinate uncertainty has been specified
+    pub acc: Option<bool>,
+    /// Captive or cultivated observations
+    pub captive: Option<bool>,
+    /// Observations whose taxa are endemic to their location
+    pub endemic: Option<bool>,
+    /// Observations that are georeferenced
+    pub geo: Option<bool>,
+    /// Observations with the deprecated `ID, Please!` flag. Note that this will return observations, but that this attribute is no longer used.
+    pub id_please: Option<bool>,
+    /// Observations that have community identifications
+    pub identified: Option<bool>,
+    /// Observations whose taxa are introduced in their location 
+    pub introduced: Option<bool>,
+    /// Observations that show on map tiles
+    pub mappable: Option<bool>,
+    /// Observations whose taxa are native to their location
+    pub native: Option<bool>,
+    /// Observations whose taxa are outside their known ranges
+    pub out_of_range: Option<bool>,
+    /// Observations identified by the curator of a project. If the `project_id` parameter is also specified, this will only consider observations identified by curators of the specified project(s) 
+    pub pcid: Option<bool>,
+    /// Observations with photos
+    pub photos: Option<bool>,
+    /// Observations that have been favorited by at least one user 
+    pub popular: Option<bool>,
+    /// Observations with sounds
+    pub sounds: Option<bool>,
+    /// Observations of active taxon concepts 
+    pub taxon_is_active: Option<bool>,
+    /// Observations whose taxa are threatened in their location 
+    pub threatened: Option<bool>,
+    /// Observations with a `quality_grade` of either `needs_id` or `research`. Equivalent to `quality_grade=needs_id,research` 
+    pub verifiable: Option<bool>,
+    /// License attribute of an observation must not be null
+    pub licensed: Option<bool>,
+    /// License attribute of at least one photo of an observation must not be null
+    pub photo_licensed: Option<bool>,
+    /// Must have this ID
+    pub id: Option<Vec<String>>,
+    /// Must not have this ID
+    pub not_id: Option<Vec<String>>,
+    /// Observation must have this license
+    pub license: Option<Vec<String>>,
+    /// Must have an observation field value with this datatype
+    pub ofv_datatype: Option<Vec<String>>,
+    /// Must have at least one photo with this license
+    pub photo_license: Option<Vec<String>>,
+    /// Must be observed within the place with this ID
+    pub place_id: Option<Vec<i32>>,
+    /// Must be added to the project this ID or slug
+    pub project_id: Option<Vec<String>>,
+    /// Taxon must have this rank
+    pub rank: Option<Vec<String>>,
+    /// Must be affiliated with the iNaturalist network website with this ID 
+    pub site_id: Option<Vec<String>>,
+    /// Must have at least one sound with this license
+    pub sound_license: Option<Vec<String>>,
+    /// Only show observations of these taxa and their descendants
+    pub taxon_id: Option<Vec<String>>,
+    /// Exclude observations of these taxa and their descendants
+    pub without_taxon_id: Option<Vec<String>>,
+    /// Taxon must have a scientific or common name matching this string 
+    pub taxon_name: Option<Vec<String>>,
+    /// User must have this ID or login
+    pub user_id: Option<Vec<String>>,
+    /// User must have this login
+    pub user_login: Option<Vec<String>>,
+    /// Observations identified by a particular user
+    pub ident_user_id: Option<i32>,
+    /// Must be observed within this day of the month
+    pub day: Option<Vec<String>>,
+    /// Must be observed within this month
+    pub month: Option<Vec<String>>,
+    /// Must be observed within this year
+    pub year: Option<Vec<String>>,
+    /// Must have an annotation using this controlled term ID
+    pub term_id: Option<Vec<i32>>,
+    /// Must have an annotation using this controlled value ID. Must be combined with the `term_id` parameter 
+    pub term_value_id: Option<Vec<i32>>,
+    /// Exclude observations with annotations using this controlled value ID. Must be combined with the `term_id` parameter 
+    pub without_term_value_id: Option<Vec<i32>>,
+    /// Must have a positional accuracy above this value (meters)
+    pub acc_above: Option<String>,
+    /// Must have a positional accuracy below this value (meters)
+    pub acc_below: Option<String>,
+    /// Positional accuracy must be below this value (in meters) or be unknown
+    pub acc_below_or_unknown: Option<String>,
+    /// Must be observed on or after this date
+    pub d1: Option<String>,
+    /// Must be observed on or before this date
+    pub d2: Option<String>,
+    /// Must be created at or after this time
+    pub created_d1: Option<String>,
+    /// Must be created at or before this time
+    pub created_d2: Option<String>,
+    /// Must be created on this date
+    pub created_on: Option<String>,
+    /// Must be observed on this date
+    pub observed_on: Option<String>,
+    /// Must not be of a taxon previously observed by this user
+    pub unobserved_by_user_id: Option<i32>,
+    /// Must match the rules of the project with this ID or slug
+    pub apply_project_rules_for: Option<String>,
+    /// Taxon must have this conservation status code. If the `place_id` parameter is also specified, this will only consider statuses specific to that place 
+    pub cs: Option<String>,
+    /// Taxon must have a conservation status from this authority. If the `place_id` parameter is also specified, this will only consider statuses specific to that place 
+    pub csa: Option<String>,
+    /// Taxon must have this IUCN conservation status. If the `place_id` parameter is also specified, this will only consider statuses specific to that place 
+    pub csi: Option<Vec<String>>,
+    /// Must have this geoprivacy setting
+    pub geoprivacy: Option<Vec<String>>,
+    /// Filter observations by the most conservative geoprivacy applied by a conservation status associated with one of the taxa proposed in the current identifications. 
+    pub taxon_geoprivacy: Option<Vec<String>>,
+    /// Taxon must have this rank or lower
+    pub hrank: Option<String>,
+    /// Taxon must have this rank or higher
+    pub lrank: Option<String>,
+    /// Taxon must by within this iconic taxon
+    pub iconic_taxa: Option<Vec<String>>,
+    /// Must have an ID above this value
+    pub id_above: Option<String>,
+    /// Must have an ID below this value
+    pub id_below: Option<String>,
+    /// Identifications must meet these criteria
+    pub identifications: Option<String>,
+    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius) 
+    pub lat: Option<f64>,
+    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius) 
+    pub lng: Option<f64>,
+    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius) 
+    pub radius: Option<String>,
+    /// Must be within this bounding box (*nelat, *nelng, *swlat, *swlng) 
+    pub nelat: Option<f64>,
+    /// Must be within this bounding box (*nelat, *nelng, *swlat, *swlng) 
+    pub nelng: Option<f64>,
+    /// Must be within this bounding box (*nelat, *nelng, *swlat, *swlng) 
+    pub swlat: Option<f64>,
+    /// Must be within this bounding box (*nelat, *nelng, *swlat, *swlng) 
+    pub swlng: Option<f64>,
+    /// Taxon must be in the list with this ID
+    pub list_id: Option<i32>,
+    /// Must not be in the project with this ID or slug
+    pub not_in_project: Option<String>,
+    /// Must not match the rules of the project with this ID or slug
+    pub not_matching_project_rules_for: Option<String>,
+    /// Search observation properties. Can be combined with `search_on`
+    pub q: Option<String>,
+    /// Properties to search on, when combined with `q`. Searches across all properties by default 
+    pub search_on: Option<String>,
+    /// Must have this quality grade
+    pub quality_grade: Option<String>,
+    /// Must be updated since this time
+    pub updated_since: Option<String>,
+    /// See `reviewed`
+    pub viewer_id: Option<String>,
+    /// Observations have been reviewed by the user with ID equal to the value of the `viewer_id` parameter 
+    pub reviewed: Option<bool>,
+    /// Locale preference for taxon common names 
+    pub locale: Option<String>,
+    /// Place preference for regional taxon common names 
+    pub preferred_place_id: Option<i32>,
+    /// Set the `Cache-Control` HTTP header with this value as `max-age`, in seconds. This means subsequent identical requests will be cached on iNaturalist servers, and commonly within web browsers 
+    pub ttl: Option<String>,
+    /// Histogram basis: when the observation was created or observed 
+    pub date_field: Option<String>,
+    /// Time interval for histogram, with groups starting on or contained within the group value. The year, month, week, day, and hour options will set default values for `d1` or `created_d1` depending on the value of `date_field`, to limit the number of groups returned. You can override those values if you want data from a longer or shorter time span. The `hour` interval only works with `date_field=created`, and this you should filter dates with `created_d[1,2]` 
+    pub interval: Option<String>
+}
+
+/// struct for passing parameters to the method [`observations_id_delete`]
+#[derive(Clone, Debug, Default)]
+pub struct ObservationsIdDeleteParams {
+    /// ID of the record
+    pub id: i32
+}
+
+/// struct for passing parameters to the method [`observations_id_fave_post`]
+#[derive(Clone, Debug, Default)]
+pub struct ObservationsIdFavePostParams {
+    /// ID of the record
+    pub id: i32
+}
+
+/// struct for passing parameters to the method [`observations_id_get`]
+#[derive(Clone, Debug, Default)]
+pub struct ObservationsIdGetParams {
+    /// Must have this ID
+    pub id: Vec<i32>
+}
+
+/// struct for passing parameters to the method [`observations_id_put`]
+#[derive(Clone, Debug, Default)]
+pub struct ObservationsIdPutParams {
+    /// ID of the record
+    pub id: i32,
+    /// Comment object
+    pub body: Option<crate::models::PostObservation>
+}
+
+/// struct for passing parameters to the method [`observations_id_quality_metric_delete`]
+#[derive(Clone, Debug, Default)]
+pub struct ObservationsIdQualityMetricDeleteParams {
+    /// ID of the record
+    pub id: i32,
+    /// Data quality category
+    pub metric: String
+}
+
+/// struct for passing parameters to the method [`observations_id_quality_metric_post`]
+#[derive(Clone, Debug, Default)]
+pub struct ObservationsIdQualityMetricPostParams {
+    /// ID of the record
+    pub id: i32,
+    /// Data quality category
+    pub metric: String,
+    /// Quality object
+    pub body: Option<crate::models::PostQuality>
+}
+
+/// struct for passing parameters to the method [`observations_id_review_post`]
+#[derive(Clone, Debug, Default)]
+pub struct ObservationsIdReviewPostParams {
+    /// ID of the record
+    pub id: i32
+}
+
+/// struct for passing parameters to the method [`observations_id_subscriptions_get`]
+#[derive(Clone, Debug, Default)]
+pub struct ObservationsIdSubscriptionsGetParams {
+    /// ID of the record
+    pub id: i32
+}
+
+/// struct for passing parameters to the method [`observations_id_taxon_summary_get`]
+#[derive(Clone, Debug, Default)]
+pub struct ObservationsIdTaxonSummaryGetParams {
+    /// ID of the record
+    pub id: i32
+}
+
+/// struct for passing parameters to the method [`observations_id_unfave_delete`]
+#[derive(Clone, Debug, Default)]
+pub struct ObservationsIdUnfaveDeleteParams {
+    /// ID of the record
+    pub id: i32
+}
+
+/// struct for passing parameters to the method [`observations_id_unreview_post`]
+#[derive(Clone, Debug, Default)]
+pub struct ObservationsIdUnreviewPostParams {
+    /// ID of the record
+    pub id: i32
+}
+
+/// struct for passing parameters to the method [`observations_id_viewed_updates_put`]
+#[derive(Clone, Debug, Default)]
+pub struct ObservationsIdViewedUpdatesPutParams {
+    /// ID of the record
+    pub id: i32
+}
+
+/// struct for passing parameters to the method [`observations_identifiers_get`]
+#[derive(Clone, Debug, Default)]
+pub struct ObservationsIdentifiersGetParams {
+    /// Whether or not positional accuracy / coordinate uncertainty has been specified
+    pub acc: Option<bool>,
+    /// Captive or cultivated observations
+    pub captive: Option<bool>,
+    /// Observations whose taxa are endemic to their location
+    pub endemic: Option<bool>,
+    /// Observations that are georeferenced
+    pub geo: Option<bool>,
+    /// Observations with the deprecated `ID, Please!` flag. Note that this will return observations, but that this attribute is no longer used.
+    pub id_please: Option<bool>,
+    /// Observations that have community identifications
+    pub identified: Option<bool>,
+    /// Observations whose taxa are introduced in their location 
+    pub introduced: Option<bool>,
+    /// Observations that show on map tiles
+    pub mappable: Option<bool>,
+    /// Observations whose taxa are native to their location
+    pub native: Option<bool>,
+    /// Observations whose taxa are outside their known ranges
+    pub out_of_range: Option<bool>,
+    /// Observations identified by the curator of a project. If the `project_id` parameter is also specified, this will only consider observations identified by curators of the specified project(s) 
+    pub pcid: Option<bool>,
+    /// Observations with photos
+    pub photos: Option<bool>,
+    /// Observations that have been favorited by at least one user 
+    pub popular: Option<bool>,
+    /// Observations with sounds
+    pub sounds: Option<bool>,
+    /// Observations of active taxon concepts 
+    pub taxon_is_active: Option<bool>,
+    /// Observations whose taxa are threatened in their location 
+    pub threatened: Option<bool>,
+    /// Observations with a `quality_grade` of either `needs_id` or `research`. Equivalent to `quality_grade=needs_id,research` 
+    pub verifiable: Option<bool>,
+    /// License attribute of an observation must not be null
+    pub licensed: Option<bool>,
+    /// License attribute of at least one photo of an observation must not be null
+    pub photo_licensed: Option<bool>,
+    /// Must have this ID
+    pub id: Option<Vec<String>>,
+    /// Must not have this ID
+    pub not_id: Option<Vec<String>>,
+    /// Observation must have this license
+    pub license: Option<Vec<String>>,
+    /// Must have an observation field value with this datatype
+    pub ofv_datatype: Option<Vec<String>>,
+    /// Must have at least one photo with this license
+    pub photo_license: Option<Vec<String>>,
+    /// Must be observed within the place with this ID
+    pub place_id: Option<Vec<i32>>,
+    /// Must be added to the project this ID or slug
+    pub project_id: Option<Vec<String>>,
+    /// Taxon must have this rank
+    pub rank: Option<Vec<String>>,
+    /// Must be affiliated with the iNaturalist network website with this ID 
+    pub site_id: Option<Vec<String>>,
+    /// Must have at least one sound with this license
+    pub sound_license: Option<Vec<String>>,
+    /// Only show observations of these taxa and their descendants
+    pub taxon_id: Option<Vec<String>>,
+    /// Exclude observations of these taxa and their descendants
+    pub without_taxon_id: Option<Vec<String>>,
+    /// Taxon must have a scientific or common name matching this string 
+    pub taxon_name: Option<Vec<String>>,
+    /// User must have this ID or login
+    pub user_id: Option<Vec<String>>,
+    /// User must have this login
+    pub user_login: Option<Vec<String>>,
+    /// Observations identified by a particular user
+    pub ident_user_id: Option<i32>,
+    /// Must be observed within this day of the month
+    pub day: Option<Vec<String>>,
+    /// Must be observed within this month
+    pub month: Option<Vec<String>>,
+    /// Must be observed within this year
+    pub year: Option<Vec<String>>,
+    /// Must have an annotation using this controlled term ID
+    pub term_id: Option<Vec<i32>>,
+    /// Must have an annotation using this controlled value ID. Must be combined with the `term_id` parameter 
+    pub term_value_id: Option<Vec<i32>>,
+    /// Exclude observations with annotations using this controlled value ID. Must be combined with the `term_id` parameter 
+    pub without_term_value_id: Option<Vec<i32>>,
+    /// Must have a positional accuracy above this value (meters)
+    pub acc_above: Option<String>,
+    /// Must have a positional accuracy below this value (meters)
+    pub acc_below: Option<String>,
+    /// Positional accuracy must be below this value (in meters) or be unknown
+    pub acc_below_or_unknown: Option<String>,
+    /// Must be observed on or after this date
+    pub d1: Option<String>,
+    /// Must be observed on or before this date
+    pub d2: Option<String>,
+    /// Must be created at or after this time
+    pub created_d1: Option<String>,
+    /// Must be created at or before this time
+    pub created_d2: Option<String>,
+    /// Must be created on this date
+    pub created_on: Option<String>,
+    /// Must be observed on this date
+    pub observed_on: Option<String>,
+    /// Must not be of a taxon previously observed by this user
+    pub unobserved_by_user_id: Option<i32>,
+    /// Must match the rules of the project with this ID or slug
+    pub apply_project_rules_for: Option<String>,
+    /// Taxon must have this conservation status code. If the `place_id` parameter is also specified, this will only consider statuses specific to that place 
+    pub cs: Option<String>,
+    /// Taxon must have a conservation status from this authority. If the `place_id` parameter is also specified, this will only consider statuses specific to that place 
+    pub csa: Option<String>,
+    /// Taxon must have this IUCN conservation status. If the `place_id` parameter is also specified, this will only consider statuses specific to that place 
+    pub csi: Option<Vec<String>>,
+    /// Must have this geoprivacy setting
+    pub geoprivacy: Option<Vec<String>>,
+    /// Filter observations by the most conservative geoprivacy applied by a conservation status associated with one of the taxa proposed in the current identifications. 
+    pub taxon_geoprivacy: Option<Vec<String>>,
+    /// Taxon must have this rank or lower
+    pub hrank: Option<String>,
+    /// Taxon must have this rank or higher
+    pub lrank: Option<String>,
+    /// Taxon must by within this iconic taxon
+    pub iconic_taxa: Option<Vec<String>>,
+    /// Must have an ID above this value
+    pub id_above: Option<String>,
+    /// Must have an ID below this value
+    pub id_below: Option<String>,
+    /// Identifications must meet these criteria
+    pub identifications: Option<String>,
+    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius) 
+    pub lat: Option<f64>,
+    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius) 
+    pub lng: Option<f64>,
+    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius) 
+    pub radius: Option<String>,
+    /// Must be within this bounding box (*nelat, *nelng, *swlat, *swlng) 
+    pub nelat: Option<f64>,
+    /// Must be within this bounding box (*nelat, *nelng, *swlat, *swlng) 
+    pub nelng: Option<f64>,
+    /// Must be within this bounding box (*nelat, *nelng, *swlat, *swlng) 
+    pub swlat: Option<f64>,
+    /// Must be within this bounding box (*nelat, *nelng, *swlat, *swlng) 
+    pub swlng: Option<f64>,
+    /// Taxon must be in the list with this ID
+    pub list_id: Option<i32>,
+    /// Must not be in the project with this ID or slug
+    pub not_in_project: Option<String>,
+    /// Must not match the rules of the project with this ID or slug
+    pub not_matching_project_rules_for: Option<String>,
+    /// Search observation properties. Can be combined with `search_on`
+    pub q: Option<String>,
+    /// Properties to search on, when combined with `q`. Searches across all properties by default 
+    pub search_on: Option<String>,
+    /// Must have this quality grade
+    pub quality_grade: Option<String>,
+    /// Must be updated since this time
+    pub updated_since: Option<String>,
+    /// See `reviewed`
+    pub viewer_id: Option<String>,
+    /// Observations have been reviewed by the user with ID equal to the value of the `viewer_id` parameter 
+    pub reviewed: Option<bool>,
+    /// Locale preference for taxon common names 
+    pub locale: Option<String>,
+    /// Place preference for regional taxon common names 
+    pub preferred_place_id: Option<i32>,
+    /// Set the `Cache-Control` HTTP header with this value as `max-age`, in seconds. This means subsequent identical requests will be cached on iNaturalist servers, and commonly within web browsers 
+    pub ttl: Option<String>
+}
+
+/// struct for passing parameters to the method [`observations_observers_get`]
+#[derive(Clone, Debug, Default)]
+pub struct ObservationsObserversGetParams {
+    /// Whether or not positional accuracy / coordinate uncertainty has been specified
+    pub acc: Option<bool>,
+    /// Captive or cultivated observations
+    pub captive: Option<bool>,
+    /// Observations whose taxa are endemic to their location
+    pub endemic: Option<bool>,
+    /// Observations that are georeferenced
+    pub geo: Option<bool>,
+    /// Observations with the deprecated `ID, Please!` flag. Note that this will return observations, but that this attribute is no longer used.
+    pub id_please: Option<bool>,
+    /// Observations that have community identifications
+    pub identified: Option<bool>,
+    /// Observations whose taxa are introduced in their location 
+    pub introduced: Option<bool>,
+    /// Observations that show on map tiles
+    pub mappable: Option<bool>,
+    /// Observations whose taxa are native to their location
+    pub native: Option<bool>,
+    /// Observations whose taxa are outside their known ranges
+    pub out_of_range: Option<bool>,
+    /// Observations identified by the curator of a project. If the `project_id` parameter is also specified, this will only consider observations identified by curators of the specified project(s) 
+    pub pcid: Option<bool>,
+    /// Observations with photos
+    pub photos: Option<bool>,
+    /// Observations that have been favorited by at least one user 
+    pub popular: Option<bool>,
+    /// Observations with sounds
+    pub sounds: Option<bool>,
+    /// Observations of active taxon concepts 
+    pub taxon_is_active: Option<bool>,
+    /// Observations whose taxa are threatened in their location 
+    pub threatened: Option<bool>,
+    /// Observations with a `quality_grade` of either `needs_id` or `research`. Equivalent to `quality_grade=needs_id,research` 
+    pub verifiable: Option<bool>,
+    /// License attribute of an observation must not be null
+    pub licensed: Option<bool>,
+    /// License attribute of at least one photo of an observation must not be null
+    pub photo_licensed: Option<bool>,
+    /// Must have this ID
+    pub id: Option<Vec<String>>,
+    /// Must not have this ID
+    pub not_id: Option<Vec<String>>,
+    /// Observation must have this license
+    pub license: Option<Vec<String>>,
+    /// Must have an observation field value with this datatype
+    pub ofv_datatype: Option<Vec<String>>,
+    /// Must have at least one photo with this license
+    pub photo_license: Option<Vec<String>>,
+    /// Must be observed within the place with this ID
+    pub place_id: Option<Vec<i32>>,
+    /// Must be added to the project this ID or slug
+    pub project_id: Option<Vec<String>>,
+    /// Taxon must have this rank
+    pub rank: Option<Vec<String>>,
+    /// Must be affiliated with the iNaturalist network website with this ID 
+    pub site_id: Option<Vec<String>>,
+    /// Must have at least one sound with this license
+    pub sound_license: Option<Vec<String>>,
+    /// Only show observations of these taxa and their descendants
+    pub taxon_id: Option<Vec<String>>,
+    /// Exclude observations of these taxa and their descendants
+    pub without_taxon_id: Option<Vec<String>>,
+    /// Taxon must have a scientific or common name matching this string 
+    pub taxon_name: Option<Vec<String>>,
+    /// User must have this ID or login
+    pub user_id: Option<Vec<String>>,
+    /// User must have this login
+    pub user_login: Option<Vec<String>>,
+    /// Observations identified by a particular user
+    pub ident_user_id: Option<i32>,
+    /// Must be observed within this day of the month
+    pub day: Option<Vec<String>>,
+    /// Must be observed within this month
+    pub month: Option<Vec<String>>,
+    /// Must be observed within this year
+    pub year: Option<Vec<String>>,
+    /// Must have an annotation using this controlled term ID
+    pub term_id: Option<Vec<i32>>,
+    /// Must have an annotation using this controlled value ID. Must be combined with the `term_id` parameter 
+    pub term_value_id: Option<Vec<i32>>,
+    /// Exclude observations with annotations using this controlled value ID. Must be combined with the `term_id` parameter 
+    pub without_term_value_id: Option<Vec<i32>>,
+    /// Must have a positional accuracy above this value (meters)
+    pub acc_above: Option<String>,
+    /// Must have a positional accuracy below this value (meters)
+    pub acc_below: Option<String>,
+    /// Positional accuracy must be below this value (in meters) or be unknown
+    pub acc_below_or_unknown: Option<String>,
+    /// Must be observed on or after this date
+    pub d1: Option<String>,
+    /// Must be observed on or before this date
+    pub d2: Option<String>,
+    /// Must be created at or after this time
+    pub created_d1: Option<String>,
+    /// Must be created at or before this time
+    pub created_d2: Option<String>,
+    /// Must be created on this date
+    pub created_on: Option<String>,
+    /// Must be observed on this date
+    pub observed_on: Option<String>,
+    /// Must not be of a taxon previously observed by this user
+    pub unobserved_by_user_id: Option<i32>,
+    /// Must match the rules of the project with this ID or slug
+    pub apply_project_rules_for: Option<String>,
+    /// Taxon must have this conservation status code. If the `place_id` parameter is also specified, this will only consider statuses specific to that place 
+    pub cs: Option<String>,
+    /// Taxon must have a conservation status from this authority. If the `place_id` parameter is also specified, this will only consider statuses specific to that place 
+    pub csa: Option<String>,
+    /// Taxon must have this IUCN conservation status. If the `place_id` parameter is also specified, this will only consider statuses specific to that place 
+    pub csi: Option<Vec<String>>,
+    /// Must have this geoprivacy setting
+    pub geoprivacy: Option<Vec<String>>,
+    /// Filter observations by the most conservative geoprivacy applied by a conservation status associated with one of the taxa proposed in the current identifications. 
+    pub taxon_geoprivacy: Option<Vec<String>>,
+    /// Taxon must have this rank or lower
+    pub hrank: Option<String>,
+    /// Taxon must have this rank or higher
+    pub lrank: Option<String>,
+    /// Taxon must by within this iconic taxon
+    pub iconic_taxa: Option<Vec<String>>,
+    /// Must have an ID above this value
+    pub id_above: Option<String>,
+    /// Must have an ID below this value
+    pub id_below: Option<String>,
+    /// Identifications must meet these criteria
+    pub identifications: Option<String>,
+    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius) 
+    pub lat: Option<f64>,
+    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius) 
+    pub lng: Option<f64>,
+    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius) 
+    pub radius: Option<String>,
+    /// Must be within this bounding box (*nelat, *nelng, *swlat, *swlng) 
+    pub nelat: Option<f64>,
+    /// Must be within this bounding box (*nelat, *nelng, *swlat, *swlng) 
+    pub nelng: Option<f64>,
+    /// Must be within this bounding box (*nelat, *nelng, *swlat, *swlng) 
+    pub swlat: Option<f64>,
+    /// Must be within this bounding box (*nelat, *nelng, *swlat, *swlng) 
+    pub swlng: Option<f64>,
+    /// Taxon must be in the list with this ID
+    pub list_id: Option<i32>,
+    /// Must not be in the project with this ID or slug
+    pub not_in_project: Option<String>,
+    /// Must not match the rules of the project with this ID or slug
+    pub not_matching_project_rules_for: Option<String>,
+    /// Search observation properties. Can be combined with `search_on`
+    pub q: Option<String>,
+    /// Properties to search on, when combined with `q`. Searches across all properties by default 
+    pub search_on: Option<String>,
+    /// Must have this quality grade
+    pub quality_grade: Option<String>,
+    /// Must be updated since this time
+    pub updated_since: Option<String>,
+    /// See `reviewed`
+    pub viewer_id: Option<String>,
+    /// Observations have been reviewed by the user with ID equal to the value of the `viewer_id` parameter 
+    pub reviewed: Option<bool>,
+    /// Locale preference for taxon common names 
+    pub locale: Option<String>,
+    /// Place preference for regional taxon common names 
+    pub preferred_place_id: Option<i32>,
+    /// Set the `Cache-Control` HTTP header with this value as `max-age`, in seconds. This means subsequent identical requests will be cached on iNaturalist servers, and commonly within web browsers 
+    pub ttl: Option<String>
+}
+
+/// struct for passing parameters to the method [`observations_popular_field_values_get`]
+#[derive(Clone, Debug, Default)]
+pub struct ObservationsPopularFieldValuesGetParams {
+    /// Whether or not positional accuracy / coordinate uncertainty has been specified
+    pub acc: Option<bool>,
+    /// Captive or cultivated observations
+    pub captive: Option<bool>,
+    /// Observations whose taxa are endemic to their location
+    pub endemic: Option<bool>,
+    /// Observations that are georeferenced
+    pub geo: Option<bool>,
+    /// Observations with the deprecated `ID, Please!` flag. Note that this will return observations, but that this attribute is no longer used.
+    pub id_please: Option<bool>,
+    /// Observations that have community identifications
+    pub identified: Option<bool>,
+    /// Observations whose taxa are introduced in their location 
+    pub introduced: Option<bool>,
+    /// Observations that show on map tiles
+    pub mappable: Option<bool>,
+    /// Observations whose taxa are native to their location
+    pub native: Option<bool>,
+    /// Observations whose taxa are outside their known ranges
+    pub out_of_range: Option<bool>,
+    /// Observations identified by the curator of a project. If the `project_id` parameter is also specified, this will only consider observations identified by curators of the specified project(s) 
+    pub pcid: Option<bool>,
+    /// Observations with photos
+    pub photos: Option<bool>,
+    /// Observations that have been favorited by at least one user 
+    pub popular: Option<bool>,
+    /// Observations with sounds
+    pub sounds: Option<bool>,
+    /// Observations of active taxon concepts 
+    pub taxon_is_active: Option<bool>,
+    /// Observations whose taxa are threatened in their location 
+    pub threatened: Option<bool>,
+    /// Observations with a `quality_grade` of either `needs_id` or `research`. Equivalent to `quality_grade=needs_id,research` 
+    pub verifiable: Option<bool>,
+    /// License attribute of an observation must not be null
+    pub licensed: Option<bool>,
+    /// License attribute of at least one photo of an observation must not be null
+    pub photo_licensed: Option<bool>,
+    /// Must have this ID
+    pub id: Option<Vec<String>>,
+    /// Must not have this ID
+    pub not_id: Option<Vec<String>>,
+    /// Observation must have this license
+    pub license: Option<Vec<String>>,
+    /// Must have an observation field value with this datatype
+    pub ofv_datatype: Option<Vec<String>>,
+    /// Must have at least one photo with this license
+    pub photo_license: Option<Vec<String>>,
+    /// Must be observed within the place with this ID
+    pub place_id: Option<Vec<i32>>,
+    /// Must be added to the project this ID or slug
+    pub project_id: Option<Vec<String>>,
+    /// Taxon must have this rank
+    pub rank: Option<Vec<String>>,
+    /// Must be affiliated with the iNaturalist network website with this ID 
+    pub site_id: Option<Vec<String>>,
+    /// Must have at least one sound with this license
+    pub sound_license: Option<Vec<String>>,
+    /// Only show observations of these taxa and their descendants
+    pub taxon_id: Option<Vec<String>>,
+    /// Exclude observations of these taxa and their descendants
+    pub without_taxon_id: Option<Vec<String>>,
+    /// Taxon must have a scientific or common name matching this string 
+    pub taxon_name: Option<Vec<String>>,
+    /// User must have this ID or login
+    pub user_id: Option<Vec<String>>,
+    /// User must have this login
+    pub user_login: Option<Vec<String>>,
+    /// Observations identified by a particular user
+    pub ident_user_id: Option<i32>,
+    /// Must be observed within this day of the month
+    pub day: Option<Vec<String>>,
+    /// Must be observed within this month
+    pub month: Option<Vec<String>>,
+    /// Must be observed within this year
+    pub year: Option<Vec<String>>,
+    /// Must have an annotation using this controlled term ID
+    pub term_id: Option<Vec<i32>>,
+    /// Must have an annotation using this controlled value ID. Must be combined with the `term_id` parameter 
+    pub term_value_id: Option<Vec<i32>>,
+    /// Exclude observations with annotations using this controlled value ID. Must be combined with the `term_id` parameter 
+    pub without_term_value_id: Option<Vec<i32>>,
+    /// Must have a positional accuracy above this value (meters)
+    pub acc_above: Option<String>,
+    /// Must have a positional accuracy below this value (meters)
+    pub acc_below: Option<String>,
+    /// Positional accuracy must be below this value (in meters) or be unknown
+    pub acc_below_or_unknown: Option<String>,
+    /// Must be observed on or after this date
+    pub d1: Option<String>,
+    /// Must be observed on or before this date
+    pub d2: Option<String>,
+    /// Must be created at or after this time
+    pub created_d1: Option<String>,
+    /// Must be created at or before this time
+    pub created_d2: Option<String>,
+    /// Must be created on this date
+    pub created_on: Option<String>,
+    /// Must be observed on this date
+    pub observed_on: Option<String>,
+    /// Must not be of a taxon previously observed by this user
+    pub unobserved_by_user_id: Option<i32>,
+    /// Must match the rules of the project with this ID or slug
+    pub apply_project_rules_for: Option<String>,
+    /// Taxon must have this conservation status code. If the `place_id` parameter is also specified, this will only consider statuses specific to that place 
+    pub cs: Option<String>,
+    /// Taxon must have a conservation status from this authority. If the `place_id` parameter is also specified, this will only consider statuses specific to that place 
+    pub csa: Option<String>,
+    /// Taxon must have this IUCN conservation status. If the `place_id` parameter is also specified, this will only consider statuses specific to that place 
+    pub csi: Option<Vec<String>>,
+    /// Must have this geoprivacy setting
+    pub geoprivacy: Option<Vec<String>>,
+    /// Filter observations by the most conservative geoprivacy applied by a conservation status associated with one of the taxa proposed in the current identifications. 
+    pub taxon_geoprivacy: Option<Vec<String>>,
+    /// Taxon must have this rank or lower
+    pub hrank: Option<String>,
+    /// Taxon must have this rank or higher
+    pub lrank: Option<String>,
+    /// Taxon must by within this iconic taxon
+    pub iconic_taxa: Option<Vec<String>>,
+    /// Must have an ID above this value
+    pub id_above: Option<String>,
+    /// Must have an ID below this value
+    pub id_below: Option<String>,
+    /// Identifications must meet these criteria
+    pub identifications: Option<String>,
+    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius) 
+    pub lat: Option<f64>,
+    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius) 
+    pub lng: Option<f64>,
+    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius) 
+    pub radius: Option<String>,
+    /// Must be within this bounding box (*nelat, *nelng, *swlat, *swlng) 
+    pub nelat: Option<f64>,
+    /// Must be within this bounding box (*nelat, *nelng, *swlat, *swlng) 
+    pub nelng: Option<f64>,
+    /// Must be within this bounding box (*nelat, *nelng, *swlat, *swlng) 
+    pub swlat: Option<f64>,
+    /// Must be within this bounding box (*nelat, *nelng, *swlat, *swlng) 
+    pub swlng: Option<f64>,
+    /// Taxon must be in the list with this ID
+    pub list_id: Option<i32>,
+    /// Must not be in the project with this ID or slug
+    pub not_in_project: Option<String>,
+    /// Must not match the rules of the project with this ID or slug
+    pub not_matching_project_rules_for: Option<String>,
+    /// Search observation properties. Can be combined with `search_on`
+    pub q: Option<String>,
+    /// Properties to search on, when combined with `q`. Searches across all properties by default 
+    pub search_on: Option<String>,
+    /// Must have this quality grade
+    pub quality_grade: Option<String>,
+    /// Must be updated since this time
+    pub updated_since: Option<String>,
+    /// See `reviewed`
+    pub viewer_id: Option<String>,
+    /// Observations have been reviewed by the user with ID equal to the value of the `viewer_id` parameter 
+    pub reviewed: Option<bool>,
+    /// Locale preference for taxon common names 
+    pub locale: Option<String>,
+    /// Place preference for regional taxon common names 
+    pub preferred_place_id: Option<i32>,
+    /// Set the `Cache-Control` HTTP header with this value as `max-age`, in seconds. This means subsequent identical requests will be cached on iNaturalist servers, and commonly within web browsers 
+    pub ttl: Option<String>
+}
+
+/// struct for passing parameters to the method [`observations_post`]
+#[derive(Clone, Debug, Default)]
+pub struct ObservationsPostParams {
+    /// Comment object
+    pub body: Option<crate::models::PostObservation>
+}
+
+/// struct for passing parameters to the method [`observations_species_counts_get`]
+#[derive(Clone, Debug, Default)]
+pub struct ObservationsSpeciesCountsGetParams {
+    /// Whether or not positional accuracy / coordinate uncertainty has been specified
+    pub acc: Option<bool>,
+    /// Captive or cultivated observations
+    pub captive: Option<bool>,
+    /// Observations whose taxa are endemic to their location
+    pub endemic: Option<bool>,
+    /// Observations that are georeferenced
+    pub geo: Option<bool>,
+    /// Observations with the deprecated `ID, Please!` flag. Note that this will return observations, but that this attribute is no longer used.
+    pub id_please: Option<bool>,
+    /// Observations that have community identifications
+    pub identified: Option<bool>,
+    /// Observations whose taxa are introduced in their location 
+    pub introduced: Option<bool>,
+    /// Observations that show on map tiles
+    pub mappable: Option<bool>,
+    /// Observations whose taxa are native to their location
+    pub native: Option<bool>,
+    /// Observations whose taxa are outside their known ranges
+    pub out_of_range: Option<bool>,
+    /// Observations identified by the curator of a project. If the `project_id` parameter is also specified, this will only consider observations identified by curators of the specified project(s) 
+    pub pcid: Option<bool>,
+    /// Observations with photos
+    pub photos: Option<bool>,
+    /// Observations that have been favorited by at least one user 
+    pub popular: Option<bool>,
+    /// Observations with sounds
+    pub sounds: Option<bool>,
+    /// Observations of active taxon concepts 
+    pub taxon_is_active: Option<bool>,
+    /// Observations whose taxa are threatened in their location 
+    pub threatened: Option<bool>,
+    /// Observations with a `quality_grade` of either `needs_id` or `research`. Equivalent to `quality_grade=needs_id,research` 
+    pub verifiable: Option<bool>,
+    /// License attribute of an observation must not be null
+    pub licensed: Option<bool>,
+    /// License attribute of at least one photo of an observation must not be null
+    pub photo_licensed: Option<bool>,
+    /// Must have this ID
+    pub id: Option<Vec<String>>,
+    /// Must not have this ID
+    pub not_id: Option<Vec<String>>,
+    /// Observation must have this license
+    pub license: Option<Vec<String>>,
+    /// Must have an observation field value with this datatype
+    pub ofv_datatype: Option<Vec<String>>,
+    /// Must have at least one photo with this license
+    pub photo_license: Option<Vec<String>>,
+    /// Must be observed within the place with this ID
+    pub place_id: Option<Vec<i32>>,
+    /// Must be added to the project this ID or slug
+    pub project_id: Option<Vec<String>>,
+    /// Taxon must have this rank
+    pub rank: Option<Vec<String>>,
+    /// Must be affiliated with the iNaturalist network website with this ID 
+    pub site_id: Option<Vec<String>>,
+    /// Must have at least one sound with this license
+    pub sound_license: Option<Vec<String>>,
+    /// Only show observations of these taxa and their descendants
+    pub taxon_id: Option<Vec<String>>,
+    /// Exclude observations of these taxa and their descendants
+    pub without_taxon_id: Option<Vec<String>>,
+    /// Taxon must have a scientific or common name matching this string 
+    pub taxon_name: Option<Vec<String>>,
+    /// User must have this ID or login
+    pub user_id: Option<Vec<String>>,
+    /// User must have this login
+    pub user_login: Option<Vec<String>>,
+    /// Observations identified by a particular user
+    pub ident_user_id: Option<i32>,
+    /// Must be observed within this day of the month
+    pub day: Option<Vec<String>>,
+    /// Must be observed within this month
+    pub month: Option<Vec<String>>,
+    /// Must be observed within this year
+    pub year: Option<Vec<String>>,
+    /// Must have an annotation using this controlled term ID
+    pub term_id: Option<Vec<i32>>,
+    /// Must have an annotation using this controlled value ID. Must be combined with the `term_id` parameter 
+    pub term_value_id: Option<Vec<i32>>,
+    /// Exclude observations with annotations using this controlled value ID. Must be combined with the `term_id` parameter 
+    pub without_term_value_id: Option<Vec<i32>>,
+    /// Must have a positional accuracy above this value (meters)
+    pub acc_above: Option<String>,
+    /// Must have a positional accuracy below this value (meters)
+    pub acc_below: Option<String>,
+    /// Positional accuracy must be below this value (in meters) or be unknown
+    pub acc_below_or_unknown: Option<String>,
+    /// Must be observed on or after this date
+    pub d1: Option<String>,
+    /// Must be observed on or before this date
+    pub d2: Option<String>,
+    /// Must be created at or after this time
+    pub created_d1: Option<String>,
+    /// Must be created at or before this time
+    pub created_d2: Option<String>,
+    /// Must be created on this date
+    pub created_on: Option<String>,
+    /// Must be observed on this date
+    pub observed_on: Option<String>,
+    /// Must not be of a taxon previously observed by this user
+    pub unobserved_by_user_id: Option<i32>,
+    /// Must match the rules of the project with this ID or slug
+    pub apply_project_rules_for: Option<String>,
+    /// Taxon must have this conservation status code. If the `place_id` parameter is also specified, this will only consider statuses specific to that place 
+    pub cs: Option<String>,
+    /// Taxon must have a conservation status from this authority. If the `place_id` parameter is also specified, this will only consider statuses specific to that place 
+    pub csa: Option<String>,
+    /// Taxon must have this IUCN conservation status. If the `place_id` parameter is also specified, this will only consider statuses specific to that place 
+    pub csi: Option<Vec<String>>,
+    /// Must have this geoprivacy setting
+    pub geoprivacy: Option<Vec<String>>,
+    /// Filter observations by the most conservative geoprivacy applied by a conservation status associated with one of the taxa proposed in the current identifications. 
+    pub taxon_geoprivacy: Option<Vec<String>>,
+    /// Taxon must have this rank or lower
+    pub hrank: Option<String>,
+    /// Taxon must have this rank or higher
+    pub lrank: Option<String>,
+    /// Taxon must by within this iconic taxon
+    pub iconic_taxa: Option<Vec<String>>,
+    /// Must have an ID above this value
+    pub id_above: Option<String>,
+    /// Must have an ID below this value
+    pub id_below: Option<String>,
+    /// Identifications must meet these criteria
+    pub identifications: Option<String>,
+    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius) 
+    pub lat: Option<f64>,
+    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius) 
+    pub lng: Option<f64>,
+    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius) 
+    pub radius: Option<String>,
+    /// Must be within this bounding box (*nelat, *nelng, *swlat, *swlng) 
+    pub nelat: Option<f64>,
+    /// Must be within this bounding box (*nelat, *nelng, *swlat, *swlng) 
+    pub nelng: Option<f64>,
+    /// Must be within this bounding box (*nelat, *nelng, *swlat, *swlng) 
+    pub swlat: Option<f64>,
+    /// Must be within this bounding box (*nelat, *nelng, *swlat, *swlng) 
+    pub swlng: Option<f64>,
+    /// Taxon must be in the list with this ID
+    pub list_id: Option<i32>,
+    /// Must not be in the project with this ID or slug
+    pub not_in_project: Option<String>,
+    /// Must not match the rules of the project with this ID or slug
+    pub not_matching_project_rules_for: Option<String>,
+    /// Search observation properties. Can be combined with `search_on`
+    pub q: Option<String>,
+    /// Properties to search on, when combined with `q`. Searches across all properties by default 
+    pub search_on: Option<String>,
+    /// Must have this quality grade
+    pub quality_grade: Option<String>,
+    /// Must be updated since this time
+    pub updated_since: Option<String>,
+    /// See `reviewed`
+    pub viewer_id: Option<String>,
+    /// Observations have been reviewed by the user with ID equal to the value of the `viewer_id` parameter 
+    pub reviewed: Option<bool>,
+    /// Locale preference for taxon common names 
+    pub locale: Option<String>,
+    /// Place preference for regional taxon common names 
+    pub preferred_place_id: Option<i32>,
+    /// Set the `Cache-Control` HTTP header with this value as `max-age`, in seconds. This means subsequent identical requests will be cached on iNaturalist servers, and commonly within web browsers 
+    pub ttl: Option<String>
+}
+
+/// struct for passing parameters to the method [`observations_updates_get`]
+#[derive(Clone, Debug, Default)]
+pub struct ObservationsUpdatesGetParams {
+    /// Must be created at or after this time
+    pub created_after: Option<String>,
+    /// Notification has been viewed by the user before
+    pub viewed: Option<bool>,
+    /// Only show updates on observations owned by the currently authenticated user or on observations the authenticated user is following but does not own. 
+    pub observations_by: Option<String>,
+    /// Pagination `page` number
+    pub page: Option<String>,
+    /// Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted 
+    pub per_page: Option<String>
+}
+
+/// struct for passing parameters to the method [`subscriptions_observation_id_subscribe_post`]
+#[derive(Clone, Debug, Default)]
+pub struct SubscriptionsObservationIdSubscribePostParams {
+    /// ID of the record
+    pub id: i32
+}
+
+/// struct for passing parameters to the method [`votes_unvote_observation_id_delete`]
+#[derive(Clone, Debug, Default)]
+pub struct VotesUnvoteObservationIdDeleteParams {
+    /// ID of the record
+    pub id: i32,
+    /// Vote object
+    pub body: Option<crate::models::PostObservationVote>
+}
+
+/// struct for passing parameters to the method [`votes_vote_observation_id_post`]
+#[derive(Clone, Debug, Default)]
+pub struct VotesVoteObservationIdPostParams {
+    /// ID of the record
+    pub id: i32,
+    /// Vote object
+    pub body: Option<crate::models::PostObservationVote>
+}
+
 
 /// struct for typed errors of method [`observations_deleted_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -191,8 +1365,12 @@ pub enum VotesVoteObservationIdPostError {
 
 
 /// Given a starting date, return an array of IDs of the authenticated user's observations that have been deleted since that date. Requires authentication 
-pub async fn observations_deleted_get(configuration: &configuration::Configuration, since: String) -> Result<(), Error<ObservationsDeletedGetError>> {
+pub async fn observations_deleted_get(configuration: &configuration::Configuration, params: ObservationsDeletedGetParams) -> Result<(), Error<ObservationsDeletedGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let since = params.since;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -228,8 +1406,98 @@ pub async fn observations_deleted_get(configuration: &configuration::Configurati
 }
 
 /// Given zero to many of following parameters, returns observations matching the search criteria. The large size of the observations index prevents us from supporting the `page` parameter when retrieving records from large result sets. If you need to retrieve large numbers of records, use the `per_page` and `id_above` or `id_below` parameters instead. 
-pub async fn observations_get(configuration: &configuration::Configuration, acc: Option<bool>, captive: Option<bool>, endemic: Option<bool>, geo: Option<bool>, id_please: Option<bool>, identified: Option<bool>, introduced: Option<bool>, mappable: Option<bool>, native: Option<bool>, out_of_range: Option<bool>, pcid: Option<bool>, photos: Option<bool>, popular: Option<bool>, sounds: Option<bool>, taxon_is_active: Option<bool>, threatened: Option<bool>, verifiable: Option<bool>, licensed: Option<bool>, photo_licensed: Option<bool>, id: Option<Vec<String>>, not_id: Option<Vec<String>>, license: Option<Vec<String>>, ofv_datatype: Option<Vec<String>>, photo_license: Option<Vec<String>>, place_id: Option<Vec<i32>>, project_id: Option<Vec<String>>, rank: Option<Vec<String>>, site_id: Option<Vec<String>>, sound_license: Option<Vec<String>>, taxon_id: Option<Vec<String>>, without_taxon_id: Option<Vec<String>>, taxon_name: Option<Vec<String>>, user_id: Option<Vec<String>>, user_login: Option<Vec<String>>, ident_user_id: Option<i32>, day: Option<Vec<String>>, month: Option<Vec<String>>, year: Option<Vec<String>>, term_id: Option<Vec<i32>>, term_value_id: Option<Vec<i32>>, without_term_value_id: Option<Vec<i32>>, acc_above: Option<&str>, acc_below: Option<&str>, acc_below_or_unknown: Option<&str>, d1: Option<String>, d2: Option<String>, created_d1: Option<String>, created_d2: Option<String>, created_on: Option<String>, observed_on: Option<String>, unobserved_by_user_id: Option<i32>, apply_project_rules_for: Option<&str>, cs: Option<&str>, csa: Option<&str>, csi: Option<Vec<String>>, geoprivacy: Option<Vec<String>>, taxon_geoprivacy: Option<Vec<String>>, hrank: Option<&str>, lrank: Option<&str>, iconic_taxa: Option<Vec<String>>, id_above: Option<&str>, id_below: Option<&str>, identifications: Option<&str>, lat: Option<f64>, lng: Option<f64>, radius: Option<&str>, nelat: Option<f64>, nelng: Option<f64>, swlat: Option<f64>, swlng: Option<f64>, list_id: Option<i32>, not_in_project: Option<&str>, not_matching_project_rules_for: Option<&str>, q: Option<&str>, search_on: Option<&str>, quality_grade: Option<&str>, updated_since: Option<&str>, viewer_id: Option<&str>, reviewed: Option<bool>, locale: Option<&str>, preferred_place_id: Option<i32>, ttl: Option<&str>, page: Option<&str>, per_page: Option<&str>, order: Option<&str>, order_by: Option<&str>, only_id: Option<bool>) -> Result<crate::models::ObservationsResponse, Error<ObservationsGetError>> {
+pub async fn observations_get(configuration: &configuration::Configuration, params: ObservationsGetParams) -> Result<crate::models::ObservationsResponse, Error<ObservationsGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let acc = params.acc;
+    let captive = params.captive;
+    let endemic = params.endemic;
+    let geo = params.geo;
+    let id_please = params.id_please;
+    let identified = params.identified;
+    let introduced = params.introduced;
+    let mappable = params.mappable;
+    let native = params.native;
+    let out_of_range = params.out_of_range;
+    let pcid = params.pcid;
+    let photos = params.photos;
+    let popular = params.popular;
+    let sounds = params.sounds;
+    let taxon_is_active = params.taxon_is_active;
+    let threatened = params.threatened;
+    let verifiable = params.verifiable;
+    let licensed = params.licensed;
+    let photo_licensed = params.photo_licensed;
+    let id = params.id;
+    let not_id = params.not_id;
+    let license = params.license;
+    let ofv_datatype = params.ofv_datatype;
+    let photo_license = params.photo_license;
+    let place_id = params.place_id;
+    let project_id = params.project_id;
+    let rank = params.rank;
+    let site_id = params.site_id;
+    let sound_license = params.sound_license;
+    let taxon_id = params.taxon_id;
+    let without_taxon_id = params.without_taxon_id;
+    let taxon_name = params.taxon_name;
+    let user_id = params.user_id;
+    let user_login = params.user_login;
+    let ident_user_id = params.ident_user_id;
+    let day = params.day;
+    let month = params.month;
+    let year = params.year;
+    let term_id = params.term_id;
+    let term_value_id = params.term_value_id;
+    let without_term_value_id = params.without_term_value_id;
+    let acc_above = params.acc_above;
+    let acc_below = params.acc_below;
+    let acc_below_or_unknown = params.acc_below_or_unknown;
+    let d1 = params.d1;
+    let d2 = params.d2;
+    let created_d1 = params.created_d1;
+    let created_d2 = params.created_d2;
+    let created_on = params.created_on;
+    let observed_on = params.observed_on;
+    let unobserved_by_user_id = params.unobserved_by_user_id;
+    let apply_project_rules_for = params.apply_project_rules_for;
+    let cs = params.cs;
+    let csa = params.csa;
+    let csi = params.csi;
+    let geoprivacy = params.geoprivacy;
+    let taxon_geoprivacy = params.taxon_geoprivacy;
+    let hrank = params.hrank;
+    let lrank = params.lrank;
+    let iconic_taxa = params.iconic_taxa;
+    let id_above = params.id_above;
+    let id_below = params.id_below;
+    let identifications = params.identifications;
+    let lat = params.lat;
+    let lng = params.lng;
+    let radius = params.radius;
+    let nelat = params.nelat;
+    let nelng = params.nelng;
+    let swlat = params.swlat;
+    let swlng = params.swlng;
+    let list_id = params.list_id;
+    let not_in_project = params.not_in_project;
+    let not_matching_project_rules_for = params.not_matching_project_rules_for;
+    let q = params.q;
+    let search_on = params.search_on;
+    let quality_grade = params.quality_grade;
+    let updated_since = params.updated_since;
+    let viewer_id = params.viewer_id;
+    let reviewed = params.reviewed;
+    let locale = params.locale;
+    let preferred_place_id = params.preferred_place_id;
+    let ttl = params.ttl;
+    let page = params.page;
+    let per_page = params.per_page;
+    let order = params.order;
+    let order_by = params.order_by;
+    let only_id = params.only_id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -592,8 +1860,95 @@ pub async fn observations_get(configuration: &configuration::Configuration, acc:
 }
 
 /// Given zero to many of following parameters, returns histogram data about observations matching the search criteria 
-pub async fn observations_histogram_get(configuration: &configuration::Configuration, acc: Option<bool>, captive: Option<bool>, endemic: Option<bool>, geo: Option<bool>, id_please: Option<bool>, identified: Option<bool>, introduced: Option<bool>, mappable: Option<bool>, native: Option<bool>, out_of_range: Option<bool>, pcid: Option<bool>, photos: Option<bool>, popular: Option<bool>, sounds: Option<bool>, taxon_is_active: Option<bool>, threatened: Option<bool>, verifiable: Option<bool>, licensed: Option<bool>, photo_licensed: Option<bool>, id: Option<Vec<String>>, not_id: Option<Vec<String>>, license: Option<Vec<String>>, ofv_datatype: Option<Vec<String>>, photo_license: Option<Vec<String>>, place_id: Option<Vec<i32>>, project_id: Option<Vec<String>>, rank: Option<Vec<String>>, site_id: Option<Vec<String>>, sound_license: Option<Vec<String>>, taxon_id: Option<Vec<String>>, without_taxon_id: Option<Vec<String>>, taxon_name: Option<Vec<String>>, user_id: Option<Vec<String>>, user_login: Option<Vec<String>>, ident_user_id: Option<i32>, day: Option<Vec<String>>, month: Option<Vec<String>>, year: Option<Vec<String>>, term_id: Option<Vec<i32>>, term_value_id: Option<Vec<i32>>, without_term_value_id: Option<Vec<i32>>, acc_above: Option<&str>, acc_below: Option<&str>, acc_below_or_unknown: Option<&str>, d1: Option<String>, d2: Option<String>, created_d1: Option<String>, created_d2: Option<String>, created_on: Option<String>, observed_on: Option<String>, unobserved_by_user_id: Option<i32>, apply_project_rules_for: Option<&str>, cs: Option<&str>, csa: Option<&str>, csi: Option<Vec<String>>, geoprivacy: Option<Vec<String>>, taxon_geoprivacy: Option<Vec<String>>, hrank: Option<&str>, lrank: Option<&str>, iconic_taxa: Option<Vec<String>>, id_above: Option<&str>, id_below: Option<&str>, identifications: Option<&str>, lat: Option<f64>, lng: Option<f64>, radius: Option<&str>, nelat: Option<f64>, nelng: Option<f64>, swlat: Option<f64>, swlng: Option<f64>, list_id: Option<i32>, not_in_project: Option<&str>, not_matching_project_rules_for: Option<&str>, q: Option<&str>, search_on: Option<&str>, quality_grade: Option<&str>, updated_since: Option<&str>, viewer_id: Option<&str>, reviewed: Option<bool>, locale: Option<&str>, preferred_place_id: Option<i32>, ttl: Option<&str>, date_field: Option<&str>, interval: Option<&str>) -> Result<(), Error<ObservationsHistogramGetError>> {
+pub async fn observations_histogram_get(configuration: &configuration::Configuration, params: ObservationsHistogramGetParams) -> Result<(), Error<ObservationsHistogramGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let acc = params.acc;
+    let captive = params.captive;
+    let endemic = params.endemic;
+    let geo = params.geo;
+    let id_please = params.id_please;
+    let identified = params.identified;
+    let introduced = params.introduced;
+    let mappable = params.mappable;
+    let native = params.native;
+    let out_of_range = params.out_of_range;
+    let pcid = params.pcid;
+    let photos = params.photos;
+    let popular = params.popular;
+    let sounds = params.sounds;
+    let taxon_is_active = params.taxon_is_active;
+    let threatened = params.threatened;
+    let verifiable = params.verifiable;
+    let licensed = params.licensed;
+    let photo_licensed = params.photo_licensed;
+    let id = params.id;
+    let not_id = params.not_id;
+    let license = params.license;
+    let ofv_datatype = params.ofv_datatype;
+    let photo_license = params.photo_license;
+    let place_id = params.place_id;
+    let project_id = params.project_id;
+    let rank = params.rank;
+    let site_id = params.site_id;
+    let sound_license = params.sound_license;
+    let taxon_id = params.taxon_id;
+    let without_taxon_id = params.without_taxon_id;
+    let taxon_name = params.taxon_name;
+    let user_id = params.user_id;
+    let user_login = params.user_login;
+    let ident_user_id = params.ident_user_id;
+    let day = params.day;
+    let month = params.month;
+    let year = params.year;
+    let term_id = params.term_id;
+    let term_value_id = params.term_value_id;
+    let without_term_value_id = params.without_term_value_id;
+    let acc_above = params.acc_above;
+    let acc_below = params.acc_below;
+    let acc_below_or_unknown = params.acc_below_or_unknown;
+    let d1 = params.d1;
+    let d2 = params.d2;
+    let created_d1 = params.created_d1;
+    let created_d2 = params.created_d2;
+    let created_on = params.created_on;
+    let observed_on = params.observed_on;
+    let unobserved_by_user_id = params.unobserved_by_user_id;
+    let apply_project_rules_for = params.apply_project_rules_for;
+    let cs = params.cs;
+    let csa = params.csa;
+    let csi = params.csi;
+    let geoprivacy = params.geoprivacy;
+    let taxon_geoprivacy = params.taxon_geoprivacy;
+    let hrank = params.hrank;
+    let lrank = params.lrank;
+    let iconic_taxa = params.iconic_taxa;
+    let id_above = params.id_above;
+    let id_below = params.id_below;
+    let identifications = params.identifications;
+    let lat = params.lat;
+    let lng = params.lng;
+    let radius = params.radius;
+    let nelat = params.nelat;
+    let nelng = params.nelng;
+    let swlat = params.swlat;
+    let swlng = params.swlng;
+    let list_id = params.list_id;
+    let not_in_project = params.not_in_project;
+    let not_matching_project_rules_for = params.not_matching_project_rules_for;
+    let q = params.q;
+    let search_on = params.search_on;
+    let quality_grade = params.quality_grade;
+    let updated_since = params.updated_since;
+    let viewer_id = params.viewer_id;
+    let reviewed = params.reviewed;
+    let locale = params.locale;
+    let preferred_place_id = params.preferred_place_id;
+    let ttl = params.ttl;
+    let date_field = params.date_field;
+    let interval = params.interval;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -947,8 +2302,12 @@ pub async fn observations_histogram_get(configuration: &configuration::Configura
 }
 
 /// Delete an observation 
-pub async fn observations_id_delete(configuration: &configuration::Configuration, id: i32) -> Result<(), Error<ObservationsIdDeleteError>> {
+pub async fn observations_id_delete(configuration: &configuration::Configuration, params: ObservationsIdDeleteParams) -> Result<(), Error<ObservationsIdDeleteError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -983,8 +2342,12 @@ pub async fn observations_id_delete(configuration: &configuration::Configuration
 }
 
 /// Fave an observation 
-pub async fn observations_id_fave_post(configuration: &configuration::Configuration, id: i32) -> Result<(), Error<ObservationsIdFavePostError>> {
+pub async fn observations_id_fave_post(configuration: &configuration::Configuration, params: ObservationsIdFavePostParams) -> Result<(), Error<ObservationsIdFavePostError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -1019,8 +2382,12 @@ pub async fn observations_id_fave_post(configuration: &configuration::Configurat
 }
 
 /// Given an ID, or an array of IDs in comma-delimited format, returns corresponding observations. A maximum of 200 results will be returned 
-pub async fn observations_id_get(configuration: &configuration::Configuration, id: Vec<i32>) -> Result<crate::models::ObservationsShowResponse, Error<ObservationsIdGetError>> {
+pub async fn observations_id_get(configuration: &configuration::Configuration, params: ObservationsIdGetParams) -> Result<crate::models::ObservationsShowResponse, Error<ObservationsIdGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -1047,8 +2414,13 @@ pub async fn observations_id_get(configuration: &configuration::Configuration, i
 }
 
 /// Update an observation 
-pub async fn observations_id_put(configuration: &configuration::Configuration, id: i32, body: Option<crate::models::PostObservation>) -> Result<(), Error<ObservationsIdPutError>> {
+pub async fn observations_id_put(configuration: &configuration::Configuration, params: ObservationsIdPutParams) -> Result<(), Error<ObservationsIdPutError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+    let body = params.body;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -1084,8 +2456,13 @@ pub async fn observations_id_put(configuration: &configuration::Configuration, i
 }
 
 /// Delete a quality metric 
-pub async fn observations_id_quality_metric_delete(configuration: &configuration::Configuration, id: i32, metric: &str) -> Result<(), Error<ObservationsIdQualityMetricDeleteError>> {
+pub async fn observations_id_quality_metric_delete(configuration: &configuration::Configuration, params: ObservationsIdQualityMetricDeleteParams) -> Result<(), Error<ObservationsIdQualityMetricDeleteError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+    let metric = params.metric;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -1120,8 +2497,14 @@ pub async fn observations_id_quality_metric_delete(configuration: &configuration
 }
 
 /// Set the value of a quality metric 
-pub async fn observations_id_quality_metric_post(configuration: &configuration::Configuration, id: i32, metric: &str, body: Option<crate::models::PostQuality>) -> Result<(), Error<ObservationsIdQualityMetricPostError>> {
+pub async fn observations_id_quality_metric_post(configuration: &configuration::Configuration, params: ObservationsIdQualityMetricPostParams) -> Result<(), Error<ObservationsIdQualityMetricPostError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+    let metric = params.metric;
+    let body = params.body;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -1157,8 +2540,12 @@ pub async fn observations_id_quality_metric_post(configuration: &configuration::
 }
 
 /// Review an observation 
-pub async fn observations_id_review_post(configuration: &configuration::Configuration, id: i32) -> Result<(), Error<ObservationsIdReviewPostError>> {
+pub async fn observations_id_review_post(configuration: &configuration::Configuration, params: ObservationsIdReviewPostParams) -> Result<(), Error<ObservationsIdReviewPostError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -1193,8 +2580,12 @@ pub async fn observations_id_review_post(configuration: &configuration::Configur
 }
 
 /// Fetches any subscriptions the current user has to this observation or the observer 
-pub async fn observations_id_subscriptions_get(configuration: &configuration::Configuration, id: i32) -> Result<(), Error<ObservationsIdSubscriptionsGetError>> {
+pub async fn observations_id_subscriptions_get(configuration: &configuration::Configuration, params: ObservationsIdSubscriptionsGetParams) -> Result<(), Error<ObservationsIdSubscriptionsGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -1229,8 +2620,12 @@ pub async fn observations_id_subscriptions_get(configuration: &configuration::Co
 }
 
 /// Fetches information about this observation's taxon, within the context of this observation's location 
-pub async fn observations_id_taxon_summary_get(configuration: &configuration::Configuration, id: i32) -> Result<(), Error<ObservationsIdTaxonSummaryGetError>> {
+pub async fn observations_id_taxon_summary_get(configuration: &configuration::Configuration, params: ObservationsIdTaxonSummaryGetParams) -> Result<(), Error<ObservationsIdTaxonSummaryGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -1257,8 +2652,12 @@ pub async fn observations_id_taxon_summary_get(configuration: &configuration::Co
 }
 
 /// Unfave an observation 
-pub async fn observations_id_unfave_delete(configuration: &configuration::Configuration, id: i32) -> Result<(), Error<ObservationsIdUnfaveDeleteError>> {
+pub async fn observations_id_unfave_delete(configuration: &configuration::Configuration, params: ObservationsIdUnfaveDeleteParams) -> Result<(), Error<ObservationsIdUnfaveDeleteError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -1293,8 +2692,12 @@ pub async fn observations_id_unfave_delete(configuration: &configuration::Config
 }
 
 /// Unreview an observation 
-pub async fn observations_id_unreview_post(configuration: &configuration::Configuration, id: i32) -> Result<(), Error<ObservationsIdUnreviewPostError>> {
+pub async fn observations_id_unreview_post(configuration: &configuration::Configuration, params: ObservationsIdUnreviewPostParams) -> Result<(), Error<ObservationsIdUnreviewPostError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -1329,8 +2732,12 @@ pub async fn observations_id_unreview_post(configuration: &configuration::Config
 }
 
 /// Mark all updates associated with this observation as viewed by logged-in user 
-pub async fn observations_id_viewed_updates_put(configuration: &configuration::Configuration, id: i32) -> Result<(), Error<ObservationsIdViewedUpdatesPutError>> {
+pub async fn observations_id_viewed_updates_put(configuration: &configuration::Configuration, params: ObservationsIdViewedUpdatesPutParams) -> Result<(), Error<ObservationsIdViewedUpdatesPutError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -1365,8 +2772,93 @@ pub async fn observations_id_viewed_updates_put(configuration: &configuration::C
 }
 
 /// Given zero to many of following parameters, returns identifiers of observations matching the search criteria and the count of observations they have identified, ordered by count descending. A maximum of 500 results will be returned 
-pub async fn observations_identifiers_get(configuration: &configuration::Configuration, acc: Option<bool>, captive: Option<bool>, endemic: Option<bool>, geo: Option<bool>, id_please: Option<bool>, identified: Option<bool>, introduced: Option<bool>, mappable: Option<bool>, native: Option<bool>, out_of_range: Option<bool>, pcid: Option<bool>, photos: Option<bool>, popular: Option<bool>, sounds: Option<bool>, taxon_is_active: Option<bool>, threatened: Option<bool>, verifiable: Option<bool>, licensed: Option<bool>, photo_licensed: Option<bool>, id: Option<Vec<String>>, not_id: Option<Vec<String>>, license: Option<Vec<String>>, ofv_datatype: Option<Vec<String>>, photo_license: Option<Vec<String>>, place_id: Option<Vec<i32>>, project_id: Option<Vec<String>>, rank: Option<Vec<String>>, site_id: Option<Vec<String>>, sound_license: Option<Vec<String>>, taxon_id: Option<Vec<String>>, without_taxon_id: Option<Vec<String>>, taxon_name: Option<Vec<String>>, user_id: Option<Vec<String>>, user_login: Option<Vec<String>>, ident_user_id: Option<i32>, day: Option<Vec<String>>, month: Option<Vec<String>>, year: Option<Vec<String>>, term_id: Option<Vec<i32>>, term_value_id: Option<Vec<i32>>, without_term_value_id: Option<Vec<i32>>, acc_above: Option<&str>, acc_below: Option<&str>, acc_below_or_unknown: Option<&str>, d1: Option<String>, d2: Option<String>, created_d1: Option<String>, created_d2: Option<String>, created_on: Option<String>, observed_on: Option<String>, unobserved_by_user_id: Option<i32>, apply_project_rules_for: Option<&str>, cs: Option<&str>, csa: Option<&str>, csi: Option<Vec<String>>, geoprivacy: Option<Vec<String>>, taxon_geoprivacy: Option<Vec<String>>, hrank: Option<&str>, lrank: Option<&str>, iconic_taxa: Option<Vec<String>>, id_above: Option<&str>, id_below: Option<&str>, identifications: Option<&str>, lat: Option<f64>, lng: Option<f64>, radius: Option<&str>, nelat: Option<f64>, nelng: Option<f64>, swlat: Option<f64>, swlng: Option<f64>, list_id: Option<i32>, not_in_project: Option<&str>, not_matching_project_rules_for: Option<&str>, q: Option<&str>, search_on: Option<&str>, quality_grade: Option<&str>, updated_since: Option<&str>, viewer_id: Option<&str>, reviewed: Option<bool>, locale: Option<&str>, preferred_place_id: Option<i32>, ttl: Option<&str>) -> Result<crate::models::UserCountsResponse, Error<ObservationsIdentifiersGetError>> {
+pub async fn observations_identifiers_get(configuration: &configuration::Configuration, params: ObservationsIdentifiersGetParams) -> Result<crate::models::UserCountsResponse, Error<ObservationsIdentifiersGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let acc = params.acc;
+    let captive = params.captive;
+    let endemic = params.endemic;
+    let geo = params.geo;
+    let id_please = params.id_please;
+    let identified = params.identified;
+    let introduced = params.introduced;
+    let mappable = params.mappable;
+    let native = params.native;
+    let out_of_range = params.out_of_range;
+    let pcid = params.pcid;
+    let photos = params.photos;
+    let popular = params.popular;
+    let sounds = params.sounds;
+    let taxon_is_active = params.taxon_is_active;
+    let threatened = params.threatened;
+    let verifiable = params.verifiable;
+    let licensed = params.licensed;
+    let photo_licensed = params.photo_licensed;
+    let id = params.id;
+    let not_id = params.not_id;
+    let license = params.license;
+    let ofv_datatype = params.ofv_datatype;
+    let photo_license = params.photo_license;
+    let place_id = params.place_id;
+    let project_id = params.project_id;
+    let rank = params.rank;
+    let site_id = params.site_id;
+    let sound_license = params.sound_license;
+    let taxon_id = params.taxon_id;
+    let without_taxon_id = params.without_taxon_id;
+    let taxon_name = params.taxon_name;
+    let user_id = params.user_id;
+    let user_login = params.user_login;
+    let ident_user_id = params.ident_user_id;
+    let day = params.day;
+    let month = params.month;
+    let year = params.year;
+    let term_id = params.term_id;
+    let term_value_id = params.term_value_id;
+    let without_term_value_id = params.without_term_value_id;
+    let acc_above = params.acc_above;
+    let acc_below = params.acc_below;
+    let acc_below_or_unknown = params.acc_below_or_unknown;
+    let d1 = params.d1;
+    let d2 = params.d2;
+    let created_d1 = params.created_d1;
+    let created_d2 = params.created_d2;
+    let created_on = params.created_on;
+    let observed_on = params.observed_on;
+    let unobserved_by_user_id = params.unobserved_by_user_id;
+    let apply_project_rules_for = params.apply_project_rules_for;
+    let cs = params.cs;
+    let csa = params.csa;
+    let csi = params.csi;
+    let geoprivacy = params.geoprivacy;
+    let taxon_geoprivacy = params.taxon_geoprivacy;
+    let hrank = params.hrank;
+    let lrank = params.lrank;
+    let iconic_taxa = params.iconic_taxa;
+    let id_above = params.id_above;
+    let id_below = params.id_below;
+    let identifications = params.identifications;
+    let lat = params.lat;
+    let lng = params.lng;
+    let radius = params.radius;
+    let nelat = params.nelat;
+    let nelng = params.nelng;
+    let swlat = params.swlat;
+    let swlng = params.swlng;
+    let list_id = params.list_id;
+    let not_in_project = params.not_in_project;
+    let not_matching_project_rules_for = params.not_matching_project_rules_for;
+    let q = params.q;
+    let search_on = params.search_on;
+    let quality_grade = params.quality_grade;
+    let updated_since = params.updated_since;
+    let viewer_id = params.viewer_id;
+    let reviewed = params.reviewed;
+    let locale = params.locale;
+    let preferred_place_id = params.preferred_place_id;
+    let ttl = params.ttl;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -1714,8 +3206,93 @@ pub async fn observations_identifiers_get(configuration: &configuration::Configu
 }
 
 /// Given zero to many of following parameters, returns observers of observations matching the search criteria and the count of observations and distinct taxa of rank `species` they have observed. A maximum of 500 results will be returned 
-pub async fn observations_observers_get(configuration: &configuration::Configuration, acc: Option<bool>, captive: Option<bool>, endemic: Option<bool>, geo: Option<bool>, id_please: Option<bool>, identified: Option<bool>, introduced: Option<bool>, mappable: Option<bool>, native: Option<bool>, out_of_range: Option<bool>, pcid: Option<bool>, photos: Option<bool>, popular: Option<bool>, sounds: Option<bool>, taxon_is_active: Option<bool>, threatened: Option<bool>, verifiable: Option<bool>, licensed: Option<bool>, photo_licensed: Option<bool>, id: Option<Vec<String>>, not_id: Option<Vec<String>>, license: Option<Vec<String>>, ofv_datatype: Option<Vec<String>>, photo_license: Option<Vec<String>>, place_id: Option<Vec<i32>>, project_id: Option<Vec<String>>, rank: Option<Vec<String>>, site_id: Option<Vec<String>>, sound_license: Option<Vec<String>>, taxon_id: Option<Vec<String>>, without_taxon_id: Option<Vec<String>>, taxon_name: Option<Vec<String>>, user_id: Option<Vec<String>>, user_login: Option<Vec<String>>, ident_user_id: Option<i32>, day: Option<Vec<String>>, month: Option<Vec<String>>, year: Option<Vec<String>>, term_id: Option<Vec<i32>>, term_value_id: Option<Vec<i32>>, without_term_value_id: Option<Vec<i32>>, acc_above: Option<&str>, acc_below: Option<&str>, acc_below_or_unknown: Option<&str>, d1: Option<String>, d2: Option<String>, created_d1: Option<String>, created_d2: Option<String>, created_on: Option<String>, observed_on: Option<String>, unobserved_by_user_id: Option<i32>, apply_project_rules_for: Option<&str>, cs: Option<&str>, csa: Option<&str>, csi: Option<Vec<String>>, geoprivacy: Option<Vec<String>>, taxon_geoprivacy: Option<Vec<String>>, hrank: Option<&str>, lrank: Option<&str>, iconic_taxa: Option<Vec<String>>, id_above: Option<&str>, id_below: Option<&str>, identifications: Option<&str>, lat: Option<f64>, lng: Option<f64>, radius: Option<&str>, nelat: Option<f64>, nelng: Option<f64>, swlat: Option<f64>, swlng: Option<f64>, list_id: Option<i32>, not_in_project: Option<&str>, not_matching_project_rules_for: Option<&str>, q: Option<&str>, search_on: Option<&str>, quality_grade: Option<&str>, updated_since: Option<&str>, viewer_id: Option<&str>, reviewed: Option<bool>, locale: Option<&str>, preferred_place_id: Option<i32>, ttl: Option<&str>) -> Result<crate::models::ObservationsObserversResponse, Error<ObservationsObserversGetError>> {
+pub async fn observations_observers_get(configuration: &configuration::Configuration, params: ObservationsObserversGetParams) -> Result<crate::models::ObservationsObserversResponse, Error<ObservationsObserversGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let acc = params.acc;
+    let captive = params.captive;
+    let endemic = params.endemic;
+    let geo = params.geo;
+    let id_please = params.id_please;
+    let identified = params.identified;
+    let introduced = params.introduced;
+    let mappable = params.mappable;
+    let native = params.native;
+    let out_of_range = params.out_of_range;
+    let pcid = params.pcid;
+    let photos = params.photos;
+    let popular = params.popular;
+    let sounds = params.sounds;
+    let taxon_is_active = params.taxon_is_active;
+    let threatened = params.threatened;
+    let verifiable = params.verifiable;
+    let licensed = params.licensed;
+    let photo_licensed = params.photo_licensed;
+    let id = params.id;
+    let not_id = params.not_id;
+    let license = params.license;
+    let ofv_datatype = params.ofv_datatype;
+    let photo_license = params.photo_license;
+    let place_id = params.place_id;
+    let project_id = params.project_id;
+    let rank = params.rank;
+    let site_id = params.site_id;
+    let sound_license = params.sound_license;
+    let taxon_id = params.taxon_id;
+    let without_taxon_id = params.without_taxon_id;
+    let taxon_name = params.taxon_name;
+    let user_id = params.user_id;
+    let user_login = params.user_login;
+    let ident_user_id = params.ident_user_id;
+    let day = params.day;
+    let month = params.month;
+    let year = params.year;
+    let term_id = params.term_id;
+    let term_value_id = params.term_value_id;
+    let without_term_value_id = params.without_term_value_id;
+    let acc_above = params.acc_above;
+    let acc_below = params.acc_below;
+    let acc_below_or_unknown = params.acc_below_or_unknown;
+    let d1 = params.d1;
+    let d2 = params.d2;
+    let created_d1 = params.created_d1;
+    let created_d2 = params.created_d2;
+    let created_on = params.created_on;
+    let observed_on = params.observed_on;
+    let unobserved_by_user_id = params.unobserved_by_user_id;
+    let apply_project_rules_for = params.apply_project_rules_for;
+    let cs = params.cs;
+    let csa = params.csa;
+    let csi = params.csi;
+    let geoprivacy = params.geoprivacy;
+    let taxon_geoprivacy = params.taxon_geoprivacy;
+    let hrank = params.hrank;
+    let lrank = params.lrank;
+    let iconic_taxa = params.iconic_taxa;
+    let id_above = params.id_above;
+    let id_below = params.id_below;
+    let identifications = params.identifications;
+    let lat = params.lat;
+    let lng = params.lng;
+    let radius = params.radius;
+    let nelat = params.nelat;
+    let nelng = params.nelng;
+    let swlat = params.swlat;
+    let swlng = params.swlng;
+    let list_id = params.list_id;
+    let not_in_project = params.not_in_project;
+    let not_matching_project_rules_for = params.not_matching_project_rules_for;
+    let q = params.q;
+    let search_on = params.search_on;
+    let quality_grade = params.quality_grade;
+    let updated_since = params.updated_since;
+    let viewer_id = params.viewer_id;
+    let reviewed = params.reviewed;
+    let locale = params.locale;
+    let preferred_place_id = params.preferred_place_id;
+    let ttl = params.ttl;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -2063,8 +3640,93 @@ pub async fn observations_observers_get(configuration: &configuration::Configura
 }
 
 /// Given zero to many of following parameters, returns an array of relevant controlled terms values and a monthly histogram 
-pub async fn observations_popular_field_values_get(configuration: &configuration::Configuration, acc: Option<bool>, captive: Option<bool>, endemic: Option<bool>, geo: Option<bool>, id_please: Option<bool>, identified: Option<bool>, introduced: Option<bool>, mappable: Option<bool>, native: Option<bool>, out_of_range: Option<bool>, pcid: Option<bool>, photos: Option<bool>, popular: Option<bool>, sounds: Option<bool>, taxon_is_active: Option<bool>, threatened: Option<bool>, verifiable: Option<bool>, licensed: Option<bool>, photo_licensed: Option<bool>, id: Option<Vec<String>>, not_id: Option<Vec<String>>, license: Option<Vec<String>>, ofv_datatype: Option<Vec<String>>, photo_license: Option<Vec<String>>, place_id: Option<Vec<i32>>, project_id: Option<Vec<String>>, rank: Option<Vec<String>>, site_id: Option<Vec<String>>, sound_license: Option<Vec<String>>, taxon_id: Option<Vec<String>>, without_taxon_id: Option<Vec<String>>, taxon_name: Option<Vec<String>>, user_id: Option<Vec<String>>, user_login: Option<Vec<String>>, ident_user_id: Option<i32>, day: Option<Vec<String>>, month: Option<Vec<String>>, year: Option<Vec<String>>, term_id: Option<Vec<i32>>, term_value_id: Option<Vec<i32>>, without_term_value_id: Option<Vec<i32>>, acc_above: Option<&str>, acc_below: Option<&str>, acc_below_or_unknown: Option<&str>, d1: Option<String>, d2: Option<String>, created_d1: Option<String>, created_d2: Option<String>, created_on: Option<String>, observed_on: Option<String>, unobserved_by_user_id: Option<i32>, apply_project_rules_for: Option<&str>, cs: Option<&str>, csa: Option<&str>, csi: Option<Vec<String>>, geoprivacy: Option<Vec<String>>, taxon_geoprivacy: Option<Vec<String>>, hrank: Option<&str>, lrank: Option<&str>, iconic_taxa: Option<Vec<String>>, id_above: Option<&str>, id_below: Option<&str>, identifications: Option<&str>, lat: Option<f64>, lng: Option<f64>, radius: Option<&str>, nelat: Option<f64>, nelng: Option<f64>, swlat: Option<f64>, swlng: Option<f64>, list_id: Option<i32>, not_in_project: Option<&str>, not_matching_project_rules_for: Option<&str>, q: Option<&str>, search_on: Option<&str>, quality_grade: Option<&str>, updated_since: Option<&str>, viewer_id: Option<&str>, reviewed: Option<bool>, locale: Option<&str>, preferred_place_id: Option<i32>, ttl: Option<&str>) -> Result<(), Error<ObservationsPopularFieldValuesGetError>> {
+pub async fn observations_popular_field_values_get(configuration: &configuration::Configuration, params: ObservationsPopularFieldValuesGetParams) -> Result<(), Error<ObservationsPopularFieldValuesGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let acc = params.acc;
+    let captive = params.captive;
+    let endemic = params.endemic;
+    let geo = params.geo;
+    let id_please = params.id_please;
+    let identified = params.identified;
+    let introduced = params.introduced;
+    let mappable = params.mappable;
+    let native = params.native;
+    let out_of_range = params.out_of_range;
+    let pcid = params.pcid;
+    let photos = params.photos;
+    let popular = params.popular;
+    let sounds = params.sounds;
+    let taxon_is_active = params.taxon_is_active;
+    let threatened = params.threatened;
+    let verifiable = params.verifiable;
+    let licensed = params.licensed;
+    let photo_licensed = params.photo_licensed;
+    let id = params.id;
+    let not_id = params.not_id;
+    let license = params.license;
+    let ofv_datatype = params.ofv_datatype;
+    let photo_license = params.photo_license;
+    let place_id = params.place_id;
+    let project_id = params.project_id;
+    let rank = params.rank;
+    let site_id = params.site_id;
+    let sound_license = params.sound_license;
+    let taxon_id = params.taxon_id;
+    let without_taxon_id = params.without_taxon_id;
+    let taxon_name = params.taxon_name;
+    let user_id = params.user_id;
+    let user_login = params.user_login;
+    let ident_user_id = params.ident_user_id;
+    let day = params.day;
+    let month = params.month;
+    let year = params.year;
+    let term_id = params.term_id;
+    let term_value_id = params.term_value_id;
+    let without_term_value_id = params.without_term_value_id;
+    let acc_above = params.acc_above;
+    let acc_below = params.acc_below;
+    let acc_below_or_unknown = params.acc_below_or_unknown;
+    let d1 = params.d1;
+    let d2 = params.d2;
+    let created_d1 = params.created_d1;
+    let created_d2 = params.created_d2;
+    let created_on = params.created_on;
+    let observed_on = params.observed_on;
+    let unobserved_by_user_id = params.unobserved_by_user_id;
+    let apply_project_rules_for = params.apply_project_rules_for;
+    let cs = params.cs;
+    let csa = params.csa;
+    let csi = params.csi;
+    let geoprivacy = params.geoprivacy;
+    let taxon_geoprivacy = params.taxon_geoprivacy;
+    let hrank = params.hrank;
+    let lrank = params.lrank;
+    let iconic_taxa = params.iconic_taxa;
+    let id_above = params.id_above;
+    let id_below = params.id_below;
+    let identifications = params.identifications;
+    let lat = params.lat;
+    let lng = params.lng;
+    let radius = params.radius;
+    let nelat = params.nelat;
+    let nelng = params.nelng;
+    let swlat = params.swlat;
+    let swlng = params.swlng;
+    let list_id = params.list_id;
+    let not_in_project = params.not_in_project;
+    let not_matching_project_rules_for = params.not_matching_project_rules_for;
+    let q = params.q;
+    let search_on = params.search_on;
+    let quality_grade = params.quality_grade;
+    let updated_since = params.updated_since;
+    let viewer_id = params.viewer_id;
+    let reviewed = params.reviewed;
+    let locale = params.locale;
+    let preferred_place_id = params.preferred_place_id;
+    let ttl = params.ttl;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -2412,8 +4074,12 @@ pub async fn observations_popular_field_values_get(configuration: &configuration
 }
 
 /// Create an observation 
-pub async fn observations_post(configuration: &configuration::Configuration, body: Option<crate::models::PostObservation>) -> Result<(), Error<ObservationsPostError>> {
+pub async fn observations_post(configuration: &configuration::Configuration, params: ObservationsPostParams) -> Result<(), Error<ObservationsPostError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let body = params.body;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -2449,8 +4115,93 @@ pub async fn observations_post(configuration: &configuration::Configuration, bod
 }
 
 /// Given zero to many of following parameters, returns `leaf taxa` associated with observations matching the search criteria and the count of observations they are associated with, ordered by count descending. `Leaf taxa` are the leaves of the taxonomic tree containing only the taxa associated with observations matching the search criteria. 
-pub async fn observations_species_counts_get(configuration: &configuration::Configuration, acc: Option<bool>, captive: Option<bool>, endemic: Option<bool>, geo: Option<bool>, id_please: Option<bool>, identified: Option<bool>, introduced: Option<bool>, mappable: Option<bool>, native: Option<bool>, out_of_range: Option<bool>, pcid: Option<bool>, photos: Option<bool>, popular: Option<bool>, sounds: Option<bool>, taxon_is_active: Option<bool>, threatened: Option<bool>, verifiable: Option<bool>, licensed: Option<bool>, photo_licensed: Option<bool>, id: Option<Vec<String>>, not_id: Option<Vec<String>>, license: Option<Vec<String>>, ofv_datatype: Option<Vec<String>>, photo_license: Option<Vec<String>>, place_id: Option<Vec<i32>>, project_id: Option<Vec<String>>, rank: Option<Vec<String>>, site_id: Option<Vec<String>>, sound_license: Option<Vec<String>>, taxon_id: Option<Vec<String>>, without_taxon_id: Option<Vec<String>>, taxon_name: Option<Vec<String>>, user_id: Option<Vec<String>>, user_login: Option<Vec<String>>, ident_user_id: Option<i32>, day: Option<Vec<String>>, month: Option<Vec<String>>, year: Option<Vec<String>>, term_id: Option<Vec<i32>>, term_value_id: Option<Vec<i32>>, without_term_value_id: Option<Vec<i32>>, acc_above: Option<&str>, acc_below: Option<&str>, acc_below_or_unknown: Option<&str>, d1: Option<String>, d2: Option<String>, created_d1: Option<String>, created_d2: Option<String>, created_on: Option<String>, observed_on: Option<String>, unobserved_by_user_id: Option<i32>, apply_project_rules_for: Option<&str>, cs: Option<&str>, csa: Option<&str>, csi: Option<Vec<String>>, geoprivacy: Option<Vec<String>>, taxon_geoprivacy: Option<Vec<String>>, hrank: Option<&str>, lrank: Option<&str>, iconic_taxa: Option<Vec<String>>, id_above: Option<&str>, id_below: Option<&str>, identifications: Option<&str>, lat: Option<f64>, lng: Option<f64>, radius: Option<&str>, nelat: Option<f64>, nelng: Option<f64>, swlat: Option<f64>, swlng: Option<f64>, list_id: Option<i32>, not_in_project: Option<&str>, not_matching_project_rules_for: Option<&str>, q: Option<&str>, search_on: Option<&str>, quality_grade: Option<&str>, updated_since: Option<&str>, viewer_id: Option<&str>, reviewed: Option<bool>, locale: Option<&str>, preferred_place_id: Option<i32>, ttl: Option<&str>) -> Result<crate::models::SpeciesCountsResponse, Error<ObservationsSpeciesCountsGetError>> {
+pub async fn observations_species_counts_get(configuration: &configuration::Configuration, params: ObservationsSpeciesCountsGetParams) -> Result<crate::models::SpeciesCountsResponse, Error<ObservationsSpeciesCountsGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let acc = params.acc;
+    let captive = params.captive;
+    let endemic = params.endemic;
+    let geo = params.geo;
+    let id_please = params.id_please;
+    let identified = params.identified;
+    let introduced = params.introduced;
+    let mappable = params.mappable;
+    let native = params.native;
+    let out_of_range = params.out_of_range;
+    let pcid = params.pcid;
+    let photos = params.photos;
+    let popular = params.popular;
+    let sounds = params.sounds;
+    let taxon_is_active = params.taxon_is_active;
+    let threatened = params.threatened;
+    let verifiable = params.verifiable;
+    let licensed = params.licensed;
+    let photo_licensed = params.photo_licensed;
+    let id = params.id;
+    let not_id = params.not_id;
+    let license = params.license;
+    let ofv_datatype = params.ofv_datatype;
+    let photo_license = params.photo_license;
+    let place_id = params.place_id;
+    let project_id = params.project_id;
+    let rank = params.rank;
+    let site_id = params.site_id;
+    let sound_license = params.sound_license;
+    let taxon_id = params.taxon_id;
+    let without_taxon_id = params.without_taxon_id;
+    let taxon_name = params.taxon_name;
+    let user_id = params.user_id;
+    let user_login = params.user_login;
+    let ident_user_id = params.ident_user_id;
+    let day = params.day;
+    let month = params.month;
+    let year = params.year;
+    let term_id = params.term_id;
+    let term_value_id = params.term_value_id;
+    let without_term_value_id = params.without_term_value_id;
+    let acc_above = params.acc_above;
+    let acc_below = params.acc_below;
+    let acc_below_or_unknown = params.acc_below_or_unknown;
+    let d1 = params.d1;
+    let d2 = params.d2;
+    let created_d1 = params.created_d1;
+    let created_d2 = params.created_d2;
+    let created_on = params.created_on;
+    let observed_on = params.observed_on;
+    let unobserved_by_user_id = params.unobserved_by_user_id;
+    let apply_project_rules_for = params.apply_project_rules_for;
+    let cs = params.cs;
+    let csa = params.csa;
+    let csi = params.csi;
+    let geoprivacy = params.geoprivacy;
+    let taxon_geoprivacy = params.taxon_geoprivacy;
+    let hrank = params.hrank;
+    let lrank = params.lrank;
+    let iconic_taxa = params.iconic_taxa;
+    let id_above = params.id_above;
+    let id_below = params.id_below;
+    let identifications = params.identifications;
+    let lat = params.lat;
+    let lng = params.lng;
+    let radius = params.radius;
+    let nelat = params.nelat;
+    let nelng = params.nelng;
+    let swlat = params.swlat;
+    let swlng = params.swlng;
+    let list_id = params.list_id;
+    let not_in_project = params.not_in_project;
+    let not_matching_project_rules_for = params.not_matching_project_rules_for;
+    let q = params.q;
+    let search_on = params.search_on;
+    let quality_grade = params.quality_grade;
+    let updated_since = params.updated_since;
+    let viewer_id = params.viewer_id;
+    let reviewed = params.reviewed;
+    let locale = params.locale;
+    let preferred_place_id = params.preferred_place_id;
+    let ttl = params.ttl;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -2798,8 +4549,16 @@ pub async fn observations_species_counts_get(configuration: &configuration::Conf
 }
 
 /// Given zero to many of following parameters, returns an array of objects representing new comments and identifications on observations the authenticated user has subscribed to. Requires authentication 
-pub async fn observations_updates_get(configuration: &configuration::Configuration, created_after: Option<String>, viewed: Option<bool>, observations_by: Option<&str>, page: Option<&str>, per_page: Option<&str>) -> Result<(), Error<ObservationsUpdatesGetError>> {
+pub async fn observations_updates_get(configuration: &configuration::Configuration, params: ObservationsUpdatesGetParams) -> Result<(), Error<ObservationsUpdatesGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let created_after = params.created_after;
+    let viewed = params.viewed;
+    let observations_by = params.observations_by;
+    let page = params.page;
+    let per_page = params.per_page;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -2849,8 +4608,12 @@ pub async fn observations_updates_get(configuration: &configuration::Configurati
 }
 
 /// Toggles current user's subscription to this observation. If the logged-in user is not subscribed, POSTing here will subscribe them. If they are already subscribed, this will remove the subscription 
-pub async fn subscriptions_observation_id_subscribe_post(configuration: &configuration::Configuration, id: i32) -> Result<(), Error<SubscriptionsObservationIdSubscribePostError>> {
+pub async fn subscriptions_observation_id_subscribe_post(configuration: &configuration::Configuration, params: SubscriptionsObservationIdSubscribePostParams) -> Result<(), Error<SubscriptionsObservationIdSubscribePostError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -2885,8 +4648,13 @@ pub async fn subscriptions_observation_id_subscribe_post(configuration: &configu
 }
 
 /// Remove a vote from an observation
-pub async fn votes_unvote_observation_id_delete(configuration: &configuration::Configuration, id: i32, body: Option<crate::models::PostObservationVote>) -> Result<(), Error<VotesUnvoteObservationIdDeleteError>> {
+pub async fn votes_unvote_observation_id_delete(configuration: &configuration::Configuration, params: VotesUnvoteObservationIdDeleteParams) -> Result<(), Error<VotesUnvoteObservationIdDeleteError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+    let body = params.body;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -2922,8 +4690,13 @@ pub async fn votes_unvote_observation_id_delete(configuration: &configuration::C
 }
 
 /// Vote on an observation. A vote with an empty `scope` is recorded as a `fave` of the observation. A vote with scope `needs_id` is recorded as a vote on the Quality Grade criterion \"can the Community ID still be confirmed or improved?\", and can be an up or down vote 
-pub async fn votes_vote_observation_id_post(configuration: &configuration::Configuration, id: i32, body: Option<crate::models::PostObservationVote>) -> Result<(), Error<VotesVoteObservationIdPostError>> {
+pub async fn votes_vote_observation_id_post(configuration: &configuration::Configuration, params: VotesVoteObservationIdPostParams) -> Result<(), Error<VotesVoteObservationIdPostError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+    let body = params.body;
+
 
     let local_var_client = &local_var_configuration.client;
 

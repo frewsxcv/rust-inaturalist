@@ -14,6 +14,28 @@ use reqwest;
 use crate::apis::ResponseContent;
 use super::{Error, configuration};
 
+/// struct for passing parameters to the method [`flags_id_delete`]
+#[derive(Clone, Debug, Default)]
+pub struct FlagsIdDeleteParams {
+    /// ID of the record
+    pub id: i32
+}
+
+/// struct for passing parameters to the method [`flags_id_put`]
+#[derive(Clone, Debug, Default)]
+pub struct FlagsIdPutParams {
+    /// ID of the record
+    pub id: i32,
+    pub body: Option<crate::models::PutFlag>
+}
+
+/// struct for passing parameters to the method [`flags_post`]
+#[derive(Clone, Debug, Default)]
+pub struct FlagsPostParams {
+    /// Flag object
+    pub body: Option<crate::models::PostFlag>
+}
+
 
 /// struct for typed errors of method [`flags_id_delete`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -38,8 +60,12 @@ pub enum FlagsPostError {
 
 
 /// Delete a flag 
-pub async fn flags_id_delete(configuration: &configuration::Configuration, id: i32) -> Result<(), Error<FlagsIdDeleteError>> {
+pub async fn flags_id_delete(configuration: &configuration::Configuration, params: FlagsIdDeleteParams) -> Result<(), Error<FlagsIdDeleteError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -74,8 +100,13 @@ pub async fn flags_id_delete(configuration: &configuration::Configuration, id: i
 }
 
 /// Update a flag. Generally only used to resolve the flag. 
-pub async fn flags_id_put(configuration: &configuration::Configuration, id: i32, body: Option<crate::models::PutFlag>) -> Result<(), Error<FlagsIdPutError>> {
+pub async fn flags_id_put(configuration: &configuration::Configuration, params: FlagsIdPutParams) -> Result<(), Error<FlagsIdPutError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+    let body = params.body;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -111,8 +142,12 @@ pub async fn flags_id_put(configuration: &configuration::Configuration, id: i32,
 }
 
 /// Create a flag. To create a custom flag beyond the standard `spam` and `inappropriate` flags, set `flag` to `other` and include a `flag_explanation` 
-pub async fn flags_post(configuration: &configuration::Configuration, body: Option<crate::models::PostFlag>) -> Result<(), Error<FlagsPostError>> {
+pub async fn flags_post(configuration: &configuration::Configuration, params: FlagsPostParams) -> Result<(), Error<FlagsPostError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let body = params.body;
+
 
     let local_var_client = &local_var_configuration.client;
 

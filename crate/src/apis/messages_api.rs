@@ -14,6 +14,41 @@ use reqwest;
 use crate::apis::ResponseContent;
 use super::{Error, configuration};
 
+/// struct for passing parameters to the method [`messages_get`]
+#[derive(Clone, Debug, Default)]
+pub struct MessagesGetParams {
+    /// Pagination `page` number
+    pub page: Option<String>,
+    /// Whether to view messages the user has received (default) or messages the user has sent
+    pub _box: Option<String>,
+    /// Search query for subject and body
+    pub q: Option<String>,
+    /// User ID or username of correspondent to filter by
+    pub user_id: Option<String>,
+    /// Groups results by `thread_id`, only shows the latest message per thread, and includes a `thread_messages_count` attribute showing the total number of messages in that thread. Note that this will not work with the `q` param, and it probably should only be used with `box=any` because the `thread_messages_count` will be inaccurate when you restrict it to `inbox` or `sent`. 
+    pub threads: Option<bool>
+}
+
+/// struct for passing parameters to the method [`messages_id_delete`]
+#[derive(Clone, Debug, Default)]
+pub struct MessagesIdDeleteParams {
+    /// ID of the record
+    pub id: i32
+}
+
+/// struct for passing parameters to the method [`messages_id_get`]
+#[derive(Clone, Debug, Default)]
+pub struct MessagesIdGetParams {
+    /// ID of the record
+    pub id: i32
+}
+
+/// struct for passing parameters to the method [`messages_post`]
+#[derive(Clone, Debug, Default)]
+pub struct MessagesPostParams {
+    pub body: Option<crate::models::PostMessage>
+}
+
 
 /// struct for typed errors of method [`messages_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -58,8 +93,16 @@ pub enum MessagesUnreadGetError {
 
 
 /// Show the user's inbox or sent box
-pub async fn messages_get(configuration: &configuration::Configuration, page: Option<&str>, _box: Option<&str>, q: Option<&str>, user_id: Option<&str>, threads: Option<bool>) -> Result<(), Error<MessagesGetError>> {
+pub async fn messages_get(configuration: &configuration::Configuration, params: MessagesGetParams) -> Result<(), Error<MessagesGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let page = params.page;
+    let _box = params._box;
+    let q = params.q;
+    let user_id = params.user_id;
+    let threads = params.threads;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -109,8 +152,12 @@ pub async fn messages_get(configuration: &configuration::Configuration, page: Op
 }
 
 /// This will all of the authenticated user's copies of the messages in tha thread to which the specified message belongs. 
-pub async fn messages_id_delete(configuration: &configuration::Configuration, id: i32) -> Result<(), Error<MessagesIdDeleteError>> {
+pub async fn messages_id_delete(configuration: &configuration::Configuration, params: MessagesIdDeleteParams) -> Result<(), Error<MessagesIdDeleteError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -145,8 +192,12 @@ pub async fn messages_id_delete(configuration: &configuration::Configuration, id
 }
 
 /// Retrieves all messages in the thread the specified message belongs to and marks them all as read. 
-pub async fn messages_id_get(configuration: &configuration::Configuration, id: i32) -> Result<serde_json::Value, Error<MessagesIdGetError>> {
+pub async fn messages_id_get(configuration: &configuration::Configuration, params: MessagesIdGetParams) -> Result<serde_json::Value, Error<MessagesIdGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -181,8 +232,12 @@ pub async fn messages_id_get(configuration: &configuration::Configuration, id: i
 }
 
 /// Create and deliver a new message to another user
-pub async fn messages_post(configuration: &configuration::Configuration, body: Option<crate::models::PostMessage>) -> Result<crate::models::Message, Error<MessagesPostError>> {
+pub async fn messages_post(configuration: &configuration::Configuration, params: MessagesPostParams) -> Result<crate::models::Message, Error<MessagesPostError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let body = params.body;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -217,8 +272,11 @@ pub async fn messages_post(configuration: &configuration::Configuration, body: O
     }
 }
 
-pub async fn messages_unread_get(configuration: &configuration::Configuration, ) -> Result<serde_json::Value, Error<MessagesUnreadGetError>> {
+pub async fn messages_unread_get(configuration: &configuration::Configuration) -> Result<serde_json::Value, Error<MessagesUnreadGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+
 
     let local_var_client = &local_var_configuration.client;
 

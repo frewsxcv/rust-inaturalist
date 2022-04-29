@@ -14,6 +14,13 @@ use reqwest;
 use crate::apis::ResponseContent;
 use super::{Error, configuration};
 
+/// struct for passing parameters to the method [`photos_post`]
+#[derive(Clone, Debug, Default)]
+pub struct PhotosPostParams {
+    /// The photo
+    pub file: Option<std::path::PathBuf>
+}
+
 
 /// struct for typed errors of method [`photos_post`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -24,8 +31,12 @@ pub enum PhotosPostError {
 
 
 /// Create a photo 
-pub async fn photos_post(configuration: &configuration::Configuration, file: Option<std::path::PathBuf>) -> Result<(), Error<PhotosPostError>> {
+pub async fn photos_post(configuration: &configuration::Configuration, params: PhotosPostParams) -> Result<(), Error<PhotosPostError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let file = params.file;
+
 
     let local_var_client = &local_var_configuration.client;
 

@@ -14,6 +14,23 @@ use reqwest;
 use crate::apis::ResponseContent;
 use super::{Error, configuration};
 
+/// struct for passing parameters to the method [`search_get`]
+#[derive(Clone, Debug, Default)]
+pub struct SearchGetParams {
+    /// Search object properties
+    pub q: Option<String>,
+    /// Must be of this type
+    pub sources: Option<Vec<String>>,
+    /// Must be associated with this place
+    pub place_id: Option<Vec<String>>,
+    /// Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted 
+    pub per_page: Option<String>,
+    /// Locale preference for taxon common names 
+    pub locale: Option<String>,
+    /// Place preference for regional taxon common names 
+    pub preferred_place_id: Option<i32>
+}
+
 
 /// struct for typed errors of method [`search_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -24,8 +41,17 @@ pub enum SearchGetError {
 
 
 /// Given zero to many of following parameters, returns object matching the search criteria 
-pub async fn search_get(configuration: &configuration::Configuration, q: Option<&str>, sources: Option<Vec<String>>, place_id: Option<Vec<String>>, per_page: Option<&str>, locale: Option<&str>, preferred_place_id: Option<i32>) -> Result<(), Error<SearchGetError>> {
+pub async fn search_get(configuration: &configuration::Configuration, params: SearchGetParams) -> Result<(), Error<SearchGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let q = params.q;
+    let sources = params.sources;
+    let place_id = params.place_id;
+    let per_page = params.per_page;
+    let locale = params.locale;
+    let preferred_place_id = params.preferred_place_id;
+
 
     let local_var_client = &local_var_configuration.client;
 

@@ -14,6 +14,13 @@ use reqwest;
 use crate::apis::ResponseContent;
 use super::{Error, configuration};
 
+/// struct for passing parameters to the method [`controlled_terms_for_taxon_get`]
+#[derive(Clone, Debug, Default)]
+pub struct ControlledTermsForTaxonGetParams {
+    /// Filter by this taxon
+    pub taxon_id: i32
+}
+
 
 /// struct for typed errors of method [`controlled_terms_for_taxon_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -31,8 +38,12 @@ pub enum ControlledTermsGetError {
 
 
 /// Returns attribute controlled terms relevant to a taxon 
-pub async fn controlled_terms_for_taxon_get(configuration: &configuration::Configuration, taxon_id: i32) -> Result<(), Error<ControlledTermsForTaxonGetError>> {
+pub async fn controlled_terms_for_taxon_get(configuration: &configuration::Configuration, params: ControlledTermsForTaxonGetParams) -> Result<(), Error<ControlledTermsForTaxonGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let taxon_id = params.taxon_id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -60,8 +71,11 @@ pub async fn controlled_terms_for_taxon_get(configuration: &configuration::Confi
 }
 
 /// List all attribute controlled terms 
-pub async fn controlled_terms_get(configuration: &configuration::Configuration, ) -> Result<(), Error<ControlledTermsGetError>> {
+pub async fn controlled_terms_get(configuration: &configuration::Configuration) -> Result<(), Error<ControlledTermsGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+
 
     let local_var_client = &local_var_configuration.client;
 

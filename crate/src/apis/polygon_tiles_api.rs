@@ -14,6 +14,53 @@ use reqwest;
 use crate::apis::ResponseContent;
 use super::{Error, configuration};
 
+/// struct for passing parameters to the method [`places_place_id_zoom_xy_png_get`]
+#[derive(Clone, Debug, Default)]
+pub struct PlacesPlaceIdZoomXyPngGetParams {
+    /// Place ID
+    pub place_id: i32,
+    /// Zoom level. Z coordinate in the XYZ tiling scheme
+    pub zoom: i32,
+    /// X coordinate in the XYZ tiling scheme. Must be less than 2^zoom
+    pub x: i32,
+    /// Y coordinate in the XYZ tiling scheme. Must be less than 2^zoom
+    pub y: i32,
+    /// Set the `Cache-Control` HTTP header with this value as `max-age`, in seconds. This means subsequent identical requests will be cached on iNaturalist servers, and commonly within web browsers 
+    pub ttl: Option<String>
+}
+
+/// struct for passing parameters to the method [`taxon_places_taxon_id_zoom_xy_png_get`]
+#[derive(Clone, Debug, Default)]
+pub struct TaxonPlacesTaxonIdZoomXyPngGetParams {
+    /// Taxon ID
+    pub taxon_id: i32,
+    /// Zoom level. Z coordinate in the XYZ tiling scheme
+    pub zoom: i32,
+    /// X coordinate in the XYZ tiling scheme. Must be less than 2^zoom
+    pub x: i32,
+    /// Y coordinate in the XYZ tiling scheme. Must be less than 2^zoom
+    pub y: i32,
+    /// Set the `Cache-Control` HTTP header with this value as `max-age`, in seconds. This means subsequent identical requests will be cached on iNaturalist servers, and commonly within web browsers 
+    pub ttl: Option<String>
+}
+
+/// struct for passing parameters to the method [`taxon_ranges_taxon_id_zoom_xy_png_get`]
+#[derive(Clone, Debug, Default)]
+pub struct TaxonRangesTaxonIdZoomXyPngGetParams {
+    /// Taxon ID
+    pub taxon_id: i32,
+    /// Zoom level. Z coordinate in the XYZ tiling scheme
+    pub zoom: i32,
+    /// X coordinate in the XYZ tiling scheme. Must be less than 2^zoom
+    pub x: i32,
+    /// Y coordinate in the XYZ tiling scheme. Must be less than 2^zoom
+    pub y: i32,
+    /// Primary color to use in tile creation. Accepts common colors by string (e.g. `color=blue`), and accepts escaped color HEX codes (e.g. `color=%2386a91c`) 
+    pub color: Option<String>,
+    /// Set the `Cache-Control` HTTP header with this value as `max-age`, in seconds. This means subsequent identical requests will be cached on iNaturalist servers, and commonly within web browsers 
+    pub ttl: Option<String>
+}
+
 
 /// struct for typed errors of method [`places_place_id_zoom_xy_png_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -38,8 +85,16 @@ pub enum TaxonRangesTaxonIdZoomXyPngGetError {
 
 
 /// Returns a PNG map tile representing the boundary of this place, following the XYZ tiling scheme 
-pub async fn places_place_id_zoom_xy_png_get(configuration: &configuration::Configuration, place_id: i32, zoom: i32, x: i32, y: i32, ttl: Option<&str>) -> Result<(), Error<PlacesPlaceIdZoomXyPngGetError>> {
+pub async fn places_place_id_zoom_xy_png_get(configuration: &configuration::Configuration, params: PlacesPlaceIdZoomXyPngGetParams) -> Result<(), Error<PlacesPlaceIdZoomXyPngGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let place_id = params.place_id;
+    let zoom = params.zoom;
+    let x = params.x;
+    let y = params.y;
+    let ttl = params.ttl;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -69,8 +124,16 @@ pub async fn places_place_id_zoom_xy_png_get(configuration: &configuration::Conf
 }
 
 /// Returns a PNG map tile representing the boundaries of places this taxon is known to occur, following the XYZ tiling scheme 
-pub async fn taxon_places_taxon_id_zoom_xy_png_get(configuration: &configuration::Configuration, taxon_id: i32, zoom: i32, x: i32, y: i32, ttl: Option<&str>) -> Result<(), Error<TaxonPlacesTaxonIdZoomXyPngGetError>> {
+pub async fn taxon_places_taxon_id_zoom_xy_png_get(configuration: &configuration::Configuration, params: TaxonPlacesTaxonIdZoomXyPngGetParams) -> Result<(), Error<TaxonPlacesTaxonIdZoomXyPngGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let taxon_id = params.taxon_id;
+    let zoom = params.zoom;
+    let x = params.x;
+    let y = params.y;
+    let ttl = params.ttl;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -100,8 +163,17 @@ pub async fn taxon_places_taxon_id_zoom_xy_png_get(configuration: &configuration
 }
 
 /// Returns a PNG map tile representing the range of this taxon, following the XYZ tiling scheme 
-pub async fn taxon_ranges_taxon_id_zoom_xy_png_get(configuration: &configuration::Configuration, taxon_id: i32, zoom: i32, x: i32, y: i32, color: Option<&str>, ttl: Option<&str>) -> Result<(), Error<TaxonRangesTaxonIdZoomXyPngGetError>> {
+pub async fn taxon_ranges_taxon_id_zoom_xy_png_get(configuration: &configuration::Configuration, params: TaxonRangesTaxonIdZoomXyPngGetParams) -> Result<(), Error<TaxonRangesTaxonIdZoomXyPngGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let taxon_id = params.taxon_id;
+    let zoom = params.zoom;
+    let x = params.x;
+    let y = params.y;
+    let color = params.color;
+    let ttl = params.ttl;
+
 
     let local_var_client = &local_var_configuration.client;
 

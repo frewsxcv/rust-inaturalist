@@ -14,6 +14,29 @@ use reqwest;
 use crate::apis::ResponseContent;
 use super::{Error, configuration};
 
+/// struct for passing parameters to the method [`comments_id_delete`]
+#[derive(Clone, Debug, Default)]
+pub struct CommentsIdDeleteParams {
+    /// ID of the record
+    pub id: i32
+}
+
+/// struct for passing parameters to the method [`comments_id_put`]
+#[derive(Clone, Debug, Default)]
+pub struct CommentsIdPutParams {
+    /// ID of the record
+    pub id: i32,
+    /// Comment object
+    pub body: Option<crate::models::PostComment>
+}
+
+/// struct for passing parameters to the method [`comments_post`]
+#[derive(Clone, Debug, Default)]
+pub struct CommentsPostParams {
+    /// Comment object
+    pub body: Option<crate::models::PostComment>
+}
+
 
 /// struct for typed errors of method [`comments_id_delete`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -38,8 +61,12 @@ pub enum CommentsPostError {
 
 
 /// Delete a comment 
-pub async fn comments_id_delete(configuration: &configuration::Configuration, id: i32) -> Result<(), Error<CommentsIdDeleteError>> {
+pub async fn comments_id_delete(configuration: &configuration::Configuration, params: CommentsIdDeleteParams) -> Result<(), Error<CommentsIdDeleteError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -74,8 +101,13 @@ pub async fn comments_id_delete(configuration: &configuration::Configuration, id
 }
 
 /// Update a comment 
-pub async fn comments_id_put(configuration: &configuration::Configuration, id: i32, body: Option<crate::models::PostComment>) -> Result<(), Error<CommentsIdPutError>> {
+pub async fn comments_id_put(configuration: &configuration::Configuration, params: CommentsIdPutParams) -> Result<(), Error<CommentsIdPutError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+    let body = params.body;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -111,8 +143,12 @@ pub async fn comments_id_put(configuration: &configuration::Configuration, id: i
 }
 
 /// Create a comment 
-pub async fn comments_post(configuration: &configuration::Configuration, body: Option<crate::models::PostComment>) -> Result<(), Error<CommentsPostError>> {
+pub async fn comments_post(configuration: &configuration::Configuration, params: CommentsPostParams) -> Result<(), Error<CommentsPostError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let body = params.body;
+
 
     let local_var_client = &local_var_configuration.client;
 

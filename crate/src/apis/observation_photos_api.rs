@@ -14,6 +14,35 @@ use reqwest;
 use crate::apis::ResponseContent;
 use super::{Error, configuration};
 
+/// struct for passing parameters to the method [`observation_photos_id_delete`]
+#[derive(Clone, Debug, Default)]
+pub struct ObservationPhotosIdDeleteParams {
+    /// ID of the record
+    pub id: i32
+}
+
+/// struct for passing parameters to the method [`observation_photos_id_put`]
+#[derive(Clone, Debug, Default)]
+pub struct ObservationPhotosIdPutParams {
+    /// ID of the record
+    pub id: i32,
+    /// Position in which the photo is displayed for the observation
+    pub observation_photo_position: Option<i32>,
+    /// The photo
+    pub file: Option<std::path::PathBuf>
+}
+
+/// struct for passing parameters to the method [`observation_photos_post`]
+#[derive(Clone, Debug, Default)]
+pub struct ObservationPhotosPostParams {
+    /// Observation ID
+    pub observation_photo_observation_id: Option<i32>,
+    /// Observation UUID
+    pub observation_photo_uuid: Option<String>,
+    /// The photo
+    pub file: Option<std::path::PathBuf>
+}
+
 
 /// struct for typed errors of method [`observation_photos_id_delete`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -38,8 +67,12 @@ pub enum ObservationPhotosPostError {
 
 
 /// Delete an observation photo 
-pub async fn observation_photos_id_delete(configuration: &configuration::Configuration, id: i32) -> Result<(), Error<ObservationPhotosIdDeleteError>> {
+pub async fn observation_photos_id_delete(configuration: &configuration::Configuration, params: ObservationPhotosIdDeleteParams) -> Result<(), Error<ObservationPhotosIdDeleteError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -74,8 +107,14 @@ pub async fn observation_photos_id_delete(configuration: &configuration::Configu
 }
 
 /// Update an observation photo
-pub async fn observation_photos_id_put(configuration: &configuration::Configuration, id: i32, observation_photo_position: Option<i32>, file: Option<std::path::PathBuf>) -> Result<(), Error<ObservationPhotosIdPutError>> {
+pub async fn observation_photos_id_put(configuration: &configuration::Configuration, params: ObservationPhotosIdPutParams) -> Result<(), Error<ObservationPhotosIdPutError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+    let observation_photo_position = params.observation_photo_position;
+    let file = params.file;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -116,8 +155,14 @@ pub async fn observation_photos_id_put(configuration: &configuration::Configurat
 }
 
 /// Create an observation photo 
-pub async fn observation_photos_post(configuration: &configuration::Configuration, observation_photo_observation_id: Option<i32>, observation_photo_uuid: Option<&str>, file: Option<std::path::PathBuf>) -> Result<(), Error<ObservationPhotosPostError>> {
+pub async fn observation_photos_post(configuration: &configuration::Configuration, params: ObservationPhotosPostParams) -> Result<(), Error<ObservationPhotosPostError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let observation_photo_observation_id = params.observation_photo_observation_id;
+    let observation_photo_uuid = params.observation_photo_uuid;
+    let file = params.file;
+
 
     let local_var_client = &local_var_configuration.client;
 

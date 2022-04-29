@@ -14,6 +14,675 @@ use reqwest;
 use crate::apis::ResponseContent;
 use super::{Error, configuration};
 
+/// struct for passing parameters to the method [`identifications_categories_get`]
+#[derive(Clone, Debug, Default)]
+pub struct IdentificationsCategoriesGetParams {
+    /// ID's taxon is the same it's observation's taxon
+    pub current_taxon: Option<bool>,
+    /// ID was added by the observer
+    pub own_observation: Option<bool>,
+    /// ID was created as a results of a taxon change
+    pub is_change: Option<bool>,
+    /// ID's taxon is currently an active taxon
+    pub taxon_active: Option<bool>,
+    /// Observation's taxon is currently an active taxon
+    pub observation_taxon_active: Option<bool>,
+    /// Identification ID
+    pub id: Option<Vec<i32>>,
+    /// ID's taxon must have this rank
+    pub rank: Option<Vec<String>>,
+    /// Observation's taxon must have this rank
+    pub observation_rank: Option<Vec<String>>,
+    /// Identifier must have this user ID
+    pub user_id: Option<Vec<i32>>,
+    /// Identifier must have this login
+    pub user_login: Option<Vec<String>>,
+    /// Most recent ID on a observation by a user
+    pub current: Option<bool>,
+    /// Type of identification
+    pub category: Option<Vec<String>>,
+    /// Observation must occur in this place
+    pub place_id: Option<Vec<String>>,
+    /// Observation must have this quality grade
+    pub quality_grade: Option<Vec<String>>,
+    /// ID taxa must match the given taxa or their descendants
+    pub taxon_id: Option<Vec<String>>,
+    /// Observation taxa must match the given taxa or their descendants
+    pub observation_taxon_id: Option<Vec<String>>,
+    /// ID iconic taxon ID
+    pub iconic_taxon_id: Option<Vec<String>>,
+    /// Observation iconic taxon ID
+    pub observation_iconic_taxon_id: Option<Vec<String>>,
+    /// ID taxon must have this rank or higher
+    pub lrank: Option<String>,
+    /// ID taxon must have this rank or lower
+    pub hrank: Option<String>,
+    /// Observation taxon must have this rank or higher
+    pub observation_lrank: Option<String>,
+    /// Observation taxon must have this rank or lower
+    pub observation_hrank: Option<String>,
+    /// Exclude IDs of these taxa and their descendants
+    pub without_taxon_id: Option<Vec<String>>,
+    /// Exclude IDs of observations of these taxa and their descendants
+    pub without_observation_taxon_id: Option<Vec<String>>,
+    /// ID created on or after this time
+    pub d1: Option<String>,
+    /// ID created on or before this time
+    pub d2: Option<String>,
+    /// Observation created on or after this date
+    pub observation_created_d1: Option<String>,
+    /// Observation created on or before this date
+    pub observation_created_d2: Option<String>,
+    /// Observation observed on or after this date
+    pub observed_d1: Option<String>,
+    /// Observation observed on or before this date
+    pub observed_d2: Option<String>,
+    /// Must have an ID above this value
+    pub id_above: Option<String>,
+    /// Must have an ID below this value
+    pub id_below: Option<String>,
+    /// Pagination `page` number
+    pub page: Option<String>,
+    /// Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted 
+    pub per_page: Option<String>,
+    /// Sort order
+    pub order: Option<String>,
+    /// Sort field
+    pub order_by: Option<String>,
+    /// Return only the record IDs
+    pub only_id: Option<bool>
+}
+
+/// struct for passing parameters to the method [`identifications_get`]
+#[derive(Clone, Debug, Default)]
+pub struct IdentificationsGetParams {
+    /// ID's taxon is the same it's observation's taxon
+    pub current_taxon: Option<bool>,
+    /// ID was added by the observer
+    pub own_observation: Option<bool>,
+    /// ID was created as a results of a taxon change
+    pub is_change: Option<bool>,
+    /// ID's taxon is currently an active taxon
+    pub taxon_active: Option<bool>,
+    /// Observation's taxon is currently an active taxon
+    pub observation_taxon_active: Option<bool>,
+    /// Identification ID
+    pub id: Option<Vec<i32>>,
+    /// ID's taxon must have this rank
+    pub rank: Option<Vec<String>>,
+    /// Observation's taxon must have this rank
+    pub observation_rank: Option<Vec<String>>,
+    /// Identifier must have this user ID
+    pub user_id: Option<Vec<i32>>,
+    /// Identifier must have this login
+    pub user_login: Option<Vec<String>>,
+    /// Most recent ID on a observation by a user
+    pub current: Option<bool>,
+    /// Type of identification
+    pub category: Option<Vec<String>>,
+    /// Observation must occur in this place
+    pub place_id: Option<Vec<String>>,
+    /// Observation must have this quality grade
+    pub quality_grade: Option<Vec<String>>,
+    /// ID taxa must match the given taxa or their descendants
+    pub taxon_id: Option<Vec<String>>,
+    /// Observation taxa must match the given taxa or their descendants
+    pub observation_taxon_id: Option<Vec<String>>,
+    /// ID iconic taxon ID
+    pub iconic_taxon_id: Option<Vec<String>>,
+    /// Observation iconic taxon ID
+    pub observation_iconic_taxon_id: Option<Vec<String>>,
+    /// ID taxon must have this rank or higher
+    pub lrank: Option<String>,
+    /// ID taxon must have this rank or lower
+    pub hrank: Option<String>,
+    /// Observation taxon must have this rank or higher
+    pub observation_lrank: Option<String>,
+    /// Observation taxon must have this rank or lower
+    pub observation_hrank: Option<String>,
+    /// Exclude IDs of these taxa and their descendants
+    pub without_taxon_id: Option<Vec<String>>,
+    /// Exclude IDs of observations of these taxa and their descendants
+    pub without_observation_taxon_id: Option<Vec<String>>,
+    /// ID created on or after this time
+    pub d1: Option<String>,
+    /// ID created on or before this time
+    pub d2: Option<String>,
+    /// Observation created on or after this date
+    pub observation_created_d1: Option<String>,
+    /// Observation created on or before this date
+    pub observation_created_d2: Option<String>,
+    /// Observation observed on or after this date
+    pub observed_d1: Option<String>,
+    /// Observation observed on or before this date
+    pub observed_d2: Option<String>,
+    /// Must have an ID above this value
+    pub id_above: Option<String>,
+    /// Must have an ID below this value
+    pub id_below: Option<String>,
+    /// Pagination `page` number
+    pub page: Option<String>,
+    /// Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted 
+    pub per_page: Option<String>,
+    /// Sort order
+    pub order: Option<String>,
+    /// Sort field
+    pub order_by: Option<String>,
+    /// Return only the record IDs
+    pub only_id: Option<bool>
+}
+
+/// struct for passing parameters to the method [`identifications_id_delete`]
+#[derive(Clone, Debug, Default)]
+pub struct IdentificationsIdDeleteParams {
+    /// ID of the record
+    pub id: i32
+}
+
+/// struct for passing parameters to the method [`identifications_id_get`]
+#[derive(Clone, Debug, Default)]
+pub struct IdentificationsIdGetParams {
+    /// Must have this ID
+    pub id: Vec<i32>
+}
+
+/// struct for passing parameters to the method [`identifications_id_put`]
+#[derive(Clone, Debug, Default)]
+pub struct IdentificationsIdPutParams {
+    /// ID of the record
+    pub id: i32,
+    /// Identification object
+    pub body: Option<crate::models::PostIdentification>
+}
+
+/// struct for passing parameters to the method [`identifications_identifiers_get`]
+#[derive(Clone, Debug, Default)]
+pub struct IdentificationsIdentifiersGetParams {
+    /// ID's taxon is the same it's observation's taxon
+    pub current_taxon: Option<bool>,
+    /// ID was added by the observer
+    pub own_observation: Option<bool>,
+    /// ID was created as a results of a taxon change
+    pub is_change: Option<bool>,
+    /// ID's taxon is currently an active taxon
+    pub taxon_active: Option<bool>,
+    /// Observation's taxon is currently an active taxon
+    pub observation_taxon_active: Option<bool>,
+    /// Identification ID
+    pub id: Option<Vec<i32>>,
+    /// ID's taxon must have this rank
+    pub rank: Option<Vec<String>>,
+    /// Observation's taxon must have this rank
+    pub observation_rank: Option<Vec<String>>,
+    /// Identifier must have this user ID
+    pub user_id: Option<Vec<i32>>,
+    /// Identifier must have this login
+    pub user_login: Option<Vec<String>>,
+    /// Most recent ID on a observation by a user
+    pub current: Option<bool>,
+    /// Type of identification
+    pub category: Option<Vec<String>>,
+    /// Observation must occur in this place
+    pub place_id: Option<Vec<String>>,
+    /// Observation must have this quality grade
+    pub quality_grade: Option<Vec<String>>,
+    /// ID taxa must match the given taxa or their descendants
+    pub taxon_id: Option<Vec<String>>,
+    /// Observation taxa must match the given taxa or their descendants
+    pub observation_taxon_id: Option<Vec<String>>,
+    /// ID iconic taxon ID
+    pub iconic_taxon_id: Option<Vec<String>>,
+    /// Observation iconic taxon ID
+    pub observation_iconic_taxon_id: Option<Vec<String>>,
+    /// ID taxon must have this rank or higher
+    pub lrank: Option<String>,
+    /// ID taxon must have this rank or lower
+    pub hrank: Option<String>,
+    /// Observation taxon must have this rank or higher
+    pub observation_lrank: Option<String>,
+    /// Observation taxon must have this rank or lower
+    pub observation_hrank: Option<String>,
+    /// Exclude IDs of these taxa and their descendants
+    pub without_taxon_id: Option<Vec<String>>,
+    /// Exclude IDs of observations of these taxa and their descendants
+    pub without_observation_taxon_id: Option<Vec<String>>,
+    /// ID created on or after this time
+    pub d1: Option<String>,
+    /// ID created on or before this time
+    pub d2: Option<String>,
+    /// Observation created on or after this date
+    pub observation_created_d1: Option<String>,
+    /// Observation created on or before this date
+    pub observation_created_d2: Option<String>,
+    /// Observation observed on or after this date
+    pub observed_d1: Option<String>,
+    /// Observation observed on or before this date
+    pub observed_d2: Option<String>,
+    /// Must have an ID above this value
+    pub id_above: Option<String>,
+    /// Must have an ID below this value
+    pub id_below: Option<String>,
+    /// Pagination `page` number
+    pub page: Option<String>,
+    /// Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted 
+    pub per_page: Option<String>,
+    /// Sort order
+    pub order: Option<String>,
+    /// Sort field
+    pub order_by: Option<String>,
+    /// Return only the record IDs
+    pub only_id: Option<bool>
+}
+
+/// struct for passing parameters to the method [`identifications_observers_get`]
+#[derive(Clone, Debug, Default)]
+pub struct IdentificationsObserversGetParams {
+    /// ID's taxon is the same it's observation's taxon
+    pub current_taxon: Option<bool>,
+    /// ID was added by the observer
+    pub own_observation: Option<bool>,
+    /// ID was created as a results of a taxon change
+    pub is_change: Option<bool>,
+    /// ID's taxon is currently an active taxon
+    pub taxon_active: Option<bool>,
+    /// Observation's taxon is currently an active taxon
+    pub observation_taxon_active: Option<bool>,
+    /// Identification ID
+    pub id: Option<Vec<i32>>,
+    /// ID's taxon must have this rank
+    pub rank: Option<Vec<String>>,
+    /// Observation's taxon must have this rank
+    pub observation_rank: Option<Vec<String>>,
+    /// Identifier must have this user ID
+    pub user_id: Option<Vec<i32>>,
+    /// Identifier must have this login
+    pub user_login: Option<Vec<String>>,
+    /// Most recent ID on a observation by a user
+    pub current: Option<bool>,
+    /// Type of identification
+    pub category: Option<Vec<String>>,
+    /// Observation must occur in this place
+    pub place_id: Option<Vec<String>>,
+    /// Observation must have this quality grade
+    pub quality_grade: Option<Vec<String>>,
+    /// ID taxa must match the given taxa or their descendants
+    pub taxon_id: Option<Vec<String>>,
+    /// Observation taxa must match the given taxa or their descendants
+    pub observation_taxon_id: Option<Vec<String>>,
+    /// ID iconic taxon ID
+    pub iconic_taxon_id: Option<Vec<String>>,
+    /// Observation iconic taxon ID
+    pub observation_iconic_taxon_id: Option<Vec<String>>,
+    /// ID taxon must have this rank or higher
+    pub lrank: Option<String>,
+    /// ID taxon must have this rank or lower
+    pub hrank: Option<String>,
+    /// Observation taxon must have this rank or higher
+    pub observation_lrank: Option<String>,
+    /// Observation taxon must have this rank or lower
+    pub observation_hrank: Option<String>,
+    /// Exclude IDs of these taxa and their descendants
+    pub without_taxon_id: Option<Vec<String>>,
+    /// Exclude IDs of observations of these taxa and their descendants
+    pub without_observation_taxon_id: Option<Vec<String>>,
+    /// ID created on or after this time
+    pub d1: Option<String>,
+    /// ID created on or before this time
+    pub d2: Option<String>,
+    /// Observation created on or after this date
+    pub observation_created_d1: Option<String>,
+    /// Observation created on or before this date
+    pub observation_created_d2: Option<String>,
+    /// Observation observed on or after this date
+    pub observed_d1: Option<String>,
+    /// Observation observed on or before this date
+    pub observed_d2: Option<String>,
+    /// Must have an ID above this value
+    pub id_above: Option<String>,
+    /// Must have an ID below this value
+    pub id_below: Option<String>,
+    /// Pagination `page` number
+    pub page: Option<String>,
+    /// Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted 
+    pub per_page: Option<String>,
+    /// Sort order
+    pub order: Option<String>,
+    /// Sort field
+    pub order_by: Option<String>,
+    /// Return only the record IDs
+    pub only_id: Option<bool>
+}
+
+/// struct for passing parameters to the method [`identifications_post`]
+#[derive(Clone, Debug, Default)]
+pub struct IdentificationsPostParams {
+    /// Identification object
+    pub body: Option<crate::models::PostIdentification>
+}
+
+/// struct for passing parameters to the method [`identifications_recent_taxa_get`]
+#[derive(Clone, Debug, Default)]
+pub struct IdentificationsRecentTaxaGetParams {
+    /// ID's taxon is the same it's observation's taxon
+    pub current_taxon: Option<bool>,
+    /// ID was added by the observer
+    pub own_observation: Option<bool>,
+    /// ID was created as a results of a taxon change
+    pub is_change: Option<bool>,
+    /// ID's taxon is currently an active taxon
+    pub taxon_active: Option<bool>,
+    /// Observation's taxon is currently an active taxon
+    pub observation_taxon_active: Option<bool>,
+    /// Identification ID
+    pub id: Option<Vec<i32>>,
+    /// ID's taxon must have this rank
+    pub rank: Option<Vec<String>>,
+    /// Observation's taxon must have this rank
+    pub observation_rank: Option<Vec<String>>,
+    /// Identifier must have this user ID
+    pub user_id: Option<Vec<i32>>,
+    /// Identifier must have this login
+    pub user_login: Option<Vec<String>>,
+    /// Most recent ID on a observation by a user
+    pub current: Option<bool>,
+    /// Type of identification
+    pub category: Option<Vec<String>>,
+    /// Observation must occur in this place
+    pub place_id: Option<Vec<String>>,
+    /// Observation must have this quality grade
+    pub quality_grade: Option<Vec<String>>,
+    /// ID taxa must match the given taxa or their descendants
+    pub taxon_id: Option<Vec<String>>,
+    /// Observation taxa must match the given taxa or their descendants
+    pub observation_taxon_id: Option<Vec<String>>,
+    /// ID iconic taxon ID
+    pub iconic_taxon_id: Option<Vec<String>>,
+    /// Observation iconic taxon ID
+    pub observation_iconic_taxon_id: Option<Vec<String>>,
+    /// ID taxon must have this rank or higher
+    pub lrank: Option<String>,
+    /// ID taxon must have this rank or lower
+    pub hrank: Option<String>,
+    /// Observation taxon must have this rank or higher
+    pub observation_lrank: Option<String>,
+    /// Observation taxon must have this rank or lower
+    pub observation_hrank: Option<String>,
+    /// Exclude IDs of these taxa and their descendants
+    pub without_taxon_id: Option<Vec<String>>,
+    /// Exclude IDs of observations of these taxa and their descendants
+    pub without_observation_taxon_id: Option<Vec<String>>,
+    /// ID created on or after this time
+    pub d1: Option<String>,
+    /// ID created on or before this time
+    pub d2: Option<String>,
+    /// Observation created on or after this date
+    pub observation_created_d1: Option<String>,
+    /// Observation created on or before this date
+    pub observation_created_d2: Option<String>,
+    /// Observation observed on or after this date
+    pub observed_d1: Option<String>,
+    /// Observation observed on or before this date
+    pub observed_d2: Option<String>,
+    /// Must have an ID above this value
+    pub id_above: Option<String>,
+    /// Must have an ID below this value
+    pub id_below: Option<String>,
+    /// Pagination `page` number
+    pub page: Option<String>,
+    /// Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted 
+    pub per_page: Option<String>,
+    /// Sort order
+    pub order: Option<String>,
+    /// Sort field
+    pub order_by: Option<String>,
+    /// Return only the record IDs
+    pub only_id: Option<bool>
+}
+
+/// struct for passing parameters to the method [`identifications_similar_species_get`]
+#[derive(Clone, Debug, Default)]
+pub struct IdentificationsSimilarSpeciesGetParams {
+    /// Only show observations of these taxa and their descendants
+    pub taxon_id: i32,
+    /// Whether or not positional accuracy / coordinate uncertainty has been specified
+    pub acc: Option<bool>,
+    /// Captive or cultivated observations
+    pub captive: Option<bool>,
+    /// Observations whose taxa are endemic to their location
+    pub endemic: Option<bool>,
+    /// Observations that are georeferenced
+    pub geo: Option<bool>,
+    /// Observations with the deprecated `ID, Please!` flag. Note that this will return observations, but that this attribute is no longer used.
+    pub id_please: Option<bool>,
+    /// Observations that have community identifications
+    pub identified: Option<bool>,
+    /// Observations whose taxa are introduced in their location 
+    pub introduced: Option<bool>,
+    /// Observations that show on map tiles
+    pub mappable: Option<bool>,
+    /// Observations whose taxa are native to their location
+    pub native: Option<bool>,
+    /// Observations whose taxa are outside their known ranges
+    pub out_of_range: Option<bool>,
+    /// Observations identified by the curator of a project. If the `project_id` parameter is also specified, this will only consider observations identified by curators of the specified project(s) 
+    pub pcid: Option<bool>,
+    /// Observations with photos
+    pub photos: Option<bool>,
+    /// Observations that have been favorited by at least one user 
+    pub popular: Option<bool>,
+    /// Observations with sounds
+    pub sounds: Option<bool>,
+    /// Observations of active taxon concepts 
+    pub taxon_is_active: Option<bool>,
+    /// Observations whose taxa are threatened in their location 
+    pub threatened: Option<bool>,
+    /// Observations with a `quality_grade` of either `needs_id` or `research`. Equivalent to `quality_grade=needs_id,research` 
+    pub verifiable: Option<bool>,
+    /// License attribute of an observation must not be null
+    pub licensed: Option<bool>,
+    /// License attribute of at least one photo of an observation must not be null
+    pub photo_licensed: Option<bool>,
+    /// Must have this ID
+    pub id: Option<Vec<String>>,
+    /// Must not have this ID
+    pub not_id: Option<Vec<String>>,
+    /// Observation must have this license
+    pub license: Option<Vec<String>>,
+    /// Must have an observation field value with this datatype
+    pub ofv_datatype: Option<Vec<String>>,
+    /// Must have at least one photo with this license
+    pub photo_license: Option<Vec<String>>,
+    /// Must be observed within the place with this ID
+    pub place_id: Option<Vec<i32>>,
+    /// Must be added to the project this ID or slug
+    pub project_id: Option<Vec<String>>,
+    /// Taxon must have this rank
+    pub rank: Option<Vec<String>>,
+    /// Must be affiliated with the iNaturalist network website with this ID 
+    pub site_id: Option<Vec<String>>,
+    /// Must have at least one sound with this license
+    pub sound_license: Option<Vec<String>>,
+    /// Exclude observations of these taxa and their descendants
+    pub without_taxon_id: Option<Vec<String>>,
+    /// Taxon must have a scientific or common name matching this string 
+    pub taxon_name: Option<Vec<String>>,
+    /// User must have this ID or login
+    pub user_id: Option<Vec<String>>,
+    /// User must have this login
+    pub user_login: Option<Vec<String>>,
+    /// Observations identified by a particular user
+    pub ident_user_id: Option<i32>,
+    /// Must be observed within this day of the month
+    pub day: Option<Vec<String>>,
+    /// Must be observed within this month
+    pub month: Option<Vec<String>>,
+    /// Must be observed within this year
+    pub year: Option<Vec<String>>,
+    /// Must have an annotation using this controlled term ID
+    pub term_id: Option<Vec<i32>>,
+    /// Must have an annotation using this controlled value ID. Must be combined with the `term_id` parameter 
+    pub term_value_id: Option<Vec<i32>>,
+    /// Exclude observations with annotations using this controlled value ID. Must be combined with the `term_id` parameter 
+    pub without_term_value_id: Option<Vec<i32>>,
+    /// Must have a positional accuracy above this value (meters)
+    pub acc_above: Option<String>,
+    /// Must have a positional accuracy below this value (meters)
+    pub acc_below: Option<String>,
+    /// Positional accuracy must be below this value (in meters) or be unknown
+    pub acc_below_or_unknown: Option<String>,
+    /// Must be observed on or after this date
+    pub d1: Option<String>,
+    /// Must be observed on or before this date
+    pub d2: Option<String>,
+    /// Must be created at or after this time
+    pub created_d1: Option<String>,
+    /// Must be created at or before this time
+    pub created_d2: Option<String>,
+    /// Must be created on this date
+    pub created_on: Option<String>,
+    /// Must be observed on this date
+    pub observed_on: Option<String>,
+    /// Must not be of a taxon previously observed by this user
+    pub unobserved_by_user_id: Option<i32>,
+    /// Must match the rules of the project with this ID or slug
+    pub apply_project_rules_for: Option<String>,
+    /// Taxon must have this conservation status code. If the `place_id` parameter is also specified, this will only consider statuses specific to that place 
+    pub cs: Option<String>,
+    /// Taxon must have a conservation status from this authority. If the `place_id` parameter is also specified, this will only consider statuses specific to that place 
+    pub csa: Option<String>,
+    /// Taxon must have this IUCN conservation status. If the `place_id` parameter is also specified, this will only consider statuses specific to that place 
+    pub csi: Option<Vec<String>>,
+    /// Must have this geoprivacy setting
+    pub geoprivacy: Option<Vec<String>>,
+    /// Filter observations by the most conservative geoprivacy applied by a conservation status associated with one of the taxa proposed in the current identifications. 
+    pub taxon_geoprivacy: Option<Vec<String>>,
+    /// Taxon must have this rank or lower
+    pub hrank: Option<String>,
+    /// Taxon must have this rank or higher
+    pub lrank: Option<String>,
+    /// Taxon must by within this iconic taxon
+    pub iconic_taxa: Option<Vec<String>>,
+    /// Must have an ID above this value
+    pub id_above: Option<String>,
+    /// Must have an ID below this value
+    pub id_below: Option<String>,
+    /// Identifications must meet these criteria
+    pub identifications: Option<String>,
+    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius) 
+    pub lat: Option<f64>,
+    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius) 
+    pub lng: Option<f64>,
+    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius) 
+    pub radius: Option<String>,
+    /// Must be within this bounding box (*nelat, *nelng, *swlat, *swlng) 
+    pub nelat: Option<f64>,
+    /// Must be within this bounding box (*nelat, *nelng, *swlat, *swlng) 
+    pub nelng: Option<f64>,
+    /// Must be within this bounding box (*nelat, *nelng, *swlat, *swlng) 
+    pub swlat: Option<f64>,
+    /// Must be within this bounding box (*nelat, *nelng, *swlat, *swlng) 
+    pub swlng: Option<f64>,
+    /// Taxon must be in the list with this ID
+    pub list_id: Option<i32>,
+    /// Must not be in the project with this ID or slug
+    pub not_in_project: Option<String>,
+    /// Must not match the rules of the project with this ID or slug
+    pub not_matching_project_rules_for: Option<String>,
+    /// Search observation properties. Can be combined with `search_on`
+    pub q: Option<String>,
+    /// Properties to search on, when combined with `q`. Searches across all properties by default 
+    pub search_on: Option<String>,
+    /// Must have this quality grade
+    pub quality_grade: Option<String>,
+    /// Must be updated since this time
+    pub updated_since: Option<String>,
+    /// See `reviewed`
+    pub viewer_id: Option<String>,
+    /// Observations have been reviewed by the user with ID equal to the value of the `viewer_id` parameter 
+    pub reviewed: Option<bool>
+}
+
+/// struct for passing parameters to the method [`identifications_species_counts_get`]
+#[derive(Clone, Debug, Default)]
+pub struct IdentificationsSpeciesCountsGetParams {
+    /// ID's taxon is the same it's observation's taxon
+    pub current_taxon: Option<bool>,
+    /// ID was added by the observer
+    pub own_observation: Option<bool>,
+    /// ID was created as a results of a taxon change
+    pub is_change: Option<bool>,
+    /// ID's taxon is currently an active taxon
+    pub taxon_active: Option<bool>,
+    /// Observation's taxon is currently an active taxon
+    pub observation_taxon_active: Option<bool>,
+    /// Identification ID
+    pub id: Option<Vec<i32>>,
+    /// ID's taxon must have this rank
+    pub rank: Option<Vec<String>>,
+    /// Observation's taxon must have this rank
+    pub observation_rank: Option<Vec<String>>,
+    /// Identifier must have this user ID
+    pub user_id: Option<Vec<i32>>,
+    /// Identifier must have this login
+    pub user_login: Option<Vec<String>>,
+    /// Most recent ID on a observation by a user
+    pub current: Option<bool>,
+    /// Type of identification
+    pub category: Option<Vec<String>>,
+    /// Observation must occur in this place
+    pub place_id: Option<Vec<String>>,
+    /// Observation must have this quality grade
+    pub quality_grade: Option<Vec<String>>,
+    /// ID taxa must match the given taxa or their descendants
+    pub taxon_id: Option<Vec<String>>,
+    /// Observation taxa must match the given taxa or their descendants
+    pub observation_taxon_id: Option<Vec<String>>,
+    /// ID iconic taxon ID
+    pub iconic_taxon_id: Option<Vec<String>>,
+    /// Observation iconic taxon ID
+    pub observation_iconic_taxon_id: Option<Vec<String>>,
+    /// ID taxon must have this rank or higher
+    pub lrank: Option<String>,
+    /// ID taxon must have this rank or lower
+    pub hrank: Option<String>,
+    /// Observation taxon must have this rank or higher
+    pub observation_lrank: Option<String>,
+    /// Observation taxon must have this rank or lower
+    pub observation_hrank: Option<String>,
+    /// Exclude IDs of these taxa and their descendants
+    pub without_taxon_id: Option<Vec<String>>,
+    /// Exclude IDs of observations of these taxa and their descendants
+    pub without_observation_taxon_id: Option<Vec<String>>,
+    /// ID created on or after this time
+    pub d1: Option<String>,
+    /// ID created on or before this time
+    pub d2: Option<String>,
+    /// Observation created on or after this date
+    pub observation_created_d1: Option<String>,
+    /// Observation created on or before this date
+    pub observation_created_d2: Option<String>,
+    /// Observation observed on or after this date
+    pub observed_d1: Option<String>,
+    /// Observation observed on or before this date
+    pub observed_d2: Option<String>,
+    /// Must have an ID above this value
+    pub id_above: Option<String>,
+    /// Must have an ID below this value
+    pub id_below: Option<String>,
+    /// Pagination `page` number
+    pub page: Option<String>,
+    /// Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted 
+    pub per_page: Option<String>,
+    /// Sort order
+    pub order: Option<String>,
+    /// Sort field
+    pub order_by: Option<String>,
+    /// Return only the record IDs
+    pub only_id: Option<bool>,
+    /// Source of the taxon for counting
+    pub taxon_of: Option<String>
+}
+
 
 /// struct for typed errors of method [`identifications_categories_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -97,8 +766,48 @@ pub enum IdentificationsSpeciesCountsGetError {
 
 
 /// Given zero to many of following parameters, return counts of the categories of identifications matching the search criteria 
-pub async fn identifications_categories_get(configuration: &configuration::Configuration, current_taxon: Option<bool>, own_observation: Option<bool>, is_change: Option<bool>, taxon_active: Option<bool>, observation_taxon_active: Option<bool>, id: Option<Vec<i32>>, rank: Option<Vec<String>>, observation_rank: Option<Vec<String>>, user_id: Option<Vec<i32>>, user_login: Option<Vec<String>>, current: Option<bool>, category: Option<Vec<String>>, place_id: Option<Vec<String>>, quality_grade: Option<Vec<String>>, taxon_id: Option<Vec<String>>, observation_taxon_id: Option<Vec<String>>, iconic_taxon_id: Option<Vec<String>>, observation_iconic_taxon_id: Option<Vec<String>>, lrank: Option<&str>, hrank: Option<&str>, observation_lrank: Option<&str>, observation_hrank: Option<&str>, without_taxon_id: Option<Vec<String>>, without_observation_taxon_id: Option<Vec<String>>, d1: Option<String>, d2: Option<String>, observation_created_d1: Option<String>, observation_created_d2: Option<String>, observed_d1: Option<String>, observed_d2: Option<String>, id_above: Option<&str>, id_below: Option<&str>, page: Option<&str>, per_page: Option<&str>, order: Option<&str>, order_by: Option<&str>, only_id: Option<bool>) -> Result<(), Error<IdentificationsCategoriesGetError>> {
+pub async fn identifications_categories_get(configuration: &configuration::Configuration, params: IdentificationsCategoriesGetParams) -> Result<(), Error<IdentificationsCategoriesGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let current_taxon = params.current_taxon;
+    let own_observation = params.own_observation;
+    let is_change = params.is_change;
+    let taxon_active = params.taxon_active;
+    let observation_taxon_active = params.observation_taxon_active;
+    let id = params.id;
+    let rank = params.rank;
+    let observation_rank = params.observation_rank;
+    let user_id = params.user_id;
+    let user_login = params.user_login;
+    let current = params.current;
+    let category = params.category;
+    let place_id = params.place_id;
+    let quality_grade = params.quality_grade;
+    let taxon_id = params.taxon_id;
+    let observation_taxon_id = params.observation_taxon_id;
+    let iconic_taxon_id = params.iconic_taxon_id;
+    let observation_iconic_taxon_id = params.observation_iconic_taxon_id;
+    let lrank = params.lrank;
+    let hrank = params.hrank;
+    let observation_lrank = params.observation_lrank;
+    let observation_hrank = params.observation_hrank;
+    let without_taxon_id = params.without_taxon_id;
+    let without_observation_taxon_id = params.without_observation_taxon_id;
+    let d1 = params.d1;
+    let d2 = params.d2;
+    let observation_created_d1 = params.observation_created_d1;
+    let observation_created_d2 = params.observation_created_d2;
+    let observed_d1 = params.observed_d1;
+    let observed_d2 = params.observed_d2;
+    let id_above = params.id_above;
+    let id_below = params.id_below;
+    let page = params.page;
+    let per_page = params.per_page;
+    let order = params.order;
+    let order_by = params.order_by;
+    let only_id = params.only_id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -278,8 +987,48 @@ pub async fn identifications_categories_get(configuration: &configuration::Confi
 }
 
 /// Given zero to many of following parameters, returns identifications matching the search criteria 
-pub async fn identifications_get(configuration: &configuration::Configuration, current_taxon: Option<bool>, own_observation: Option<bool>, is_change: Option<bool>, taxon_active: Option<bool>, observation_taxon_active: Option<bool>, id: Option<Vec<i32>>, rank: Option<Vec<String>>, observation_rank: Option<Vec<String>>, user_id: Option<Vec<i32>>, user_login: Option<Vec<String>>, current: Option<bool>, category: Option<Vec<String>>, place_id: Option<Vec<String>>, quality_grade: Option<Vec<String>>, taxon_id: Option<Vec<String>>, observation_taxon_id: Option<Vec<String>>, iconic_taxon_id: Option<Vec<String>>, observation_iconic_taxon_id: Option<Vec<String>>, lrank: Option<&str>, hrank: Option<&str>, observation_lrank: Option<&str>, observation_hrank: Option<&str>, without_taxon_id: Option<Vec<String>>, without_observation_taxon_id: Option<Vec<String>>, d1: Option<String>, d2: Option<String>, observation_created_d1: Option<String>, observation_created_d2: Option<String>, observed_d1: Option<String>, observed_d2: Option<String>, id_above: Option<&str>, id_below: Option<&str>, page: Option<&str>, per_page: Option<&str>, order: Option<&str>, order_by: Option<&str>, only_id: Option<bool>) -> Result<(), Error<IdentificationsGetError>> {
+pub async fn identifications_get(configuration: &configuration::Configuration, params: IdentificationsGetParams) -> Result<(), Error<IdentificationsGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let current_taxon = params.current_taxon;
+    let own_observation = params.own_observation;
+    let is_change = params.is_change;
+    let taxon_active = params.taxon_active;
+    let observation_taxon_active = params.observation_taxon_active;
+    let id = params.id;
+    let rank = params.rank;
+    let observation_rank = params.observation_rank;
+    let user_id = params.user_id;
+    let user_login = params.user_login;
+    let current = params.current;
+    let category = params.category;
+    let place_id = params.place_id;
+    let quality_grade = params.quality_grade;
+    let taxon_id = params.taxon_id;
+    let observation_taxon_id = params.observation_taxon_id;
+    let iconic_taxon_id = params.iconic_taxon_id;
+    let observation_iconic_taxon_id = params.observation_iconic_taxon_id;
+    let lrank = params.lrank;
+    let hrank = params.hrank;
+    let observation_lrank = params.observation_lrank;
+    let observation_hrank = params.observation_hrank;
+    let without_taxon_id = params.without_taxon_id;
+    let without_observation_taxon_id = params.without_observation_taxon_id;
+    let d1 = params.d1;
+    let d2 = params.d2;
+    let observation_created_d1 = params.observation_created_d1;
+    let observation_created_d2 = params.observation_created_d2;
+    let observed_d1 = params.observed_d1;
+    let observed_d2 = params.observed_d2;
+    let id_above = params.id_above;
+    let id_below = params.id_below;
+    let page = params.page;
+    let per_page = params.per_page;
+    let order = params.order;
+    let order_by = params.order_by;
+    let only_id = params.only_id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -459,8 +1208,12 @@ pub async fn identifications_get(configuration: &configuration::Configuration, c
 }
 
 /// Delete an identification. See description of `PUT /identifications/{id} for notes on withdrawing and restoring identifications. 
-pub async fn identifications_id_delete(configuration: &configuration::Configuration, id: i32) -> Result<(), Error<IdentificationsIdDeleteError>> {
+pub async fn identifications_id_delete(configuration: &configuration::Configuration, params: IdentificationsIdDeleteParams) -> Result<(), Error<IdentificationsIdDeleteError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -495,8 +1248,12 @@ pub async fn identifications_id_delete(configuration: &configuration::Configurat
 }
 
 /// Given an ID, or an array of IDs in comma-delimited format, returns corresponding identifications. A maximum of 30 results will be returned 
-pub async fn identifications_id_get(configuration: &configuration::Configuration, id: Vec<i32>) -> Result<(), Error<IdentificationsIdGetError>> {
+pub async fn identifications_id_get(configuration: &configuration::Configuration, params: IdentificationsIdGetParams) -> Result<(), Error<IdentificationsIdGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -523,8 +1280,13 @@ pub async fn identifications_id_get(configuration: &configuration::Configuration
 }
 
 /// Update an identification. Note that to \"withdraw\" an observation you send a `PUT` request to this endpoint and set the `current` attribute to false. To \"restore\" it you do the same but set `current` to `true`. Only one identification by a given user can be `current` for a given observation, so if you \"restore\" one all the other identifications by the authenticated user for the given observation will be withdrawn. 
-pub async fn identifications_id_put(configuration: &configuration::Configuration, id: i32, body: Option<crate::models::PostIdentification>) -> Result<(), Error<IdentificationsIdPutError>> {
+pub async fn identifications_id_put(configuration: &configuration::Configuration, params: IdentificationsIdPutParams) -> Result<(), Error<IdentificationsIdPutError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+    let body = params.body;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -560,8 +1322,48 @@ pub async fn identifications_id_put(configuration: &configuration::Configuration
 }
 
 /// Given zero to many of following parameters, returns creators of identifications matching the search criteria and the count of matching identifications, ordered by count descending 
-pub async fn identifications_identifiers_get(configuration: &configuration::Configuration, current_taxon: Option<bool>, own_observation: Option<bool>, is_change: Option<bool>, taxon_active: Option<bool>, observation_taxon_active: Option<bool>, id: Option<Vec<i32>>, rank: Option<Vec<String>>, observation_rank: Option<Vec<String>>, user_id: Option<Vec<i32>>, user_login: Option<Vec<String>>, current: Option<bool>, category: Option<Vec<String>>, place_id: Option<Vec<String>>, quality_grade: Option<Vec<String>>, taxon_id: Option<Vec<String>>, observation_taxon_id: Option<Vec<String>>, iconic_taxon_id: Option<Vec<String>>, observation_iconic_taxon_id: Option<Vec<String>>, lrank: Option<&str>, hrank: Option<&str>, observation_lrank: Option<&str>, observation_hrank: Option<&str>, without_taxon_id: Option<Vec<String>>, without_observation_taxon_id: Option<Vec<String>>, d1: Option<String>, d2: Option<String>, observation_created_d1: Option<String>, observation_created_d2: Option<String>, observed_d1: Option<String>, observed_d2: Option<String>, id_above: Option<&str>, id_below: Option<&str>, page: Option<&str>, per_page: Option<&str>, order: Option<&str>, order_by: Option<&str>, only_id: Option<bool>) -> Result<crate::models::UserCountsResponse, Error<IdentificationsIdentifiersGetError>> {
+pub async fn identifications_identifiers_get(configuration: &configuration::Configuration, params: IdentificationsIdentifiersGetParams) -> Result<crate::models::UserCountsResponse, Error<IdentificationsIdentifiersGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let current_taxon = params.current_taxon;
+    let own_observation = params.own_observation;
+    let is_change = params.is_change;
+    let taxon_active = params.taxon_active;
+    let observation_taxon_active = params.observation_taxon_active;
+    let id = params.id;
+    let rank = params.rank;
+    let observation_rank = params.observation_rank;
+    let user_id = params.user_id;
+    let user_login = params.user_login;
+    let current = params.current;
+    let category = params.category;
+    let place_id = params.place_id;
+    let quality_grade = params.quality_grade;
+    let taxon_id = params.taxon_id;
+    let observation_taxon_id = params.observation_taxon_id;
+    let iconic_taxon_id = params.iconic_taxon_id;
+    let observation_iconic_taxon_id = params.observation_iconic_taxon_id;
+    let lrank = params.lrank;
+    let hrank = params.hrank;
+    let observation_lrank = params.observation_lrank;
+    let observation_hrank = params.observation_hrank;
+    let without_taxon_id = params.without_taxon_id;
+    let without_observation_taxon_id = params.without_observation_taxon_id;
+    let d1 = params.d1;
+    let d2 = params.d2;
+    let observation_created_d1 = params.observation_created_d1;
+    let observation_created_d2 = params.observation_created_d2;
+    let observed_d1 = params.observed_d1;
+    let observed_d2 = params.observed_d2;
+    let id_above = params.id_above;
+    let id_below = params.id_below;
+    let page = params.page;
+    let per_page = params.per_page;
+    let order = params.order;
+    let order_by = params.order_by;
+    let only_id = params.only_id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -741,8 +1543,48 @@ pub async fn identifications_identifiers_get(configuration: &configuration::Conf
 }
 
 /// Given zero to many of following parameters, returns creators of observations of identifications matching the search criteria and the count of matching observations, ordered by count descending 
-pub async fn identifications_observers_get(configuration: &configuration::Configuration, current_taxon: Option<bool>, own_observation: Option<bool>, is_change: Option<bool>, taxon_active: Option<bool>, observation_taxon_active: Option<bool>, id: Option<Vec<i32>>, rank: Option<Vec<String>>, observation_rank: Option<Vec<String>>, user_id: Option<Vec<i32>>, user_login: Option<Vec<String>>, current: Option<bool>, category: Option<Vec<String>>, place_id: Option<Vec<String>>, quality_grade: Option<Vec<String>>, taxon_id: Option<Vec<String>>, observation_taxon_id: Option<Vec<String>>, iconic_taxon_id: Option<Vec<String>>, observation_iconic_taxon_id: Option<Vec<String>>, lrank: Option<&str>, hrank: Option<&str>, observation_lrank: Option<&str>, observation_hrank: Option<&str>, without_taxon_id: Option<Vec<String>>, without_observation_taxon_id: Option<Vec<String>>, d1: Option<String>, d2: Option<String>, observation_created_d1: Option<String>, observation_created_d2: Option<String>, observed_d1: Option<String>, observed_d2: Option<String>, id_above: Option<&str>, id_below: Option<&str>, page: Option<&str>, per_page: Option<&str>, order: Option<&str>, order_by: Option<&str>, only_id: Option<bool>) -> Result<crate::models::UserCountsResponse, Error<IdentificationsObserversGetError>> {
+pub async fn identifications_observers_get(configuration: &configuration::Configuration, params: IdentificationsObserversGetParams) -> Result<crate::models::UserCountsResponse, Error<IdentificationsObserversGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let current_taxon = params.current_taxon;
+    let own_observation = params.own_observation;
+    let is_change = params.is_change;
+    let taxon_active = params.taxon_active;
+    let observation_taxon_active = params.observation_taxon_active;
+    let id = params.id;
+    let rank = params.rank;
+    let observation_rank = params.observation_rank;
+    let user_id = params.user_id;
+    let user_login = params.user_login;
+    let current = params.current;
+    let category = params.category;
+    let place_id = params.place_id;
+    let quality_grade = params.quality_grade;
+    let taxon_id = params.taxon_id;
+    let observation_taxon_id = params.observation_taxon_id;
+    let iconic_taxon_id = params.iconic_taxon_id;
+    let observation_iconic_taxon_id = params.observation_iconic_taxon_id;
+    let lrank = params.lrank;
+    let hrank = params.hrank;
+    let observation_lrank = params.observation_lrank;
+    let observation_hrank = params.observation_hrank;
+    let without_taxon_id = params.without_taxon_id;
+    let without_observation_taxon_id = params.without_observation_taxon_id;
+    let d1 = params.d1;
+    let d2 = params.d2;
+    let observation_created_d1 = params.observation_created_d1;
+    let observation_created_d2 = params.observation_created_d2;
+    let observed_d1 = params.observed_d1;
+    let observed_d2 = params.observed_d2;
+    let id_above = params.id_above;
+    let id_below = params.id_below;
+    let page = params.page;
+    let per_page = params.per_page;
+    let order = params.order;
+    let order_by = params.order_by;
+    let only_id = params.only_id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -922,8 +1764,12 @@ pub async fn identifications_observers_get(configuration: &configuration::Config
 }
 
 /// Create an identification
-pub async fn identifications_post(configuration: &configuration::Configuration, body: Option<crate::models::PostIdentification>) -> Result<(), Error<IdentificationsPostError>> {
+pub async fn identifications_post(configuration: &configuration::Configuration, params: IdentificationsPostParams) -> Result<(), Error<IdentificationsPostError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let body = params.body;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -959,8 +1805,48 @@ pub async fn identifications_post(configuration: &configuration::Configuration, 
 }
 
 /// Returns an array of objects each containing an identification and a taxon. Returns IDs representing the earliest occurrence of taxa associated with identifications in the filtered set of results 
-pub async fn identifications_recent_taxa_get(configuration: &configuration::Configuration, current_taxon: Option<bool>, own_observation: Option<bool>, is_change: Option<bool>, taxon_active: Option<bool>, observation_taxon_active: Option<bool>, id: Option<Vec<i32>>, rank: Option<Vec<String>>, observation_rank: Option<Vec<String>>, user_id: Option<Vec<i32>>, user_login: Option<Vec<String>>, current: Option<bool>, category: Option<Vec<String>>, place_id: Option<Vec<String>>, quality_grade: Option<Vec<String>>, taxon_id: Option<Vec<String>>, observation_taxon_id: Option<Vec<String>>, iconic_taxon_id: Option<Vec<String>>, observation_iconic_taxon_id: Option<Vec<String>>, lrank: Option<&str>, hrank: Option<&str>, observation_lrank: Option<&str>, observation_hrank: Option<&str>, without_taxon_id: Option<Vec<String>>, without_observation_taxon_id: Option<Vec<String>>, d1: Option<String>, d2: Option<String>, observation_created_d1: Option<String>, observation_created_d2: Option<String>, observed_d1: Option<String>, observed_d2: Option<String>, id_above: Option<&str>, id_below: Option<&str>, page: Option<&str>, per_page: Option<&str>, order: Option<&str>, order_by: Option<&str>, only_id: Option<bool>) -> Result<(), Error<IdentificationsRecentTaxaGetError>> {
+pub async fn identifications_recent_taxa_get(configuration: &configuration::Configuration, params: IdentificationsRecentTaxaGetParams) -> Result<(), Error<IdentificationsRecentTaxaGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let current_taxon = params.current_taxon;
+    let own_observation = params.own_observation;
+    let is_change = params.is_change;
+    let taxon_active = params.taxon_active;
+    let observation_taxon_active = params.observation_taxon_active;
+    let id = params.id;
+    let rank = params.rank;
+    let observation_rank = params.observation_rank;
+    let user_id = params.user_id;
+    let user_login = params.user_login;
+    let current = params.current;
+    let category = params.category;
+    let place_id = params.place_id;
+    let quality_grade = params.quality_grade;
+    let taxon_id = params.taxon_id;
+    let observation_taxon_id = params.observation_taxon_id;
+    let iconic_taxon_id = params.iconic_taxon_id;
+    let observation_iconic_taxon_id = params.observation_iconic_taxon_id;
+    let lrank = params.lrank;
+    let hrank = params.hrank;
+    let observation_lrank = params.observation_lrank;
+    let observation_hrank = params.observation_hrank;
+    let without_taxon_id = params.without_taxon_id;
+    let without_observation_taxon_id = params.without_observation_taxon_id;
+    let d1 = params.d1;
+    let d2 = params.d2;
+    let observation_created_d1 = params.observation_created_d1;
+    let observation_created_d2 = params.observation_created_d2;
+    let observed_d1 = params.observed_d1;
+    let observed_d2 = params.observed_d2;
+    let id_above = params.id_above;
+    let id_below = params.id_below;
+    let page = params.page;
+    let per_page = params.per_page;
+    let order = params.order;
+    let order_by = params.order_by;
+    let only_id = params.only_id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -1140,8 +2026,90 @@ pub async fn identifications_recent_taxa_get(configuration: &configuration::Conf
 }
 
 /// Returns species attached to IDs of observations of this taxon, or attached to observations identified as this species, ordered by combined frequency descending. This will only return species in the same iconic taxon, and will never return descendants of the chosen taxon 
-pub async fn identifications_similar_species_get(configuration: &configuration::Configuration, taxon_id: i32, acc: Option<bool>, captive: Option<bool>, endemic: Option<bool>, geo: Option<bool>, id_please: Option<bool>, identified: Option<bool>, introduced: Option<bool>, mappable: Option<bool>, native: Option<bool>, out_of_range: Option<bool>, pcid: Option<bool>, photos: Option<bool>, popular: Option<bool>, sounds: Option<bool>, taxon_is_active: Option<bool>, threatened: Option<bool>, verifiable: Option<bool>, licensed: Option<bool>, photo_licensed: Option<bool>, id: Option<Vec<String>>, not_id: Option<Vec<String>>, license: Option<Vec<String>>, ofv_datatype: Option<Vec<String>>, photo_license: Option<Vec<String>>, place_id: Option<Vec<i32>>, project_id: Option<Vec<String>>, rank: Option<Vec<String>>, site_id: Option<Vec<String>>, sound_license: Option<Vec<String>>, without_taxon_id: Option<Vec<String>>, taxon_name: Option<Vec<String>>, user_id: Option<Vec<String>>, user_login: Option<Vec<String>>, ident_user_id: Option<i32>, day: Option<Vec<String>>, month: Option<Vec<String>>, year: Option<Vec<String>>, term_id: Option<Vec<i32>>, term_value_id: Option<Vec<i32>>, without_term_value_id: Option<Vec<i32>>, acc_above: Option<&str>, acc_below: Option<&str>, acc_below_or_unknown: Option<&str>, d1: Option<String>, d2: Option<String>, created_d1: Option<String>, created_d2: Option<String>, created_on: Option<String>, observed_on: Option<String>, unobserved_by_user_id: Option<i32>, apply_project_rules_for: Option<&str>, cs: Option<&str>, csa: Option<&str>, csi: Option<Vec<String>>, geoprivacy: Option<Vec<String>>, taxon_geoprivacy: Option<Vec<String>>, hrank: Option<&str>, lrank: Option<&str>, iconic_taxa: Option<Vec<String>>, id_above: Option<&str>, id_below: Option<&str>, identifications: Option<&str>, lat: Option<f64>, lng: Option<f64>, radius: Option<&str>, nelat: Option<f64>, nelng: Option<f64>, swlat: Option<f64>, swlng: Option<f64>, list_id: Option<i32>, not_in_project: Option<&str>, not_matching_project_rules_for: Option<&str>, q: Option<&str>, search_on: Option<&str>, quality_grade: Option<&str>, updated_since: Option<&str>, viewer_id: Option<&str>, reviewed: Option<bool>) -> Result<(), Error<IdentificationsSimilarSpeciesGetError>> {
+pub async fn identifications_similar_species_get(configuration: &configuration::Configuration, params: IdentificationsSimilarSpeciesGetParams) -> Result<(), Error<IdentificationsSimilarSpeciesGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let taxon_id = params.taxon_id;
+    let acc = params.acc;
+    let captive = params.captive;
+    let endemic = params.endemic;
+    let geo = params.geo;
+    let id_please = params.id_please;
+    let identified = params.identified;
+    let introduced = params.introduced;
+    let mappable = params.mappable;
+    let native = params.native;
+    let out_of_range = params.out_of_range;
+    let pcid = params.pcid;
+    let photos = params.photos;
+    let popular = params.popular;
+    let sounds = params.sounds;
+    let taxon_is_active = params.taxon_is_active;
+    let threatened = params.threatened;
+    let verifiable = params.verifiable;
+    let licensed = params.licensed;
+    let photo_licensed = params.photo_licensed;
+    let id = params.id;
+    let not_id = params.not_id;
+    let license = params.license;
+    let ofv_datatype = params.ofv_datatype;
+    let photo_license = params.photo_license;
+    let place_id = params.place_id;
+    let project_id = params.project_id;
+    let rank = params.rank;
+    let site_id = params.site_id;
+    let sound_license = params.sound_license;
+    let without_taxon_id = params.without_taxon_id;
+    let taxon_name = params.taxon_name;
+    let user_id = params.user_id;
+    let user_login = params.user_login;
+    let ident_user_id = params.ident_user_id;
+    let day = params.day;
+    let month = params.month;
+    let year = params.year;
+    let term_id = params.term_id;
+    let term_value_id = params.term_value_id;
+    let without_term_value_id = params.without_term_value_id;
+    let acc_above = params.acc_above;
+    let acc_below = params.acc_below;
+    let acc_below_or_unknown = params.acc_below_or_unknown;
+    let d1 = params.d1;
+    let d2 = params.d2;
+    let created_d1 = params.created_d1;
+    let created_d2 = params.created_d2;
+    let created_on = params.created_on;
+    let observed_on = params.observed_on;
+    let unobserved_by_user_id = params.unobserved_by_user_id;
+    let apply_project_rules_for = params.apply_project_rules_for;
+    let cs = params.cs;
+    let csa = params.csa;
+    let csi = params.csi;
+    let geoprivacy = params.geoprivacy;
+    let taxon_geoprivacy = params.taxon_geoprivacy;
+    let hrank = params.hrank;
+    let lrank = params.lrank;
+    let iconic_taxa = params.iconic_taxa;
+    let id_above = params.id_above;
+    let id_below = params.id_below;
+    let identifications = params.identifications;
+    let lat = params.lat;
+    let lng = params.lng;
+    let radius = params.radius;
+    let nelat = params.nelat;
+    let nelng = params.nelng;
+    let swlat = params.swlat;
+    let swlng = params.swlng;
+    let list_id = params.list_id;
+    let not_in_project = params.not_in_project;
+    let not_matching_project_rules_for = params.not_matching_project_rules_for;
+    let q = params.q;
+    let search_on = params.search_on;
+    let quality_grade = params.quality_grade;
+    let updated_since = params.updated_since;
+    let viewer_id = params.viewer_id;
+    let reviewed = params.reviewed;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -1475,8 +2443,49 @@ pub async fn identifications_similar_species_get(configuration: &configuration::
 }
 
 /// Given zero to many of following parameters, returns `leaf taxa` associated with identifications matching the search criteria and the count of identifications they are associated with, ordered by count descending. `Leaf taxa` are the leaves of the taxonomic tree containing only the taxa associated with observations matching the search criteria. 
-pub async fn identifications_species_counts_get(configuration: &configuration::Configuration, current_taxon: Option<bool>, own_observation: Option<bool>, is_change: Option<bool>, taxon_active: Option<bool>, observation_taxon_active: Option<bool>, id: Option<Vec<i32>>, rank: Option<Vec<String>>, observation_rank: Option<Vec<String>>, user_id: Option<Vec<i32>>, user_login: Option<Vec<String>>, current: Option<bool>, category: Option<Vec<String>>, place_id: Option<Vec<String>>, quality_grade: Option<Vec<String>>, taxon_id: Option<Vec<String>>, observation_taxon_id: Option<Vec<String>>, iconic_taxon_id: Option<Vec<String>>, observation_iconic_taxon_id: Option<Vec<String>>, lrank: Option<&str>, hrank: Option<&str>, observation_lrank: Option<&str>, observation_hrank: Option<&str>, without_taxon_id: Option<Vec<String>>, without_observation_taxon_id: Option<Vec<String>>, d1: Option<String>, d2: Option<String>, observation_created_d1: Option<String>, observation_created_d2: Option<String>, observed_d1: Option<String>, observed_d2: Option<String>, id_above: Option<&str>, id_below: Option<&str>, page: Option<&str>, per_page: Option<&str>, order: Option<&str>, order_by: Option<&str>, only_id: Option<bool>, taxon_of: Option<&str>) -> Result<crate::models::SpeciesCountsResponse, Error<IdentificationsSpeciesCountsGetError>> {
+pub async fn identifications_species_counts_get(configuration: &configuration::Configuration, params: IdentificationsSpeciesCountsGetParams) -> Result<crate::models::SpeciesCountsResponse, Error<IdentificationsSpeciesCountsGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let current_taxon = params.current_taxon;
+    let own_observation = params.own_observation;
+    let is_change = params.is_change;
+    let taxon_active = params.taxon_active;
+    let observation_taxon_active = params.observation_taxon_active;
+    let id = params.id;
+    let rank = params.rank;
+    let observation_rank = params.observation_rank;
+    let user_id = params.user_id;
+    let user_login = params.user_login;
+    let current = params.current;
+    let category = params.category;
+    let place_id = params.place_id;
+    let quality_grade = params.quality_grade;
+    let taxon_id = params.taxon_id;
+    let observation_taxon_id = params.observation_taxon_id;
+    let iconic_taxon_id = params.iconic_taxon_id;
+    let observation_iconic_taxon_id = params.observation_iconic_taxon_id;
+    let lrank = params.lrank;
+    let hrank = params.hrank;
+    let observation_lrank = params.observation_lrank;
+    let observation_hrank = params.observation_hrank;
+    let without_taxon_id = params.without_taxon_id;
+    let without_observation_taxon_id = params.without_observation_taxon_id;
+    let d1 = params.d1;
+    let d2 = params.d2;
+    let observation_created_d1 = params.observation_created_d1;
+    let observation_created_d2 = params.observation_created_d2;
+    let observed_d1 = params.observed_d1;
+    let observed_d2 = params.observed_d2;
+    let id_above = params.id_above;
+    let id_below = params.id_below;
+    let page = params.page;
+    let per_page = params.per_page;
+    let order = params.order;
+    let order_by = params.order_by;
+    let only_id = params.only_id;
+    let taxon_of = params.taxon_of;
+
 
     let local_var_client = &local_var_configuration.client;
 

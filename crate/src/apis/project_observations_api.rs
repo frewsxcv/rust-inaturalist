@@ -14,6 +14,29 @@ use reqwest;
 use crate::apis::ResponseContent;
 use super::{Error, configuration};
 
+/// struct for passing parameters to the method [`project_observations_id_delete`]
+#[derive(Clone, Debug, Default)]
+pub struct ProjectObservationsIdDeleteParams {
+    /// ID of the record
+    pub id: i32
+}
+
+/// struct for passing parameters to the method [`project_observations_id_put`]
+#[derive(Clone, Debug, Default)]
+pub struct ProjectObservationsIdPutParams {
+    /// ID of the record
+    pub id: i32,
+    /// Comment object
+    pub body: Option<crate::models::UpdateProjectObservation>
+}
+
+/// struct for passing parameters to the method [`project_observations_post`]
+#[derive(Clone, Debug, Default)]
+pub struct ProjectObservationsPostParams {
+    /// ProjectObservation object
+    pub body: Option<crate::models::PostProjectObservation>
+}
+
 
 /// struct for typed errors of method [`project_observations_id_delete`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -38,8 +61,12 @@ pub enum ProjectObservationsPostError {
 
 
 /// Delete a project observation
-pub async fn project_observations_id_delete(configuration: &configuration::Configuration, id: i32) -> Result<(), Error<ProjectObservationsIdDeleteError>> {
+pub async fn project_observations_id_delete(configuration: &configuration::Configuration, params: ProjectObservationsIdDeleteParams) -> Result<(), Error<ProjectObservationsIdDeleteError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -74,8 +101,13 @@ pub async fn project_observations_id_delete(configuration: &configuration::Confi
 }
 
 /// Update a project observation
-pub async fn project_observations_id_put(configuration: &configuration::Configuration, id: i32, body: Option<crate::models::UpdateProjectObservation>) -> Result<(), Error<ProjectObservationsIdPutError>> {
+pub async fn project_observations_id_put(configuration: &configuration::Configuration, params: ProjectObservationsIdPutParams) -> Result<(), Error<ProjectObservationsIdPutError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+    let body = params.body;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -111,8 +143,12 @@ pub async fn project_observations_id_put(configuration: &configuration::Configur
 }
 
 /// Add an observation to a project
-pub async fn project_observations_post(configuration: &configuration::Configuration, body: Option<crate::models::PostProjectObservation>) -> Result<(), Error<ProjectObservationsPostError>> {
+pub async fn project_observations_post(configuration: &configuration::Configuration, params: ProjectObservationsPostParams) -> Result<(), Error<ProjectObservationsPostError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let body = params.body;
+
 
     let local_var_client = &local_var_configuration.client;
 

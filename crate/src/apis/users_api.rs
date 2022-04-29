@@ -14,6 +14,67 @@ use reqwest;
 use crate::apis::ResponseContent;
 use super::{Error, configuration};
 
+/// struct for passing parameters to the method [`users_autocomplete_get`]
+#[derive(Clone, Debug, Default)]
+pub struct UsersAutocompleteGetParams {
+    /// Name must begin with this value
+    pub q: String,
+    /// Only show users with memberships to this project
+    pub project_id: Option<i32>,
+    /// Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted 
+    pub per_page: Option<String>
+}
+
+/// struct for passing parameters to the method [`users_id_get`]
+#[derive(Clone, Debug, Default)]
+pub struct UsersIdGetParams {
+    /// ID of the record
+    pub id: i32
+}
+
+/// struct for passing parameters to the method [`users_id_mute_delete`]
+#[derive(Clone, Debug, Default)]
+pub struct UsersIdMuteDeleteParams {
+    /// ID of the record
+    pub id: i32
+}
+
+/// struct for passing parameters to the method [`users_id_mute_post`]
+#[derive(Clone, Debug, Default)]
+pub struct UsersIdMutePostParams {
+    /// ID of the record
+    pub id: i32
+}
+
+/// struct for passing parameters to the method [`users_id_projects_get`]
+#[derive(Clone, Debug, Default)]
+pub struct UsersIdProjectsGetParams {
+    /// ID of the record
+    pub id: i32,
+    /// Return more information about project rules, for example return a full taxon object instead of simply an ID 
+    pub rule_details: Option<String>,
+    /// Specify the type of project to return 
+    pub project_type: Option<String>,
+    /// Pagination `page` number
+    pub page: Option<String>,
+    /// Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted 
+    pub per_page: Option<String>
+}
+
+/// struct for passing parameters to the method [`users_id_put`]
+#[derive(Clone, Debug, Default)]
+pub struct UsersIdPutParams {
+    /// ID of the record
+    pub id: i32
+}
+
+/// struct for passing parameters to the method [`users_update_session_put`]
+#[derive(Clone, Debug, Default)]
+pub struct UsersUpdateSessionPutParams {
+    /// Comment object
+    pub body: Option<crate::models::PostUserUpdateSession>
+}
+
 
 /// struct for typed errors of method [`users_autocomplete_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -75,8 +136,14 @@ pub enum UsersUpdateSessionPutError {
 
 
 /// Given an string, returns users with names or logins starting with the search term 
-pub async fn users_autocomplete_get(configuration: &configuration::Configuration, q: &str, project_id: Option<i32>, per_page: Option<&str>) -> Result<(), Error<UsersAutocompleteGetError>> {
+pub async fn users_autocomplete_get(configuration: &configuration::Configuration, params: UsersAutocompleteGetParams) -> Result<(), Error<UsersAutocompleteGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let q = params.q;
+    let project_id = params.project_id;
+    let per_page = params.per_page;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -110,8 +177,12 @@ pub async fn users_autocomplete_get(configuration: &configuration::Configuration
 }
 
 /// Given an ID, returns corresponding user
-pub async fn users_id_get(configuration: &configuration::Configuration, id: i32) -> Result<(), Error<UsersIdGetError>> {
+pub async fn users_id_get(configuration: &configuration::Configuration, params: UsersIdGetParams) -> Result<(), Error<UsersIdGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -138,8 +209,12 @@ pub async fn users_id_get(configuration: &configuration::Configuration, id: i32)
 }
 
 /// Remove a mute on the user specified by {id}
-pub async fn users_id_mute_delete(configuration: &configuration::Configuration, id: i32) -> Result<(), Error<UsersIdMuteDeleteError>> {
+pub async fn users_id_mute_delete(configuration: &configuration::Configuration, params: UsersIdMuteDeleteParams) -> Result<(), Error<UsersIdMuteDeleteError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -174,8 +249,12 @@ pub async fn users_id_mute_delete(configuration: &configuration::Configuration, 
 }
 
 /// Make it so the authenticated user stops receiving notifications about activity by the user specified by {id}. 
-pub async fn users_id_mute_post(configuration: &configuration::Configuration, id: i32) -> Result<(), Error<UsersIdMutePostError>> {
+pub async fn users_id_mute_post(configuration: &configuration::Configuration, params: UsersIdMutePostParams) -> Result<(), Error<UsersIdMutePostError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -210,8 +289,16 @@ pub async fn users_id_mute_post(configuration: &configuration::Configuration, id
 }
 
 /// Return projects as user has joined / followed 
-pub async fn users_id_projects_get(configuration: &configuration::Configuration, id: i32, rule_details: Option<&str>, project_type: Option<&str>, page: Option<&str>, per_page: Option<&str>) -> Result<(), Error<UsersIdProjectsGetError>> {
+pub async fn users_id_projects_get(configuration: &configuration::Configuration, params: UsersIdProjectsGetParams) -> Result<(), Error<UsersIdProjectsGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+    let rule_details = params.rule_details;
+    let project_type = params.project_type;
+    let page = params.page;
+    let per_page = params.per_page;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -250,8 +337,12 @@ pub async fn users_id_projects_get(configuration: &configuration::Configuration,
 }
 
 /// Update a user 
-pub async fn users_id_put(configuration: &configuration::Configuration, id: i32) -> Result<(), Error<UsersIdPutError>> {
+pub async fn users_id_put(configuration: &configuration::Configuration, params: UsersIdPutParams) -> Result<(), Error<UsersIdPutError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -286,8 +377,11 @@ pub async fn users_id_put(configuration: &configuration::Configuration, id: i32)
 }
 
 /// Fetch the logged-in user
-pub async fn users_me_get(configuration: &configuration::Configuration, ) -> Result<(), Error<UsersMeGetError>> {
+pub async fn users_me_get(configuration: &configuration::Configuration) -> Result<(), Error<UsersMeGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -322,8 +416,12 @@ pub async fn users_me_get(configuration: &configuration::Configuration, ) -> Res
 }
 
 /// Update the logged-in user's session
-pub async fn users_update_session_put(configuration: &configuration::Configuration, body: Option<crate::models::PostUserUpdateSession>) -> Result<(), Error<UsersUpdateSessionPutError>> {
+pub async fn users_update_session_put(configuration: &configuration::Configuration, params: UsersUpdateSessionPutParams) -> Result<(), Error<UsersUpdateSessionPutError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let body = params.body;
+
 
     let local_var_client = &local_var_configuration.client;
 

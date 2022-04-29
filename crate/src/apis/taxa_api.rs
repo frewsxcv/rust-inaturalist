@@ -14,6 +14,67 @@ use reqwest;
 use crate::apis::ResponseContent;
 use super::{Error, configuration};
 
+/// struct for passing parameters to the method [`taxa_autocomplete_get`]
+#[derive(Clone, Debug, Default)]
+pub struct TaxaAutocompleteGetParams {
+    /// Name must begin with this value
+    pub q: String,
+    /// Taxon is `active`
+    pub is_active: Option<bool>,
+    /// Only show taxa with this ID, or its descendants
+    pub taxon_id: Option<Vec<String>>,
+    /// Taxon must have this rank
+    pub rank: Option<Vec<String>>,
+    /// Taxon must have this rank level. Some example values are 70 (kingdom), 60 (phylum), 50 (class), 40 (order), 30 (family), 20 (genus), 10 (species), 5 (subspecies) 
+    pub rank_level: Option<i32>,
+    /// Number of results to return in a `page`. The maximum value is 30 for this endpoint
+    pub per_page: Option<String>,
+    /// Locale preference for taxon common names 
+    pub locale: Option<String>,
+    /// Place preference for regional taxon common names 
+    pub preferred_place_id: Option<i32>,
+    /// Include all taxon names in the response
+    pub all_names: Option<bool>
+}
+
+/// struct for passing parameters to the method [`taxa_get`]
+#[derive(Clone, Debug, Default)]
+pub struct TaxaGetParams {
+    /// Name must begin with this value
+    pub q: Option<String>,
+    /// Taxon is `active`
+    pub is_active: Option<bool>,
+    /// Only show taxa with this ID, or its descendants
+    pub taxon_id: Option<Vec<String>>,
+    /// Taxon's parent must have this ID
+    pub parent_id: Option<i32>,
+    /// Taxon must have this rank
+    pub rank: Option<Vec<String>>,
+    /// Taxon must have this rank level. Some example values are 70 (kingdom), 60 (phylum), 50 (class), 40 (order), 30 (family), 20 (genus), 10 (species), 5 (subspecies) 
+    pub rank_level: Option<i32>,
+    /// Must have an ID above this value
+    pub id_above: Option<String>,
+    /// Must have an ID below this value
+    pub id_below: Option<String>,
+    /// Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted 
+    pub per_page: Option<String>,
+    /// Locale preference for taxon common names 
+    pub locale: Option<String>,
+    /// Place preference for regional taxon common names 
+    pub preferred_place_id: Option<i32>,
+    /// Return only the record IDs
+    pub only_id: Option<bool>,
+    /// Include all taxon names in the response
+    pub all_names: Option<bool>
+}
+
+/// struct for passing parameters to the method [`taxa_id_get`]
+#[derive(Clone, Debug, Default)]
+pub struct TaxaIdGetParams {
+    /// Must have this ID
+    pub id: Vec<i32>
+}
+
 
 /// struct for typed errors of method [`taxa_autocomplete_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -41,8 +102,20 @@ pub enum TaxaIdGetError {
 
 
 /// Given an string, returns taxa with names starting with the search term 
-pub async fn taxa_autocomplete_get(configuration: &configuration::Configuration, q: &str, is_active: Option<bool>, taxon_id: Option<Vec<String>>, rank: Option<Vec<String>>, rank_level: Option<i32>, per_page: Option<&str>, locale: Option<&str>, preferred_place_id: Option<i32>, all_names: Option<bool>) -> Result<crate::models::TaxaAutocompleteResponse, Error<TaxaAutocompleteGetError>> {
+pub async fn taxa_autocomplete_get(configuration: &configuration::Configuration, params: TaxaAutocompleteGetParams) -> Result<crate::models::TaxaAutocompleteResponse, Error<TaxaAutocompleteGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let q = params.q;
+    let is_active = params.is_active;
+    let taxon_id = params.taxon_id;
+    let rank = params.rank;
+    let rank_level = params.rank_level;
+    let per_page = params.per_page;
+    let locale = params.locale;
+    let preferred_place_id = params.preferred_place_id;
+    let all_names = params.all_names;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -100,8 +173,24 @@ pub async fn taxa_autocomplete_get(configuration: &configuration::Configuration,
 }
 
 /// Given zero to many of following parameters, returns taxa matching the search criteria 
-pub async fn taxa_get(configuration: &configuration::Configuration, q: Option<&str>, is_active: Option<bool>, taxon_id: Option<Vec<String>>, parent_id: Option<i32>, rank: Option<Vec<String>>, rank_level: Option<i32>, id_above: Option<&str>, id_below: Option<&str>, per_page: Option<&str>, locale: Option<&str>, preferred_place_id: Option<i32>, only_id: Option<bool>, all_names: Option<bool>) -> Result<crate::models::TaxaShowResponse, Error<TaxaGetError>> {
+pub async fn taxa_get(configuration: &configuration::Configuration, params: TaxaGetParams) -> Result<crate::models::TaxaShowResponse, Error<TaxaGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let q = params.q;
+    let is_active = params.is_active;
+    let taxon_id = params.taxon_id;
+    let parent_id = params.parent_id;
+    let rank = params.rank;
+    let rank_level = params.rank_level;
+    let id_above = params.id_above;
+    let id_below = params.id_below;
+    let per_page = params.per_page;
+    let locale = params.locale;
+    let preferred_place_id = params.preferred_place_id;
+    let only_id = params.only_id;
+    let all_names = params.all_names;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -173,8 +262,12 @@ pub async fn taxa_get(configuration: &configuration::Configuration, q: Option<&s
 }
 
 /// Given an ID, or an array of IDs in comma-delimited format, returns corresponding taxa. A maximum of 30 results will be returned 
-pub async fn taxa_id_get(configuration: &configuration::Configuration, id: Vec<i32>) -> Result<crate::models::TaxaShowResponse, Error<TaxaIdGetError>> {
+pub async fn taxa_id_get(configuration: &configuration::Configuration, params: TaxaIdGetParams) -> Result<crate::models::TaxaShowResponse, Error<TaxaIdGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+
 
     let local_var_client = &local_var_configuration.client;
 

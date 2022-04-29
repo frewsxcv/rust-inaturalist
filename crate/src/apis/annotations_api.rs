@@ -14,6 +14,36 @@ use reqwest;
 use crate::apis::ResponseContent;
 use super::{Error, configuration};
 
+/// struct for passing parameters to the method [`annotations_id_delete`]
+#[derive(Clone, Debug, Default)]
+pub struct AnnotationsIdDeleteParams {
+    /// ID or UUID of the annotation
+    pub id: String
+}
+
+/// struct for passing parameters to the method [`annotations_post`]
+#[derive(Clone, Debug, Default)]
+pub struct AnnotationsPostParams {
+    /// Annotation object
+    pub body: Option<crate::models::PostAnnotation>
+}
+
+/// struct for passing parameters to the method [`votes_unvote_annotation_id_delete`]
+#[derive(Clone, Debug, Default)]
+pub struct VotesUnvoteAnnotationIdDeleteParams {
+    /// ID or UUID of the annotation
+    pub id: String
+}
+
+/// struct for passing parameters to the method [`votes_vote_annotation_id_post`]
+#[derive(Clone, Debug, Default)]
+pub struct VotesVoteAnnotationIdPostParams {
+    /// ID or UUID of the annotation
+    pub id: String,
+    /// Vote object
+    pub body: Option<crate::models::PostVote>
+}
+
 
 /// struct for typed errors of method [`annotations_id_delete`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -45,8 +75,12 @@ pub enum VotesVoteAnnotationIdPostError {
 
 
 /// Delete an annotation 
-pub async fn annotations_id_delete(configuration: &configuration::Configuration, id: &str) -> Result<(), Error<AnnotationsIdDeleteError>> {
+pub async fn annotations_id_delete(configuration: &configuration::Configuration, params: AnnotationsIdDeleteParams) -> Result<(), Error<AnnotationsIdDeleteError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -81,8 +115,12 @@ pub async fn annotations_id_delete(configuration: &configuration::Configuration,
 }
 
 /// Create an annotation 
-pub async fn annotations_post(configuration: &configuration::Configuration, body: Option<crate::models::PostAnnotation>) -> Result<(), Error<AnnotationsPostError>> {
+pub async fn annotations_post(configuration: &configuration::Configuration, params: AnnotationsPostParams) -> Result<(), Error<AnnotationsPostError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let body = params.body;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -118,8 +156,12 @@ pub async fn annotations_post(configuration: &configuration::Configuration, body
 }
 
 /// Remove a vote from annotation 
-pub async fn votes_unvote_annotation_id_delete(configuration: &configuration::Configuration, id: &str) -> Result<(), Error<VotesUnvoteAnnotationIdDeleteError>> {
+pub async fn votes_unvote_annotation_id_delete(configuration: &configuration::Configuration, params: VotesUnvoteAnnotationIdDeleteParams) -> Result<(), Error<VotesUnvoteAnnotationIdDeleteError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -154,8 +196,13 @@ pub async fn votes_unvote_annotation_id_delete(configuration: &configuration::Co
 }
 
 /// Vote on an annotation 
-pub async fn votes_vote_annotation_id_post(configuration: &configuration::Configuration, id: &str, body: Option<crate::models::PostVote>) -> Result<(), Error<VotesVoteAnnotationIdPostError>> {
+pub async fn votes_vote_annotation_id_post(configuration: &configuration::Configuration, params: VotesVoteAnnotationIdPostParams) -> Result<(), Error<VotesVoteAnnotationIdPostError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+    let body = params.body;
+
 
     let local_var_client = &local_var_configuration.client;
 

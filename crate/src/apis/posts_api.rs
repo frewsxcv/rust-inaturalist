@@ -14,6 +14,53 @@ use reqwest;
 use crate::apis::ResponseContent;
 use super::{Error, configuration};
 
+/// struct for passing parameters to the method [`posts_for_user_get`]
+#[derive(Clone, Debug, Default)]
+pub struct PostsForUserGetParams {
+    /// returns posts newer than the post with this ID
+    pub newer_than: Option<String>,
+    /// returns posts older than the post with this ID
+    pub older_than: Option<String>,
+    /// Pagination `page` number
+    pub page: Option<String>
+}
+
+/// struct for passing parameters to the method [`posts_get`]
+#[derive(Clone, Debug, Default)]
+pub struct PostsGetParams {
+    /// Return posts by this user
+    pub login: Option<String>,
+    /// Return posts from this project
+    pub project_id: Option<i32>,
+    /// Pagination `page` number
+    pub page: Option<String>,
+    /// Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted 
+    pub per_page: Option<String>
+}
+
+/// struct for passing parameters to the method [`posts_id_delete`]
+#[derive(Clone, Debug, Default)]
+pub struct PostsIdDeleteParams {
+    /// ID of the record
+    pub id: i32
+}
+
+/// struct for passing parameters to the method [`posts_id_put`]
+#[derive(Clone, Debug, Default)]
+pub struct PostsIdPutParams {
+    /// ID of the record
+    pub id: i32,
+    /// Post object
+    pub body: Option<crate::models::PostPost>
+}
+
+/// struct for passing parameters to the method [`posts_post`]
+#[derive(Clone, Debug, Default)]
+pub struct PostsPostParams {
+    /// Post object
+    pub body: Option<crate::models::PostPost>
+}
+
 
 /// struct for typed errors of method [`posts_for_user_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -52,8 +99,14 @@ pub enum PostsPostError {
 
 
 /// Return journal posts from the iNaturalist site. If the user is logged-in, also return posts from projects the user is subscribed to 
-pub async fn posts_for_user_get(configuration: &configuration::Configuration, newer_than: Option<String>, older_than: Option<String>, page: Option<&str>) -> Result<(), Error<PostsForUserGetError>> {
+pub async fn posts_for_user_get(configuration: &configuration::Configuration, params: PostsForUserGetParams) -> Result<(), Error<PostsForUserGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let newer_than = params.newer_than;
+    let older_than = params.older_than;
+    let page = params.page;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -97,8 +150,15 @@ pub async fn posts_for_user_get(configuration: &configuration::Configuration, ne
 }
 
 /// Return journal posts from the iNaturalist site 
-pub async fn posts_get(configuration: &configuration::Configuration, login: Option<&str>, project_id: Option<i32>, page: Option<&str>, per_page: Option<&str>) -> Result<(), Error<PostsGetError>> {
+pub async fn posts_get(configuration: &configuration::Configuration, params: PostsGetParams) -> Result<(), Error<PostsGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let login = params.login;
+    let project_id = params.project_id;
+    let page = params.page;
+    let per_page = params.per_page;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -145,8 +205,12 @@ pub async fn posts_get(configuration: &configuration::Configuration, login: Opti
 }
 
 /// Delete a post 
-pub async fn posts_id_delete(configuration: &configuration::Configuration, id: i32) -> Result<(), Error<PostsIdDeleteError>> {
+pub async fn posts_id_delete(configuration: &configuration::Configuration, params: PostsIdDeleteParams) -> Result<(), Error<PostsIdDeleteError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -181,8 +245,13 @@ pub async fn posts_id_delete(configuration: &configuration::Configuration, id: i
 }
 
 /// Update a post 
-pub async fn posts_id_put(configuration: &configuration::Configuration, id: i32, body: Option<crate::models::PostPost>) -> Result<(), Error<PostsIdPutError>> {
+pub async fn posts_id_put(configuration: &configuration::Configuration, params: PostsIdPutParams) -> Result<(), Error<PostsIdPutError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+    let body = params.body;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -218,8 +287,12 @@ pub async fn posts_id_put(configuration: &configuration::Configuration, id: i32,
 }
 
 /// Create a post 
-pub async fn posts_post(configuration: &configuration::Configuration, body: Option<crate::models::PostPost>) -> Result<(), Error<PostsPostError>> {
+pub async fn posts_post(configuration: &configuration::Configuration, params: PostsPostParams) -> Result<(), Error<PostsPostError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let body = params.body;
+
 
     let local_var_client = &local_var_configuration.client;
 

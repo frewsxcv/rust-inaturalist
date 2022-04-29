@@ -1,6 +1,6 @@
 [package]
-name = "openapi"
-version = "1.3.0"
+name = "inaturalist"
+version = "0.1.0"
 authors = ["OpenAPI Generator team and contributors"]
 edition = "2018"
 

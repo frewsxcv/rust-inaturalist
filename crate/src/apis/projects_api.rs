@@ -14,6 +14,157 @@ use reqwest;
 use crate::apis::ResponseContent;
 use super::{Error, configuration};
 
+/// struct for passing parameters to the method [`projects_autocomplete_get`]
+#[derive(Clone, Debug, Default)]
+pub struct ProjectsAutocompleteGetParams {
+    /// Name must begin with this value
+    pub q: String,
+    /// Must have this ID
+    pub id: Option<Vec<String>>,
+    /// Must not have this ID
+    pub not_id: Option<Vec<String>>,
+    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius) 
+    pub lat: Option<f64>,
+    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius) 
+    pub lng: Option<f64>,
+    /// Must be associated with this place
+    pub place_id: Option<Vec<String>>,
+    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius). Defaults to 500km 
+    pub radius: Option<String>,
+    /// Must be marked featured for the relevant site
+    pub featured: Option<String>,
+    /// Must be marked noteworthy for the relevant site
+    pub noteworthy: Option<String>,
+    /// Site ID that applies to `featured` and `noteworthy`. Defaults to the site of the authenticated user, or to the main iNaturalist site https://www.inaturalist.org 
+    pub site_id: Option<i32>,
+    /// Return more information about project rules, for example return a full taxon object instead of simply an ID 
+    pub rule_details: Option<String>,
+    /// Projects must be of this type
+    pub _type: Option<Vec<String>>,
+    /// Project must have member with this user ID
+    pub member_id: Option<i32>,
+    /// Must have search parameter requirements
+    pub has_params: Option<bool>,
+    /// Must have posts
+    pub has_posts: Option<bool>,
+    /// Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted 
+    pub per_page: Option<String>
+}
+
+/// struct for passing parameters to the method [`projects_get`]
+#[derive(Clone, Debug, Default)]
+pub struct ProjectsGetParams {
+    /// Name must begin with this value
+    pub q: Option<String>,
+    /// Must have this ID
+    pub id: Option<Vec<String>>,
+    /// Must not have this ID
+    pub not_id: Option<Vec<String>>,
+    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius) 
+    pub lat: Option<f64>,
+    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius) 
+    pub lng: Option<f64>,
+    /// Must be associated with this place
+    pub place_id: Option<Vec<String>>,
+    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius). Defaults to 500km 
+    pub radius: Option<String>,
+    /// Must be marked featured for the relevant site
+    pub featured: Option<String>,
+    /// Must be marked noteworthy for the relevant site
+    pub noteworthy: Option<String>,
+    /// Site ID that applies to `featured` and `noteworthy`. Defaults to the site of the authenticated user, or to the main iNaturalist site https://www.inaturalist.org 
+    pub site_id: Option<i32>,
+    /// Return more information about project rules, for example return a full taxon object instead of simply an ID 
+    pub rule_details: Option<String>,
+    /// Projects must be of this type
+    pub _type: Option<Vec<String>>,
+    /// Project must have member with this user ID
+    pub member_id: Option<i32>,
+    /// Must have search parameter requirements
+    pub has_params: Option<bool>,
+    /// Must have posts
+    pub has_posts: Option<bool>,
+    /// Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted 
+    pub per_page: Option<String>,
+    /// Sort order. `distance` only applies if `lat` and `lng` are specified. `featured` only applies if `featured` or `noteworthy` are true 
+    pub order_by: Option<String>
+}
+
+/// struct for passing parameters to the method [`projects_id_add_post`]
+#[derive(Clone, Debug, Default)]
+pub struct ProjectsIdAddPostParams {
+    /// ID of the record
+    pub id: i32,
+    /// ProjectObservation object
+    pub body: Option<crate::models::PostProjectAdd>
+}
+
+/// struct for passing parameters to the method [`projects_id_get`]
+#[derive(Clone, Debug, Default)]
+pub struct ProjectsIdGetParams {
+    /// Must have this ID or slug
+    pub id: Vec<String>,
+    /// Return more information about project rules, for example return a full taxon object instead of simply an ID 
+    pub rule_details: Option<String>
+}
+
+/// struct for passing parameters to the method [`projects_id_join_post`]
+#[derive(Clone, Debug, Default)]
+pub struct ProjectsIdJoinPostParams {
+    /// ID of the record
+    pub id: i32
+}
+
+/// struct for passing parameters to the method [`projects_id_leave_delete`]
+#[derive(Clone, Debug, Default)]
+pub struct ProjectsIdLeaveDeleteParams {
+    /// ID of the record
+    pub id: i32
+}
+
+/// struct for passing parameters to the method [`projects_id_members_get`]
+#[derive(Clone, Debug, Default)]
+pub struct ProjectsIdMembersGetParams {
+    /// ID of the record
+    pub id: i32,
+    /// Membership role
+    pub role: Option<String>,
+    /// Pagination `page` number
+    pub page: Option<String>,
+    /// Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted 
+    pub per_page: Option<String>
+}
+
+/// struct for passing parameters to the method [`projects_id_membership_get`]
+#[derive(Clone, Debug, Default)]
+pub struct ProjectsIdMembershipGetParams {
+    /// ID of the record
+    pub id: i32
+}
+
+/// struct for passing parameters to the method [`projects_id_remove_delete`]
+#[derive(Clone, Debug, Default)]
+pub struct ProjectsIdRemoveDeleteParams {
+    /// ID of the record
+    pub id: i32,
+    /// ProjectObservation object
+    pub body: Option<crate::models::PostProjectAdd>
+}
+
+/// struct for passing parameters to the method [`projects_id_subscriptions_get`]
+#[derive(Clone, Debug, Default)]
+pub struct ProjectsIdSubscriptionsGetParams {
+    /// ID of the record
+    pub id: i32
+}
+
+/// struct for passing parameters to the method [`subscriptions_project_id_subscribe_post`]
+#[derive(Clone, Debug, Default)]
+pub struct SubscriptionsProjectIdSubscribePostParams {
+    /// ID of the record
+    pub id: i32
+}
+
 
 /// struct for typed errors of method [`projects_autocomplete_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -98,8 +249,27 @@ pub enum SubscriptionsProjectIdSubscribePostError {
 
 
 /// Given an string, returns projects with titles starting with the search term 
-pub async fn projects_autocomplete_get(configuration: &configuration::Configuration, q: &str, id: Option<Vec<String>>, not_id: Option<Vec<String>>, lat: Option<f64>, lng: Option<f64>, place_id: Option<Vec<String>>, radius: Option<&str>, featured: Option<&str>, noteworthy: Option<&str>, site_id: Option<i32>, rule_details: Option<&str>, _type: Option<Vec<String>>, member_id: Option<i32>, has_params: Option<bool>, has_posts: Option<bool>, per_page: Option<&str>) -> Result<crate::models::ProjectsResponse, Error<ProjectsAutocompleteGetError>> {
+pub async fn projects_autocomplete_get(configuration: &configuration::Configuration, params: ProjectsAutocompleteGetParams) -> Result<crate::models::ProjectsResponse, Error<ProjectsAutocompleteGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let q = params.q;
+    let id = params.id;
+    let not_id = params.not_id;
+    let lat = params.lat;
+    let lng = params.lng;
+    let place_id = params.place_id;
+    let radius = params.radius;
+    let featured = params.featured;
+    let noteworthy = params.noteworthy;
+    let site_id = params.site_id;
+    let rule_details = params.rule_details;
+    let _type = params._type;
+    let member_id = params.member_id;
+    let has_params = params.has_params;
+    let has_posts = params.has_posts;
+    let per_page = params.per_page;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -184,8 +354,28 @@ pub async fn projects_autocomplete_get(configuration: &configuration::Configurat
 }
 
 /// Given zero to many of following parameters, returns projects matching the search criteria 
-pub async fn projects_get(configuration: &configuration::Configuration, q: Option<&str>, id: Option<Vec<String>>, not_id: Option<Vec<String>>, lat: Option<f64>, lng: Option<f64>, place_id: Option<Vec<String>>, radius: Option<&str>, featured: Option<&str>, noteworthy: Option<&str>, site_id: Option<i32>, rule_details: Option<&str>, _type: Option<Vec<String>>, member_id: Option<i32>, has_params: Option<bool>, has_posts: Option<bool>, per_page: Option<&str>, order_by: Option<&str>) -> Result<crate::models::ProjectsResponse, Error<ProjectsGetError>> {
+pub async fn projects_get(configuration: &configuration::Configuration, params: ProjectsGetParams) -> Result<crate::models::ProjectsResponse, Error<ProjectsGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let q = params.q;
+    let id = params.id;
+    let not_id = params.not_id;
+    let lat = params.lat;
+    let lng = params.lng;
+    let place_id = params.place_id;
+    let radius = params.radius;
+    let featured = params.featured;
+    let noteworthy = params.noteworthy;
+    let site_id = params.site_id;
+    let rule_details = params.rule_details;
+    let _type = params._type;
+    let member_id = params.member_id;
+    let has_params = params.has_params;
+    let has_posts = params.has_posts;
+    let per_page = params.per_page;
+    let order_by = params.order_by;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -275,8 +465,13 @@ pub async fn projects_get(configuration: &configuration::Configuration, q: Optio
 }
 
 /// Add an observation to a project
-pub async fn projects_id_add_post(configuration: &configuration::Configuration, id: i32, body: Option<crate::models::PostProjectAdd>) -> Result<(), Error<ProjectsIdAddPostError>> {
+pub async fn projects_id_add_post(configuration: &configuration::Configuration, params: ProjectsIdAddPostParams) -> Result<(), Error<ProjectsIdAddPostError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+    let body = params.body;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -312,8 +507,13 @@ pub async fn projects_id_add_post(configuration: &configuration::Configuration, 
 }
 
 /// Given an ID, or an array of IDs in comma-delimited format, returns corresponding projects. A maximum of 100 results will be returned 
-pub async fn projects_id_get(configuration: &configuration::Configuration, id: Vec<String>, rule_details: Option<&str>) -> Result<crate::models::ProjectsResponse, Error<ProjectsIdGetError>> {
+pub async fn projects_id_get(configuration: &configuration::Configuration, params: ProjectsIdGetParams) -> Result<crate::models::ProjectsResponse, Error<ProjectsIdGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+    let rule_details = params.rule_details;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -343,8 +543,12 @@ pub async fn projects_id_get(configuration: &configuration::Configuration, id: V
 }
 
 /// Join a project 
-pub async fn projects_id_join_post(configuration: &configuration::Configuration, id: i32) -> Result<(), Error<ProjectsIdJoinPostError>> {
+pub async fn projects_id_join_post(configuration: &configuration::Configuration, params: ProjectsIdJoinPostParams) -> Result<(), Error<ProjectsIdJoinPostError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -379,8 +583,12 @@ pub async fn projects_id_join_post(configuration: &configuration::Configuration,
 }
 
 /// Leave a project 
-pub async fn projects_id_leave_delete(configuration: &configuration::Configuration, id: i32) -> Result<(), Error<ProjectsIdLeaveDeleteError>> {
+pub async fn projects_id_leave_delete(configuration: &configuration::Configuration, params: ProjectsIdLeaveDeleteParams) -> Result<(), Error<ProjectsIdLeaveDeleteError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -415,8 +623,15 @@ pub async fn projects_id_leave_delete(configuration: &configuration::Configurati
 }
 
 /// Given an ID, return members of the project 
-pub async fn projects_id_members_get(configuration: &configuration::Configuration, id: i32, role: Option<&str>, page: Option<&str>, per_page: Option<&str>) -> Result<crate::models::ProjectMembersResponse, Error<ProjectsIdMembersGetError>> {
+pub async fn projects_id_members_get(configuration: &configuration::Configuration, params: ProjectsIdMembersGetParams) -> Result<crate::models::ProjectMembersResponse, Error<ProjectsIdMembersGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+    let role = params.role;
+    let page = params.page;
+    let per_page = params.per_page;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -452,8 +667,12 @@ pub async fn projects_id_members_get(configuration: &configuration::Configuratio
 }
 
 /// Given a project ID, return the details of the authenticated user's membership in that project 
-pub async fn projects_id_membership_get(configuration: &configuration::Configuration, id: i32) -> Result<(), Error<ProjectsIdMembershipGetError>> {
+pub async fn projects_id_membership_get(configuration: &configuration::Configuration, params: ProjectsIdMembershipGetParams) -> Result<(), Error<ProjectsIdMembershipGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -488,8 +707,13 @@ pub async fn projects_id_membership_get(configuration: &configuration::Configura
 }
 
 /// Remove an observation from a project
-pub async fn projects_id_remove_delete(configuration: &configuration::Configuration, id: i32, body: Option<crate::models::PostProjectAdd>) -> Result<(), Error<ProjectsIdRemoveDeleteError>> {
+pub async fn projects_id_remove_delete(configuration: &configuration::Configuration, params: ProjectsIdRemoveDeleteParams) -> Result<(), Error<ProjectsIdRemoveDeleteError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+    let body = params.body;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -525,8 +749,12 @@ pub async fn projects_id_remove_delete(configuration: &configuration::Configurat
 }
 
 /// [Deprecated] Subscriptions to projects are managed through joining and leaving projects, so this will not return any useful information.  Given an ID, return subscription of the current user 
-pub async fn projects_id_subscriptions_get(configuration: &configuration::Configuration, id: i32) -> Result<(), Error<ProjectsIdSubscriptionsGetError>> {
+pub async fn projects_id_subscriptions_get(configuration: &configuration::Configuration, params: ProjectsIdSubscriptionsGetParams) -> Result<(), Error<ProjectsIdSubscriptionsGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -561,8 +789,12 @@ pub async fn projects_id_subscriptions_get(configuration: &configuration::Config
 }
 
 /// Toggles current user's subscription to this project. If the logged-in user is not subscribed, POSTing here will subscribe them. If they are already subscribed, this will remove the subscription 
-pub async fn subscriptions_project_id_subscribe_post(configuration: &configuration::Configuration, id: i32) -> Result<(), Error<SubscriptionsProjectIdSubscribePostError>> {
+pub async fn subscriptions_project_id_subscribe_post(configuration: &configuration::Configuration, params: SubscriptionsProjectIdSubscribePostParams) -> Result<(), Error<SubscriptionsProjectIdSubscribePostError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+
 
     let local_var_client = &local_var_configuration.client;
 

@@ -14,6 +14,41 @@ use reqwest;
 use crate::apis::ResponseContent;
 use super::{Error, configuration};
 
+/// struct for passing parameters to the method [`places_autocomplete_get`]
+#[derive(Clone, Debug, Default)]
+pub struct PlacesAutocompleteGetParams {
+    /// Name must begin with this value
+    pub q: String,
+    /// Sort field
+    pub order_by: Option<String>
+}
+
+/// struct for passing parameters to the method [`places_id_get`]
+#[derive(Clone, Debug, Default)]
+pub struct PlacesIdGetParams {
+    /// Must have this ID or slug
+    pub id: Vec<String>,
+    /// Admin level of a place, or an array of admin levels in comma-delimited format. Supported admin levels are: -1 (continent), 0 (country), 1 (state), 2 (county), 3 (town), 10 (park)
+    pub admin_level: Option<Vec<i32>>
+}
+
+/// struct for passing parameters to the method [`places_nearby_get`]
+#[derive(Clone, Debug, Default)]
+pub struct PlacesNearbyGetParams {
+    /// Must be nearby this bounding box (*nelat, *nelng, *swlat, *swlng) 
+    pub nelat: f64,
+    /// Must be nearby this bounding box (*nelat, *nelng, *swlat, *swlng) 
+    pub nelng: f64,
+    /// Must be nearby this bounding box (*nelat, *nelng, *swlat, *swlng) 
+    pub swlat: f64,
+    /// Must be nearby this bounding box (*nelat, *nelng, *swlat, *swlng) 
+    pub swlng: f64,
+    /// Name must match this value
+    pub name: Option<String>,
+    /// Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted 
+    pub per_page: Option<String>
+}
+
 
 /// struct for typed errors of method [`places_autocomplete_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -41,8 +76,13 @@ pub enum PlacesNearbyGetError {
 
 
 /// Given an string, returns places with names starting with the search term. 
-pub async fn places_autocomplete_get(configuration: &configuration::Configuration, q: &str, order_by: Option<&str>) -> Result<crate::models::PlacesResponse, Error<PlacesAutocompleteGetError>> {
+pub async fn places_autocomplete_get(configuration: &configuration::Configuration, params: PlacesAutocompleteGetParams) -> Result<crate::models::PlacesResponse, Error<PlacesAutocompleteGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let q = params.q;
+    let order_by = params.order_by;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -73,8 +113,13 @@ pub async fn places_autocomplete_get(configuration: &configuration::Configuratio
 }
 
 /// Given an ID, or an array of IDs in comma-delimited format, returns corresponding places. A maximum of 500 results will be returned 
-pub async fn places_id_get(configuration: &configuration::Configuration, id: Vec<String>, admin_level: Option<Vec<i32>>) -> Result<crate::models::PlacesResponse, Error<PlacesIdGetError>> {
+pub async fn places_id_get(configuration: &configuration::Configuration, params: PlacesIdGetParams) -> Result<crate::models::PlacesResponse, Error<PlacesIdGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+    let admin_level = params.admin_level;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -107,8 +152,17 @@ pub async fn places_id_get(configuration: &configuration::Configuration, id: Vec
 }
 
 /// Given an bounding box, and an optional name query, return `standard` iNaturalist curator approved and `community` non-curated places nearby 
-pub async fn places_nearby_get(configuration: &configuration::Configuration, nelat: f64, nelng: f64, swlat: f64, swlng: f64, name: Option<&str>, per_page: Option<&str>) -> Result<crate::models::NearbyPlacesResponse, Error<PlacesNearbyGetError>> {
+pub async fn places_nearby_get(configuration: &configuration::Configuration, params: PlacesNearbyGetParams) -> Result<crate::models::NearbyPlacesResponse, Error<PlacesNearbyGetError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let nelat = params.nelat;
+    let nelng = params.nelng;
+    let swlat = params.swlat;
+    let swlng = params.swlng;
+    let name = params.name;
+    let per_page = params.per_page;
+
 
     let local_var_client = &local_var_configuration.client;
 

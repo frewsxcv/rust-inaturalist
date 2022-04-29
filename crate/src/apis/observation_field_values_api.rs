@@ -14,6 +14,29 @@ use reqwest;
 use crate::apis::ResponseContent;
 use super::{Error, configuration};
 
+/// struct for passing parameters to the method [`observation_field_values_id_delete`]
+#[derive(Clone, Debug, Default)]
+pub struct ObservationFieldValuesIdDeleteParams {
+    /// ID of the record
+    pub id: i32
+}
+
+/// struct for passing parameters to the method [`observation_field_values_id_put`]
+#[derive(Clone, Debug, Default)]
+pub struct ObservationFieldValuesIdPutParams {
+    /// ID of the record
+    pub id: i32,
+    /// Observation field value object
+    pub body: Option<crate::models::PostObservationFieldValue>
+}
+
+/// struct for passing parameters to the method [`observation_field_values_post`]
+#[derive(Clone, Debug, Default)]
+pub struct ObservationFieldValuesPostParams {
+    /// Observation field value object
+    pub body: Option<crate::models::PostObservationFieldValue>
+}
+
 
 /// struct for typed errors of method [`observation_field_values_id_delete`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -38,8 +61,12 @@ pub enum ObservationFieldValuesPostError {
 
 
 /// Delete an observation field value 
-pub async fn observation_field_values_id_delete(configuration: &configuration::Configuration, id: i32) -> Result<(), Error<ObservationFieldValuesIdDeleteError>> {
+pub async fn observation_field_values_id_delete(configuration: &configuration::Configuration, params: ObservationFieldValuesIdDeleteParams) -> Result<(), Error<ObservationFieldValuesIdDeleteError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -74,8 +101,13 @@ pub async fn observation_field_values_id_delete(configuration: &configuration::C
 }
 
 /// Update an observation field value 
-pub async fn observation_field_values_id_put(configuration: &configuration::Configuration, id: i32, body: Option<crate::models::PostObservationFieldValue>) -> Result<(), Error<ObservationFieldValuesIdPutError>> {
+pub async fn observation_field_values_id_put(configuration: &configuration::Configuration, params: ObservationFieldValuesIdPutParams) -> Result<(), Error<ObservationFieldValuesIdPutError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let id = params.id;
+    let body = params.body;
+
 
     let local_var_client = &local_var_configuration.client;
 
@@ -111,8 +143,12 @@ pub async fn observation_field_values_id_put(configuration: &configuration::Conf
 }
 
 /// Create an observation field value 
-pub async fn observation_field_values_post(configuration: &configuration::Configuration, body: Option<crate::models::PostObservationFieldValue>) -> Result<(), Error<ObservationFieldValuesPostError>> {
+pub async fn observation_field_values_post(configuration: &configuration::Configuration, params: ObservationFieldValuesPostParams) -> Result<(), Error<ObservationFieldValuesPostError>> {
     let local_var_configuration = configuration;
+
+    // unbox the parameters
+    let body = params.body;
+
 
     let local_var_client = &local_var_configuration.client;
 
