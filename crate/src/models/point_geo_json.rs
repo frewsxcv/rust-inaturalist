@@ -17,7 +17,7 @@ pub struct PointGeoJson {
     pub _type: Option<String>,
     /// an array of [long, lat]
     #[serde(rename = "coordinates", skip_serializing_if = "Option::is_none")]
-    pub coordinates: Option<Vec<String>>,
+    pub coordinates: Option<Vec<f64>>,
 }
 
 impl PointGeoJson {

@@ -24,11 +24,11 @@ pub struct ObservationTaxonAllOf {
     #[serde(rename = "establishment_means", skip_serializing_if = "Option::is_none")]
     pub establishment_means: Option<Box<crate::models::EstablishmentMeans>>,
     #[serde(rename = "introduced", skip_serializing_if = "Option::is_none")]
-    pub introduced: Option<String>,
+    pub introduced: Option<bool>,
     #[serde(rename = "native", skip_serializing_if = "Option::is_none")]
-    pub native: Option<String>,
+    pub native: Option<bool>,
     #[serde(rename = "threatened", skip_serializing_if = "Option::is_none")]
-    pub threatened: Option<String>,
+    pub threatened: Option<bool>,
 }
 
 impl ObservationTaxonAllOf {

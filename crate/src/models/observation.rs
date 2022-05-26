@@ -44,11 +44,11 @@ pub struct Observation {
     #[serde(rename = "identifications_count", skip_serializing_if = "Option::is_none")]
     pub identifications_count: Option<i32>,
     #[serde(rename = "identifications_most_agree", skip_serializing_if = "Option::is_none")]
-    pub identifications_most_agree: Option<i32>,
+    pub identifications_most_agree: Option<bool>,
     #[serde(rename = "identifications_most_disagree", skip_serializing_if = "Option::is_none")]
-    pub identifications_most_disagree: Option<i32>,
+    pub identifications_most_disagree: Option<bool>,
     #[serde(rename = "identifications_some_agree", skip_serializing_if = "Option::is_none")]
-    pub identifications_some_agree: Option<i32>,
+    pub identifications_some_agree: Option<bool>,
     #[serde(rename = "license_code", skip_serializing_if = "Option::is_none")]
     pub license_code: Option<String>,
     /// in the format \"lat,lng\"
@@ -79,7 +79,7 @@ pub struct Observation {
     #[serde(rename = "photos", skip_serializing_if = "Option::is_none")]
     pub photos: Option<Vec<crate::models::Photo>>,
     #[serde(rename = "place_guess", skip_serializing_if = "Option::is_none")]
-    pub place_guess: Option<i32>,
+    pub place_guess: Option<String>,
     #[serde(rename = "place_ids", skip_serializing_if = "Option::is_none")]
     pub place_ids: Option<Vec<i32>>,
     #[serde(rename = "project_ids", skip_serializing_if = "Option::is_none")]
@@ -89,7 +89,7 @@ pub struct Observation {
     #[serde(rename = "project_ids_without_curator_id", skip_serializing_if = "Option::is_none")]
     pub project_ids_without_curator_id: Option<Vec<i32>>,
     #[serde(rename = "quality_grade", skip_serializing_if = "Option::is_none")]
-    pub quality_grade: Option<i32>,
+    pub quality_grade: Option<String>,
     #[serde(rename = "reviewed_by", skip_serializing_if = "Option::is_none")]
     pub reviewed_by: Option<Vec<i32>>,
     #[serde(rename = "site_id", skip_serializing_if = "Option::is_none")]
