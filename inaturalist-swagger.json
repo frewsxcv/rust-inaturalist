@@ -5097,9 +5097,9 @@
         "taxon_geoprivacy": { "type": "string" },
         "id_please": { "type": "boolean" },
         "identifications_count": { "type": "integer" },
-        "identifications_most_agree": { "type": "integer" },
-        "identifications_most_disagree": { "type": "integer" },
-        "identifications_some_agree": { "type": "integer" },
+        "identifications_most_agree": { "type": "boolean" },
+        "identifications_most_disagree": { "type": "boolean" },
+        "identifications_some_agree": { "type": "boolean" },
         "license_code": { "type": "string" },
         "location": {
           "type": "string",
@@ -5126,7 +5126,7 @@
           "type": "array",
           "items": { "$ref": "#/definitions/Photo" }
         },
-        "place_guess": { "type": "integer" },
+        "place_guess": { "type": "string" },
         "place_ids": { "type": "array", "items": { "type": "integer" } },
         "project_ids": { "type": "array", "items": { "type": "integer" } },
         "project_ids_with_curator_id": {
@@ -5137,7 +5137,7 @@
           "type": "array",
           "items": { "type": "integer" }
         },
-        "quality_grade": { "type": "integer" },
+        "quality_grade": { "type": "string" },
         "reviewed_by": { "type": "array", "items": { "type": "integer" } },
         "site_id": { "type": "integer" },
         "sounds": {
@@ -5170,9 +5170,9 @@
             "establishment_means": {
               "$ref": "#/definitions/EstablishmentMeans"
             },
-            "introduced": { "type": "string" },
-            "native": { "type": "string" },
-            "threatened": { "type": "string" }
+            "introduced": { "type": "boolean" },
+            "native": { "type": "boolean" },
+            "threatened": { "type": "boolean" }
           }
         }
       ]
@@ -5193,7 +5193,7 @@
         "coordinates": {
           "type": "array",
           "description": "an array of [long, lat]",
-          "items": { "type": "string" }
+          "items": { "type": "number", "format": "double" }
         }
       }
     },
