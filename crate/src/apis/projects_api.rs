@@ -1,18 +1,17 @@
 /*
  * iNaturalist API
  *
- * # https://api.inaturalist.org/v1/  [iNaturalist](https://www.inaturalist.org/) is a global community of naturalists, scientists, and members of the public sharing over a million wildlife sightings to teach one another about the natural world while creating high quality citizen science data for science and conservation. The iNaturalist technology infrastructure and open source software is administered by the [California Academy of Sciences](https://www.calacademy.org/) as part of their mission to explore, explain, and sustain life on Earth.  These API methods return data in JSON/JSONP and PNG response formats. They are meant to supplement the existing [iNaturalist API](https://www.inaturalist.org/pages/api+reference), implemented in Ruby on Rails, which has more functionality and supports more write operations, but tends to be slower and have less consistent response formats. Visit our [developers page](https://www.inaturalist.org/pages/developers) for more information. Write operations that expect and return JSON describe a single `body` parameter that represents the request body, which should be specified as JSON. See the \"Model\" of each body parameter for attributes that we accept in these JSON objects.  Multiple values for a single URL parameter should be separated by commas, e.g. `taxon_id=1,2,3`.  Map tiles are generated using the [node-mapnik](https://github.com/mapnik/node-mapnik) library, following the XYZ map tiling scheme. The \"Observation Tile\" methods accept nearly all the parameters of the observation search APIs, and will generate map tiles reflecting the same observations returned by searches. These \"Observation Tile\" methods have corresponding [UTFGrid](https://github.com/mapbox/utfgrid-spec) JSON responses which return information needed to make interactive maps.  Authentication in the Node API is handled via JSON Web Tokens (JWT). To obtain one, make an [OAuth-authenticated request](http://www.inaturalist.org/pages/api+reference#auth) to https://www.inaturalist.org/users/api_token. Each JWT will expire after 24 hours. Authentication required for all PUT and POST requests. Some GET requests will also include private information like hidden coordinates if the authenticated user has permission to view them.  iNaturalist Website: https://www.inaturalist.org/  Open Source Software: https://github.com/inaturalist/  ## Terms of Use  Use of this API is subject to the iNaturalist [Terms of Service](https://www.inaturalist.org/terms) and [Privacy Policy](https://www.inaturalist.org/privacy). We will block any use of our API that violates our Terms or Privacy Policy without notice. The API is intended to support application development, not data scraping. For pre- generated data exports, see https://www.inaturalist.org/pages/developers.  Please note that we throttle API usage to a max of 100 requests per minute, though we ask that you try to keep it to 60 requests per minute or lower, and to keep under 10,000 requests per day. If we notice usage that has serious impact on our performance we may institute blocks without notification.  Terms of Service: https://www.inaturalist.org/terms  Privacy Policy: https://www.inaturalist.org/privacy 
+ * # https://api.inaturalist.org/v1/  [iNaturalist](https://www.inaturalist.org/) is a global community of naturalists, scientists, and members of the public sharing over a million wildlife sightings to teach one another about the natural world while creating high quality citizen science data for science and conservation. The iNaturalist technology infrastructure and open source software is administered by the [California Academy of Sciences](https://www.calacademy.org/) as part of their mission to explore, explain, and sustain life on Earth.  These API methods return data in JSON/JSONP and PNG response formats. They are meant to supplement the existing [iNaturalist API](https://www.inaturalist.org/pages/api+reference), implemented in Ruby on Rails, which has more functionality and supports more write operations, but tends to be slower and have less consistent response formats. Visit our [developers page](https://www.inaturalist.org/pages/developers) for more information. Write operations that expect and return JSON describe a single `body` parameter that represents the request body, which should be specified as JSON. See the \"Model\" of each body parameter for attributes that we accept in these JSON objects.  Multiple values for a single URL parameter should be separated by commas, e.g. `taxon_id=1,2,3`.  Map tiles are generated using the [node-mapnik](https://github.com/mapnik/node-mapnik) library, following the XYZ map tiling scheme. The \"Observation Tile\" methods accept nearly all the parameters of the observation search APIs, and will generate map tiles reflecting the same observations returned by searches. These \"Observation Tile\" methods have corresponding [UTFGrid](https://github.com/mapbox/utfgrid-spec) JSON responses which return information needed to make interactive maps.  Authentication in the Node API is handled via JSON Web Tokens (JWT). To obtain one, make an [OAuth-authenticated request](http://www.inaturalist.org/pages/api+reference#auth) to https://www.inaturalist.org/users/api_token. Each JWT will expire after 24 hours. Authentication required for all PUT and POST requests. Some GET requests will also include private information like hidden coordinates if the authenticated user has permission to view them.  iNaturalist Website: https://www.inaturalist.org/  Open Source Software: https://github.com/inaturalist/  ## Terms of Use  Use of this API is subject to the iNaturalist [Terms of Service](https://www.inaturalist.org/terms) and [Privacy Policy](https://www.inaturalist.org/privacy). We will block any use of our API that violates our Terms or Privacy Policy without notice. The API is intended to support application development, not data scraping. For pre- generated data exports, see https://www.inaturalist.org/pages/developers.  Please note that we throttle API usage to a max of 100 requests per minute, though we ask that you try to keep it to 60 requests per minute or lower, and to keep under 10,000 requests per day. If we notice usage that has serious impact on our performance we may institute blocks without notification.  Terms of Service: https://www.inaturalist.org/terms  Privacy Policy: https://www.inaturalist.org/privacy
  *
  * The version of the OpenAPI document: 1.3.0
- * 
+ *
  * Generated by: https://openapi-generator.tech
  */
 
-
 use reqwest;
 
+use super::{configuration, Error};
 use crate::apis::ResponseContent;
-use super::{Error, configuration};
 
 /// struct for passing parameters to the method [`projects_autocomplete_get`]
 #[derive(Clone, Debug, Default)]
@@ -23,21 +22,21 @@ pub struct ProjectsAutocompleteGetParams {
     pub id: Option<Vec<String>>,
     /// Must not have this ID
     pub not_id: Option<Vec<String>>,
-    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius) 
+    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius)
     pub lat: Option<f64>,
-    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius) 
+    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius)
     pub lng: Option<f64>,
     /// Must be associated with this place
     pub place_id: Option<Vec<String>>,
-    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius). Defaults to 500km 
+    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius). Defaults to 500km
     pub radius: Option<String>,
     /// Must be marked featured for the relevant site
     pub featured: Option<String>,
     /// Must be marked noteworthy for the relevant site
     pub noteworthy: Option<String>,
-    /// Site ID that applies to `featured` and `noteworthy`. Defaults to the site of the authenticated user, or to the main iNaturalist site https://www.inaturalist.org 
+    /// Site ID that applies to `featured` and `noteworthy`. Defaults to the site of the authenticated user, or to the main iNaturalist site https://www.inaturalist.org
     pub site_id: Option<i32>,
-    /// Return more information about project rules, for example return a full taxon object instead of simply an ID 
+    /// Return more information about project rules, for example return a full taxon object instead of simply an ID
     pub rule_details: Option<String>,
     /// Projects must be of this type
     pub r#type: Option<Vec<String>>,
@@ -47,8 +46,8 @@ pub struct ProjectsAutocompleteGetParams {
     pub has_params: Option<bool>,
     /// Must have posts
     pub has_posts: Option<bool>,
-    /// Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted 
-    pub per_page: Option<String>
+    /// Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted
+    pub per_page: Option<String>,
 }
 
 /// struct for passing parameters to the method [`projects_get`]
@@ -60,21 +59,21 @@ pub struct ProjectsGetParams {
     pub id: Option<Vec<String>>,
     /// Must not have this ID
     pub not_id: Option<Vec<String>>,
-    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius) 
+    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius)
     pub lat: Option<f64>,
-    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius) 
+    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius)
     pub lng: Option<f64>,
     /// Must be associated with this place
     pub place_id: Option<Vec<String>>,
-    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius). Defaults to 500km 
+    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius). Defaults to 500km
     pub radius: Option<String>,
     /// Must be marked featured for the relevant site
     pub featured: Option<String>,
     /// Must be marked noteworthy for the relevant site
     pub noteworthy: Option<String>,
-    /// Site ID that applies to `featured` and `noteworthy`. Defaults to the site of the authenticated user, or to the main iNaturalist site https://www.inaturalist.org 
+    /// Site ID that applies to `featured` and `noteworthy`. Defaults to the site of the authenticated user, or to the main iNaturalist site https://www.inaturalist.org
     pub site_id: Option<i32>,
-    /// Return more information about project rules, for example return a full taxon object instead of simply an ID 
+    /// Return more information about project rules, for example return a full taxon object instead of simply an ID
     pub rule_details: Option<String>,
     /// Projects must be of this type
     pub r#type: Option<Vec<String>>,
@@ -84,10 +83,10 @@ pub struct ProjectsGetParams {
     pub has_params: Option<bool>,
     /// Must have posts
     pub has_posts: Option<bool>,
-    /// Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted 
+    /// Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted
     pub per_page: Option<String>,
     /// Sort field
-    pub order_by: Option<String>
+    pub order_by: Option<String>,
 }
 
 /// struct for passing parameters to the method [`projects_id_add_post`]
@@ -96,7 +95,7 @@ pub struct ProjectsIdAddPostParams {
     /// ID of the record
     pub id: i32,
     /// ProjectObservation object
-    pub body: Option<crate::models::PostProjectAdd>
+    pub body: Option<crate::models::PostProjectAdd>,
 }
 
 /// struct for passing parameters to the method [`projects_id_get`]
@@ -104,22 +103,22 @@ pub struct ProjectsIdAddPostParams {
 pub struct ProjectsIdGetParams {
     /// Must have this ID or slug
     pub id: Vec<String>,
-    /// Return more information about project rules, for example return a full taxon object instead of simply an ID 
-    pub rule_details: Option<String>
+    /// Return more information about project rules, for example return a full taxon object instead of simply an ID
+    pub rule_details: Option<String>,
 }
 
 /// struct for passing parameters to the method [`projects_id_join_post`]
 #[derive(Clone, Debug, Default)]
 pub struct ProjectsIdJoinPostParams {
     /// ID of the record
-    pub id: i32
+    pub id: i32,
 }
 
 /// struct for passing parameters to the method [`projects_id_leave_delete`]
 #[derive(Clone, Debug, Default)]
 pub struct ProjectsIdLeaveDeleteParams {
     /// ID of the record
-    pub id: i32
+    pub id: i32,
 }
 
 /// struct for passing parameters to the method [`projects_id_members_get`]
@@ -131,15 +130,15 @@ pub struct ProjectsIdMembersGetParams {
     pub role: Option<String>,
     /// Pagination `page` number
     pub page: Option<String>,
-    /// Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted 
-    pub per_page: Option<String>
+    /// Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted
+    pub per_page: Option<String>,
 }
 
 /// struct for passing parameters to the method [`projects_id_membership_get`]
 #[derive(Clone, Debug, Default)]
 pub struct ProjectsIdMembershipGetParams {
     /// ID of the record
-    pub id: i32
+    pub id: i32,
 }
 
 /// struct for passing parameters to the method [`projects_id_remove_delete`]
@@ -148,23 +147,22 @@ pub struct ProjectsIdRemoveDeleteParams {
     /// ID of the record
     pub id: i32,
     /// ProjectObservation object
-    pub body: Option<crate::models::PostProjectAdd>
+    pub body: Option<crate::models::PostProjectAdd>,
 }
 
 /// struct for passing parameters to the method [`projects_id_subscriptions_get`]
 #[derive(Clone, Debug, Default)]
 pub struct ProjectsIdSubscriptionsGetParams {
     /// ID of the record
-    pub id: i32
+    pub id: i32,
 }
 
 /// struct for passing parameters to the method [`subscriptions_project_id_subscribe_post`]
 #[derive(Clone, Debug, Default)]
 pub struct SubscriptionsProjectIdSubscribePostParams {
     /// ID of the record
-    pub id: i32
+    pub id: i32,
 }
-
 
 /// struct for typed errors of method [`projects_autocomplete_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -247,9 +245,11 @@ pub enum SubscriptionsProjectIdSubscribePostError {
     UnknownValue(serde_json::Value),
 }
 
-
-/// Given an string, returns projects with titles starting with the search term 
-pub async fn projects_autocomplete_get(configuration: &configuration::Configuration, params: ProjectsAutocompleteGetParams) -> Result<crate::models::ProjectsResponse, Error<ProjectsAutocompleteGetError>> {
+/// Given an string, returns projects with titles starting with the search term
+pub async fn projects_autocomplete_get(
+    configuration: &configuration::Configuration,
+    params: ProjectsAutocompleteGetParams,
+) -> Result<crate::models::ProjectsResponse, Error<ProjectsAutocompleteGetError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -270,23 +270,52 @@ pub async fn projects_autocomplete_get(configuration: &configuration::Configurat
     let has_posts = params.has_posts;
     let per_page = params.per_page;
 
-
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/projects/autocomplete", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+    let local_var_uri_str = format!(
+        "{}/projects/autocomplete",
+        local_var_configuration.base_path
+    );
+    let mut local_var_req_builder =
+        local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
     local_var_req_builder = local_var_req_builder.query(&[("q", &q.to_string())]);
     if let Some(ref local_var_str) = id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = not_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("not_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("not_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("not_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "not_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = lat {
@@ -297,45 +326,81 @@ pub async fn projects_autocomplete_get(configuration: &configuration::Configurat
     }
     if let Some(ref local_var_str) = place_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("place_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("place_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("place_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "place_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = radius {
-        local_var_req_builder = local_var_req_builder.query(&[("radius", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("radius", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = featured {
-        local_var_req_builder = local_var_req_builder.query(&[("featured", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("featured", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = noteworthy {
-        local_var_req_builder = local_var_req_builder.query(&[("noteworthy", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("noteworthy", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = site_id {
-        local_var_req_builder = local_var_req_builder.query(&[("site_id", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("site_id", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = rule_details {
-        local_var_req_builder = local_var_req_builder.query(&[("rule_details", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("rule_details", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = r#type {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("type".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("type", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("type".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "type",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = member_id {
-        local_var_req_builder = local_var_req_builder.query(&[("member_id", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("member_id", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = has_params {
-        local_var_req_builder = local_var_req_builder.query(&[("has_params", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("has_params", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = has_posts {
-        local_var_req_builder = local_var_req_builder.query(&[("has_posts", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("has_posts", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = per_page {
-        local_var_req_builder = local_var_req_builder.query(&[("per_page", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("per_page", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+        local_var_req_builder =
+            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
 
     let local_var_req = local_var_req_builder.build()?;
@@ -347,14 +412,22 @@ pub async fn projects_autocomplete_get(configuration: &configuration::Configurat
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<ProjectsAutocompleteGetError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        let local_var_entity: Option<ProjectsAutocompleteGetError> =
+            serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent {
+            status: local_var_status,
+            content: local_var_content,
+            entity: local_var_entity,
+        };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-/// Given zero to many of following parameters, returns projects matching the search criteria 
-pub async fn projects_get(configuration: &configuration::Configuration, params: ProjectsGetParams) -> Result<crate::models::ProjectsResponse, Error<ProjectsGetError>> {
+/// Given zero to many of following parameters, returns projects matching the search criteria
+pub async fn projects_get(
+    configuration: &configuration::Configuration,
+    params: ProjectsGetParams,
+) -> Result<crate::models::ProjectsResponse, Error<ProjectsGetError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -376,25 +449,51 @@ pub async fn projects_get(configuration: &configuration::Configuration, params: 
     let per_page = params.per_page;
     let order_by = params.order_by;
 
-
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/projects", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
     if let Some(ref local_var_str) = q {
         local_var_req_builder = local_var_req_builder.query(&[("q", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = not_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("not_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("not_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("not_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "not_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = lat {
@@ -405,48 +504,85 @@ pub async fn projects_get(configuration: &configuration::Configuration, params: 
     }
     if let Some(ref local_var_str) = place_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("place_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("place_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("place_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "place_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = radius {
-        local_var_req_builder = local_var_req_builder.query(&[("radius", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("radius", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = featured {
-        local_var_req_builder = local_var_req_builder.query(&[("featured", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("featured", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = noteworthy {
-        local_var_req_builder = local_var_req_builder.query(&[("noteworthy", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("noteworthy", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = site_id {
-        local_var_req_builder = local_var_req_builder.query(&[("site_id", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("site_id", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = rule_details {
-        local_var_req_builder = local_var_req_builder.query(&[("rule_details", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("rule_details", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = r#type {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("type".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("type", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("type".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "type",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = member_id {
-        local_var_req_builder = local_var_req_builder.query(&[("member_id", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("member_id", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = has_params {
-        local_var_req_builder = local_var_req_builder.query(&[("has_params", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("has_params", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = has_posts {
-        local_var_req_builder = local_var_req_builder.query(&[("has_posts", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("has_posts", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = per_page {
-        local_var_req_builder = local_var_req_builder.query(&[("per_page", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("per_page", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = order_by {
-        local_var_req_builder = local_var_req_builder.query(&[("order_by", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("order_by", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+        local_var_req_builder =
+            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
 
     let local_var_req = local_var_req_builder.build()?;
@@ -458,28 +594,41 @@ pub async fn projects_get(configuration: &configuration::Configuration, params: 
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<ProjectsGetError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        let local_var_entity: Option<ProjectsGetError> =
+            serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent {
+            status: local_var_status,
+            content: local_var_content,
+            entity: local_var_entity,
+        };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
 /// Add an observation to a project
-pub async fn projects_id_add_post(configuration: &configuration::Configuration, params: ProjectsIdAddPostParams) -> Result<(), Error<ProjectsIdAddPostError>> {
+pub async fn projects_id_add_post(
+    configuration: &configuration::Configuration,
+    params: ProjectsIdAddPostParams,
+) -> Result<(), Error<ProjectsIdAddPostError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
     let id = params.id;
     let body = params.body;
 
-
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/projects/{id}/add", local_var_configuration.base_path, id=id);
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
+    let local_var_uri_str = format!(
+        "{}/projects/{id}/add",
+        local_var_configuration.base_path,
+        id = id
+    );
+    let mut local_var_req_builder =
+        local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+        local_var_req_builder =
+            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
     if let Some(ref local_var_apikey) = local_var_configuration.api_key {
         let local_var_key = local_var_apikey.key.clone();
@@ -500,31 +649,49 @@ pub async fn projects_id_add_post(configuration: &configuration::Configuration, 
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         Ok(())
     } else {
-        let local_var_entity: Option<ProjectsIdAddPostError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        let local_var_entity: Option<ProjectsIdAddPostError> =
+            serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent {
+            status: local_var_status,
+            content: local_var_content,
+            entity: local_var_entity,
+        };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-/// Given an ID, or an array of IDs in comma-delimited format, returns corresponding projects. A maximum of 100 results will be returned 
-pub async fn projects_id_get(configuration: &configuration::Configuration, params: ProjectsIdGetParams) -> Result<crate::models::ProjectsResponse, Error<ProjectsIdGetError>> {
+/// Given an ID, or an array of IDs in comma-delimited format, returns corresponding projects. A maximum of 100 results will be returned
+pub async fn projects_id_get(
+    configuration: &configuration::Configuration,
+    params: ProjectsIdGetParams,
+) -> Result<crate::models::ProjectsResponse, Error<ProjectsIdGetError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
     let id = params.id;
     let rule_details = params.rule_details;
 
-
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/projects/{id}", local_var_configuration.base_path, id=id.into_iter().map(|n| n.to_string()).collect::<Vec<String>>().join(","));
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+    let local_var_uri_str = format!(
+        "{}/projects/{id}",
+        local_var_configuration.base_path,
+        id = id
+            .into_iter()
+            .map(|n| n.to_string())
+            .collect::<Vec<String>>()
+            .join(",")
+    );
+    let mut local_var_req_builder =
+        local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
     if let Some(ref local_var_str) = rule_details {
-        local_var_req_builder = local_var_req_builder.query(&[("rule_details", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("rule_details", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+        local_var_req_builder =
+            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
 
     let local_var_req = local_var_req_builder.build()?;
@@ -536,27 +703,40 @@ pub async fn projects_id_get(configuration: &configuration::Configuration, param
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<ProjectsIdGetError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        let local_var_entity: Option<ProjectsIdGetError> =
+            serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent {
+            status: local_var_status,
+            content: local_var_content,
+            entity: local_var_entity,
+        };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-/// Join a project 
-pub async fn projects_id_join_post(configuration: &configuration::Configuration, params: ProjectsIdJoinPostParams) -> Result<(), Error<ProjectsIdJoinPostError>> {
+/// Join a project
+pub async fn projects_id_join_post(
+    configuration: &configuration::Configuration,
+    params: ProjectsIdJoinPostParams,
+) -> Result<(), Error<ProjectsIdJoinPostError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
     let id = params.id;
 
-
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/projects/{id}/join", local_var_configuration.base_path, id=id);
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
+    let local_var_uri_str = format!(
+        "{}/projects/{id}/join",
+        local_var_configuration.base_path,
+        id = id
+    );
+    let mut local_var_req_builder =
+        local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+        local_var_req_builder =
+            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
     if let Some(ref local_var_apikey) = local_var_configuration.api_key {
         let local_var_key = local_var_apikey.key.clone();
@@ -576,27 +756,40 @@ pub async fn projects_id_join_post(configuration: &configuration::Configuration,
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         Ok(())
     } else {
-        let local_var_entity: Option<ProjectsIdJoinPostError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        let local_var_entity: Option<ProjectsIdJoinPostError> =
+            serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent {
+            status: local_var_status,
+            content: local_var_content,
+            entity: local_var_entity,
+        };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-/// Leave a project 
-pub async fn projects_id_leave_delete(configuration: &configuration::Configuration, params: ProjectsIdLeaveDeleteParams) -> Result<(), Error<ProjectsIdLeaveDeleteError>> {
+/// Leave a project
+pub async fn projects_id_leave_delete(
+    configuration: &configuration::Configuration,
+    params: ProjectsIdLeaveDeleteParams,
+) -> Result<(), Error<ProjectsIdLeaveDeleteError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
     let id = params.id;
 
-
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/projects/{id}/leave", local_var_configuration.base_path, id=id);
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::DELETE, local_var_uri_str.as_str());
+    let local_var_uri_str = format!(
+        "{}/projects/{id}/leave",
+        local_var_configuration.base_path,
+        id = id
+    );
+    let mut local_var_req_builder =
+        local_var_client.request(reqwest::Method::DELETE, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+        local_var_req_builder =
+            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
     if let Some(ref local_var_apikey) = local_var_configuration.api_key {
         let local_var_key = local_var_apikey.key.clone();
@@ -616,14 +809,22 @@ pub async fn projects_id_leave_delete(configuration: &configuration::Configurati
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         Ok(())
     } else {
-        let local_var_entity: Option<ProjectsIdLeaveDeleteError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        let local_var_entity: Option<ProjectsIdLeaveDeleteError> =
+            serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent {
+            status: local_var_status,
+            content: local_var_content,
+            entity: local_var_entity,
+        };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-/// Given an ID, return members of the project 
-pub async fn projects_id_members_get(configuration: &configuration::Configuration, params: ProjectsIdMembersGetParams) -> Result<crate::models::ProjectMembersResponse, Error<ProjectsIdMembersGetError>> {
+/// Given an ID, return members of the project
+pub async fn projects_id_members_get(
+    configuration: &configuration::Configuration,
+    params: ProjectsIdMembersGetParams,
+) -> Result<crate::models::ProjectMembersResponse, Error<ProjectsIdMembersGetError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -632,23 +833,31 @@ pub async fn projects_id_members_get(configuration: &configuration::Configuratio
     let page = params.page;
     let per_page = params.per_page;
 
-
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/projects/{id}/members", local_var_configuration.base_path, id=id);
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+    let local_var_uri_str = format!(
+        "{}/projects/{id}/members",
+        local_var_configuration.base_path,
+        id = id
+    );
+    let mut local_var_req_builder =
+        local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
     if let Some(ref local_var_str) = role {
-        local_var_req_builder = local_var_req_builder.query(&[("role", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("role", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = page {
-        local_var_req_builder = local_var_req_builder.query(&[("page", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("page", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = per_page {
-        local_var_req_builder = local_var_req_builder.query(&[("per_page", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("per_page", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+        local_var_req_builder =
+            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
 
     let local_var_req = local_var_req_builder.build()?;
@@ -660,27 +869,40 @@ pub async fn projects_id_members_get(configuration: &configuration::Configuratio
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<ProjectsIdMembersGetError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        let local_var_entity: Option<ProjectsIdMembersGetError> =
+            serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent {
+            status: local_var_status,
+            content: local_var_content,
+            entity: local_var_entity,
+        };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-/// Given a project ID, return the details of the authenticated user's membership in that project 
-pub async fn projects_id_membership_get(configuration: &configuration::Configuration, params: ProjectsIdMembershipGetParams) -> Result<(), Error<ProjectsIdMembershipGetError>> {
+/// Given a project ID, return the details of the authenticated user's membership in that project
+pub async fn projects_id_membership_get(
+    configuration: &configuration::Configuration,
+    params: ProjectsIdMembershipGetParams,
+) -> Result<(), Error<ProjectsIdMembershipGetError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
     let id = params.id;
 
-
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/projects/{id}/membership", local_var_configuration.base_path, id=id);
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+    let local_var_uri_str = format!(
+        "{}/projects/{id}/membership",
+        local_var_configuration.base_path,
+        id = id
+    );
+    let mut local_var_req_builder =
+        local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+        local_var_req_builder =
+            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
     if let Some(ref local_var_apikey) = local_var_configuration.api_key {
         let local_var_key = local_var_apikey.key.clone();
@@ -700,28 +922,41 @@ pub async fn projects_id_membership_get(configuration: &configuration::Configura
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         Ok(())
     } else {
-        let local_var_entity: Option<ProjectsIdMembershipGetError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        let local_var_entity: Option<ProjectsIdMembershipGetError> =
+            serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent {
+            status: local_var_status,
+            content: local_var_content,
+            entity: local_var_entity,
+        };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
 /// Remove an observation from a project
-pub async fn projects_id_remove_delete(configuration: &configuration::Configuration, params: ProjectsIdRemoveDeleteParams) -> Result<(), Error<ProjectsIdRemoveDeleteError>> {
+pub async fn projects_id_remove_delete(
+    configuration: &configuration::Configuration,
+    params: ProjectsIdRemoveDeleteParams,
+) -> Result<(), Error<ProjectsIdRemoveDeleteError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
     let id = params.id;
     let body = params.body;
 
-
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/projects/{id}/remove", local_var_configuration.base_path, id=id);
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::DELETE, local_var_uri_str.as_str());
+    let local_var_uri_str = format!(
+        "{}/projects/{id}/remove",
+        local_var_configuration.base_path,
+        id = id
+    );
+    let mut local_var_req_builder =
+        local_var_client.request(reqwest::Method::DELETE, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+        local_var_req_builder =
+            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
     if let Some(ref local_var_apikey) = local_var_configuration.api_key {
         let local_var_key = local_var_apikey.key.clone();
@@ -742,27 +977,40 @@ pub async fn projects_id_remove_delete(configuration: &configuration::Configurat
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         Ok(())
     } else {
-        let local_var_entity: Option<ProjectsIdRemoveDeleteError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        let local_var_entity: Option<ProjectsIdRemoveDeleteError> =
+            serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent {
+            status: local_var_status,
+            content: local_var_content,
+            entity: local_var_entity,
+        };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-/// [Deprecated] Subscriptions to projects are managed through joining and leaving projects, so this will not return any useful information.  Given an ID, return subscription of the current user 
-pub async fn projects_id_subscriptions_get(configuration: &configuration::Configuration, params: ProjectsIdSubscriptionsGetParams) -> Result<(), Error<ProjectsIdSubscriptionsGetError>> {
+/// [Deprecated] Subscriptions to projects are managed through joining and leaving projects, so this will not return any useful information.  Given an ID, return subscription of the current user
+pub async fn projects_id_subscriptions_get(
+    configuration: &configuration::Configuration,
+    params: ProjectsIdSubscriptionsGetParams,
+) -> Result<(), Error<ProjectsIdSubscriptionsGetError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
     let id = params.id;
 
-
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/projects/{id}/subscriptions", local_var_configuration.base_path, id=id);
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+    let local_var_uri_str = format!(
+        "{}/projects/{id}/subscriptions",
+        local_var_configuration.base_path,
+        id = id
+    );
+    let mut local_var_req_builder =
+        local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+        local_var_req_builder =
+            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
     if let Some(ref local_var_apikey) = local_var_configuration.api_key {
         let local_var_key = local_var_apikey.key.clone();
@@ -782,27 +1030,40 @@ pub async fn projects_id_subscriptions_get(configuration: &configuration::Config
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         Ok(())
     } else {
-        let local_var_entity: Option<ProjectsIdSubscriptionsGetError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        let local_var_entity: Option<ProjectsIdSubscriptionsGetError> =
+            serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent {
+            status: local_var_status,
+            content: local_var_content,
+            entity: local_var_entity,
+        };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-/// Toggles current user's subscription to this project. If the logged-in user is not subscribed, POSTing here will subscribe them. If they are already subscribed, this will remove the subscription 
-pub async fn subscriptions_project_id_subscribe_post(configuration: &configuration::Configuration, params: SubscriptionsProjectIdSubscribePostParams) -> Result<(), Error<SubscriptionsProjectIdSubscribePostError>> {
+/// Toggles current user's subscription to this project. If the logged-in user is not subscribed, POSTing here will subscribe them. If they are already subscribed, this will remove the subscription
+pub async fn subscriptions_project_id_subscribe_post(
+    configuration: &configuration::Configuration,
+    params: SubscriptionsProjectIdSubscribePostParams,
+) -> Result<(), Error<SubscriptionsProjectIdSubscribePostError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
     let id = params.id;
 
-
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/subscriptions/project/{id}/subscribe", local_var_configuration.base_path, id=id);
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
+    let local_var_uri_str = format!(
+        "{}/subscriptions/project/{id}/subscribe",
+        local_var_configuration.base_path,
+        id = id
+    );
+    let mut local_var_req_builder =
+        local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+        local_var_req_builder =
+            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
     if let Some(ref local_var_apikey) = local_var_configuration.api_key {
         let local_var_key = local_var_apikey.key.clone();
@@ -822,9 +1083,13 @@ pub async fn subscriptions_project_id_subscribe_post(configuration: &configurati
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         Ok(())
     } else {
-        let local_var_entity: Option<SubscriptionsProjectIdSubscribePostError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        let local_var_entity: Option<SubscriptionsProjectIdSubscribePostError> =
+            serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent {
+            status: local_var_status,
+            content: local_var_content,
+            entity: local_var_entity,
+        };
         Err(Error::ResponseError(local_var_error))
     }
 }
-

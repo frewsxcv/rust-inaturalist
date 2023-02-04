@@ -1,18 +1,17 @@
 /*
  * iNaturalist API
  *
- * # https://api.inaturalist.org/v1/  [iNaturalist](https://www.inaturalist.org/) is a global community of naturalists, scientists, and members of the public sharing over a million wildlife sightings to teach one another about the natural world while creating high quality citizen science data for science and conservation. The iNaturalist technology infrastructure and open source software is administered by the [California Academy of Sciences](https://www.calacademy.org/) as part of their mission to explore, explain, and sustain life on Earth.  These API methods return data in JSON/JSONP and PNG response formats. They are meant to supplement the existing [iNaturalist API](https://www.inaturalist.org/pages/api+reference), implemented in Ruby on Rails, which has more functionality and supports more write operations, but tends to be slower and have less consistent response formats. Visit our [developers page](https://www.inaturalist.org/pages/developers) for more information. Write operations that expect and return JSON describe a single `body` parameter that represents the request body, which should be specified as JSON. See the \"Model\" of each body parameter for attributes that we accept in these JSON objects.  Multiple values for a single URL parameter should be separated by commas, e.g. `taxon_id=1,2,3`.  Map tiles are generated using the [node-mapnik](https://github.com/mapnik/node-mapnik) library, following the XYZ map tiling scheme. The \"Observation Tile\" methods accept nearly all the parameters of the observation search APIs, and will generate map tiles reflecting the same observations returned by searches. These \"Observation Tile\" methods have corresponding [UTFGrid](https://github.com/mapbox/utfgrid-spec) JSON responses which return information needed to make interactive maps.  Authentication in the Node API is handled via JSON Web Tokens (JWT). To obtain one, make an [OAuth-authenticated request](http://www.inaturalist.org/pages/api+reference#auth) to https://www.inaturalist.org/users/api_token. Each JWT will expire after 24 hours. Authentication required for all PUT and POST requests. Some GET requests will also include private information like hidden coordinates if the authenticated user has permission to view them.  iNaturalist Website: https://www.inaturalist.org/  Open Source Software: https://github.com/inaturalist/  ## Terms of Use  Use of this API is subject to the iNaturalist [Terms of Service](https://www.inaturalist.org/terms) and [Privacy Policy](https://www.inaturalist.org/privacy). We will block any use of our API that violates our Terms or Privacy Policy without notice. The API is intended to support application development, not data scraping. For pre- generated data exports, see https://www.inaturalist.org/pages/developers.  Please note that we throttle API usage to a max of 100 requests per minute, though we ask that you try to keep it to 60 requests per minute or lower, and to keep under 10,000 requests per day. If we notice usage that has serious impact on our performance we may institute blocks without notification.  Terms of Service: https://www.inaturalist.org/terms  Privacy Policy: https://www.inaturalist.org/privacy 
+ * # https://api.inaturalist.org/v1/  [iNaturalist](https://www.inaturalist.org/) is a global community of naturalists, scientists, and members of the public sharing over a million wildlife sightings to teach one another about the natural world while creating high quality citizen science data for science and conservation. The iNaturalist technology infrastructure and open source software is administered by the [California Academy of Sciences](https://www.calacademy.org/) as part of their mission to explore, explain, and sustain life on Earth.  These API methods return data in JSON/JSONP and PNG response formats. They are meant to supplement the existing [iNaturalist API](https://www.inaturalist.org/pages/api+reference), implemented in Ruby on Rails, which has more functionality and supports more write operations, but tends to be slower and have less consistent response formats. Visit our [developers page](https://www.inaturalist.org/pages/developers) for more information. Write operations that expect and return JSON describe a single `body` parameter that represents the request body, which should be specified as JSON. See the \"Model\" of each body parameter for attributes that we accept in these JSON objects.  Multiple values for a single URL parameter should be separated by commas, e.g. `taxon_id=1,2,3`.  Map tiles are generated using the [node-mapnik](https://github.com/mapnik/node-mapnik) library, following the XYZ map tiling scheme. The \"Observation Tile\" methods accept nearly all the parameters of the observation search APIs, and will generate map tiles reflecting the same observations returned by searches. These \"Observation Tile\" methods have corresponding [UTFGrid](https://github.com/mapbox/utfgrid-spec) JSON responses which return information needed to make interactive maps.  Authentication in the Node API is handled via JSON Web Tokens (JWT). To obtain one, make an [OAuth-authenticated request](http://www.inaturalist.org/pages/api+reference#auth) to https://www.inaturalist.org/users/api_token. Each JWT will expire after 24 hours. Authentication required for all PUT and POST requests. Some GET requests will also include private information like hidden coordinates if the authenticated user has permission to view them.  iNaturalist Website: https://www.inaturalist.org/  Open Source Software: https://github.com/inaturalist/  ## Terms of Use  Use of this API is subject to the iNaturalist [Terms of Service](https://www.inaturalist.org/terms) and [Privacy Policy](https://www.inaturalist.org/privacy). We will block any use of our API that violates our Terms or Privacy Policy without notice. The API is intended to support application development, not data scraping. For pre- generated data exports, see https://www.inaturalist.org/pages/developers.  Please note that we throttle API usage to a max of 100 requests per minute, though we ask that you try to keep it to 60 requests per minute or lower, and to keep under 10,000 requests per day. If we notice usage that has serious impact on our performance we may institute blocks without notification.  Terms of Service: https://www.inaturalist.org/terms  Privacy Policy: https://www.inaturalist.org/privacy
  *
  * The version of the OpenAPI document: 1.3.0
- * 
+ *
  * Generated by: https://openapi-generator.tech
  */
 
-
 use reqwest;
 
+use super::{configuration, Error};
 use crate::apis::ResponseContent;
-use super::{Error, configuration};
 
 /// struct for passing parameters to the method [`identifications_categories_get`]
 #[derive(Clone, Debug, Default)]
@@ -83,14 +82,14 @@ pub struct IdentificationsCategoriesGetParams {
     pub id_below: Option<String>,
     /// Pagination `page` number
     pub page: Option<String>,
-    /// Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted 
+    /// Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted
     pub per_page: Option<String>,
     /// Sort order
     pub order: Option<String>,
     /// Sort field
     pub order_by: Option<String>,
     /// Return only the record IDs
-    pub only_id: Option<bool>
+    pub only_id: Option<bool>,
 }
 
 /// struct for passing parameters to the method [`identifications_get`]
@@ -162,28 +161,28 @@ pub struct IdentificationsGetParams {
     pub id_below: Option<String>,
     /// Pagination `page` number
     pub page: Option<String>,
-    /// Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted 
+    /// Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted
     pub per_page: Option<String>,
     /// Sort order
     pub order: Option<String>,
     /// Sort field
     pub order_by: Option<String>,
     /// Return only the record IDs
-    pub only_id: Option<bool>
+    pub only_id: Option<bool>,
 }
 
 /// struct for passing parameters to the method [`identifications_id_delete`]
 #[derive(Clone, Debug, Default)]
 pub struct IdentificationsIdDeleteParams {
     /// ID of the record
-    pub id: i32
+    pub id: i32,
 }
 
 /// struct for passing parameters to the method [`identifications_id_get`]
 #[derive(Clone, Debug, Default)]
 pub struct IdentificationsIdGetParams {
     /// Must have this ID
-    pub id: Vec<i32>
+    pub id: Vec<i32>,
 }
 
 /// struct for passing parameters to the method [`identifications_id_put`]
@@ -192,7 +191,7 @@ pub struct IdentificationsIdPutParams {
     /// ID of the record
     pub id: i32,
     /// Identification object
-    pub body: Option<crate::models::PostIdentification>
+    pub body: Option<crate::models::PostIdentification>,
 }
 
 /// struct for passing parameters to the method [`identifications_identifiers_get`]
@@ -264,14 +263,14 @@ pub struct IdentificationsIdentifiersGetParams {
     pub id_below: Option<String>,
     /// Pagination `page` number
     pub page: Option<String>,
-    /// Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted 
+    /// Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted
     pub per_page: Option<String>,
     /// Sort order
     pub order: Option<String>,
     /// Sort field
     pub order_by: Option<String>,
     /// Return only the record IDs
-    pub only_id: Option<bool>
+    pub only_id: Option<bool>,
 }
 
 /// struct for passing parameters to the method [`identifications_observers_get`]
@@ -343,21 +342,21 @@ pub struct IdentificationsObserversGetParams {
     pub id_below: Option<String>,
     /// Pagination `page` number
     pub page: Option<String>,
-    /// Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted 
+    /// Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted
     pub per_page: Option<String>,
     /// Sort order
     pub order: Option<String>,
     /// Sort field
     pub order_by: Option<String>,
     /// Return only the record IDs
-    pub only_id: Option<bool>
+    pub only_id: Option<bool>,
 }
 
 /// struct for passing parameters to the method [`identifications_post`]
 #[derive(Clone, Debug, Default)]
 pub struct IdentificationsPostParams {
     /// Identification object
-    pub body: Option<crate::models::PostIdentification>
+    pub body: Option<crate::models::PostIdentification>,
 }
 
 /// struct for passing parameters to the method [`identifications_recent_taxa_get`]
@@ -429,14 +428,14 @@ pub struct IdentificationsRecentTaxaGetParams {
     pub id_below: Option<String>,
     /// Pagination `page` number
     pub page: Option<String>,
-    /// Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted 
+    /// Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted
     pub per_page: Option<String>,
     /// Sort order
     pub order: Option<String>,
     /// Sort field
     pub order_by: Option<String>,
     /// Return only the record IDs
-    pub only_id: Option<bool>
+    pub only_id: Option<bool>,
 }
 
 /// struct for passing parameters to the method [`identifications_similar_species_get`]
@@ -456,7 +455,7 @@ pub struct IdentificationsSimilarSpeciesGetParams {
     pub id_please: Option<bool>,
     /// Observations that have community identifications
     pub identified: Option<bool>,
-    /// Observations whose taxa are introduced in their location 
+    /// Observations whose taxa are introduced in their location
     pub introduced: Option<bool>,
     /// Observations that show on map tiles
     pub mappable: Option<bool>,
@@ -464,19 +463,19 @@ pub struct IdentificationsSimilarSpeciesGetParams {
     pub native: Option<bool>,
     /// Observations whose taxa are outside their known ranges
     pub out_of_range: Option<bool>,
-    /// Observations identified by the curator of a project. If the `project_id` parameter is also specified, this will only consider observations identified by curators of the specified project(s) 
+    /// Observations identified by the curator of a project. If the `project_id` parameter is also specified, this will only consider observations identified by curators of the specified project(s)
     pub pcid: Option<bool>,
     /// Observations with photos
     pub photos: Option<bool>,
-    /// Observations that have been favorited by at least one user 
+    /// Observations that have been favorited by at least one user
     pub popular: Option<bool>,
     /// Observations with sounds
     pub sounds: Option<bool>,
-    /// Observations of active taxon concepts 
+    /// Observations of active taxon concepts
     pub taxon_is_active: Option<bool>,
-    /// Observations whose taxa are threatened in their location 
+    /// Observations whose taxa are threatened in their location
     pub threatened: Option<bool>,
-    /// Observations with a `quality_grade` of either `needs_id` or `research`. Equivalent to `quality_grade=needs_id,research` 
+    /// Observations with a `quality_grade` of either `needs_id` or `research`. Equivalent to `quality_grade=needs_id,research`
     pub verifiable: Option<bool>,
     /// License attribute of an observation must not be null
     pub licensed: Option<bool>,
@@ -498,13 +497,13 @@ pub struct IdentificationsSimilarSpeciesGetParams {
     pub project_id: Option<Vec<String>>,
     /// Taxon must have this rank
     pub rank: Option<Vec<String>>,
-    /// Must be affiliated with the iNaturalist network website with this ID 
+    /// Must be affiliated with the iNaturalist network website with this ID
     pub site_id: Option<Vec<String>>,
     /// Must have at least one sound with this license
     pub sound_license: Option<Vec<String>>,
     /// Exclude observations of these taxa and their descendants
     pub without_taxon_id: Option<Vec<String>>,
-    /// Taxon must have a scientific or common name matching this string 
+    /// Taxon must have a scientific or common name matching this string
     pub taxon_name: Option<Vec<String>>,
     /// User must have this ID or login
     pub user_id: Option<Vec<String>>,
@@ -520,11 +519,11 @@ pub struct IdentificationsSimilarSpeciesGetParams {
     pub year: Option<Vec<String>>,
     /// Must have an annotation using this controlled term ID
     pub term_id: Option<Vec<i32>>,
-    /// Must have an annotation using this controlled value ID. Must be combined with the `term_id` parameter 
+    /// Must have an annotation using this controlled value ID. Must be combined with the `term_id` parameter
     pub term_value_id: Option<Vec<i32>>,
-    /// Exclude observations with annotations using this controlled value ID. 
+    /// Exclude observations with annotations using this controlled value ID.
     pub without_term_id: Option<i32>,
-    /// Exclude observations with annotations using this controlled value ID. Must be combined with the `term_id` parameter 
+    /// Exclude observations with annotations using this controlled value ID. Must be combined with the `term_id` parameter
     pub without_term_value_id: Option<Vec<i32>>,
     /// Must have a positional accuracy above this value (meters)
     pub acc_above: Option<String>,
@@ -548,15 +547,15 @@ pub struct IdentificationsSimilarSpeciesGetParams {
     pub unobserved_by_user_id: Option<i32>,
     /// Must match the rules of the project with this ID or slug
     pub apply_project_rules_for: Option<String>,
-    /// Taxon must have this conservation status code. If the `place_id` parameter is also specified, this will only consider statuses specific to that place 
+    /// Taxon must have this conservation status code. If the `place_id` parameter is also specified, this will only consider statuses specific to that place
     pub cs: Option<String>,
-    /// Taxon must have a conservation status from this authority. If the `place_id` parameter is also specified, this will only consider statuses specific to that place 
+    /// Taxon must have a conservation status from this authority. If the `place_id` parameter is also specified, this will only consider statuses specific to that place
     pub csa: Option<String>,
-    /// Taxon must have this IUCN conservation status. If the `place_id` parameter is also specified, this will only consider statuses specific to that place 
+    /// Taxon must have this IUCN conservation status. If the `place_id` parameter is also specified, this will only consider statuses specific to that place
     pub csi: Option<Vec<String>>,
     /// Must have this geoprivacy setting
     pub geoprivacy: Option<Vec<String>>,
-    /// Filter observations by the most conservative geoprivacy applied by a conservation status associated with one of the taxa proposed in the current identifications. 
+    /// Filter observations by the most conservative geoprivacy applied by a conservation status associated with one of the taxa proposed in the current identifications.
     pub taxon_geoprivacy: Option<Vec<String>>,
     /// Taxon must have this rank or lower
     pub hrank: Option<String>,
@@ -570,19 +569,19 @@ pub struct IdentificationsSimilarSpeciesGetParams {
     pub id_below: Option<String>,
     /// Identifications must meet these criteria
     pub identifications: Option<String>,
-    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius) 
+    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius)
     pub lat: Option<f64>,
-    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius) 
+    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius)
     pub lng: Option<f64>,
-    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius) 
+    /// Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius)
     pub radius: Option<String>,
-    /// Must be within this bounding box (*nelat, *nelng, *swlat, *swlng) 
+    /// Must be within this bounding box (*nelat, *nelng, *swlat, *swlng)
     pub nelat: Option<f64>,
-    /// Must be within this bounding box (*nelat, *nelng, *swlat, *swlng) 
+    /// Must be within this bounding box (*nelat, *nelng, *swlat, *swlng)
     pub nelng: Option<f64>,
-    /// Must be within this bounding box (*nelat, *nelng, *swlat, *swlng) 
+    /// Must be within this bounding box (*nelat, *nelng, *swlat, *swlng)
     pub swlat: Option<f64>,
-    /// Must be within this bounding box (*nelat, *nelng, *swlat, *swlng) 
+    /// Must be within this bounding box (*nelat, *nelng, *swlat, *swlng)
     pub swlng: Option<f64>,
     /// Taxon must be in the list with this ID
     pub list_id: Option<i32>,
@@ -592,7 +591,7 @@ pub struct IdentificationsSimilarSpeciesGetParams {
     pub not_matching_project_rules_for: Option<String>,
     /// Search observation properties. Can be combined with `search_on`
     pub q: Option<String>,
-    /// Properties to search on, when combined with `q`. Searches across all properties by default 
+    /// Properties to search on, when combined with `q`. Searches across all properties by default
     pub search_on: Option<String>,
     /// Must have this quality grade
     pub quality_grade: Option<String>,
@@ -600,8 +599,8 @@ pub struct IdentificationsSimilarSpeciesGetParams {
     pub updated_since: Option<String>,
     /// See `reviewed`
     pub viewer_id: Option<String>,
-    /// Observations have been reviewed by the user with ID equal to the value of the `viewer_id` parameter 
-    pub reviewed: Option<bool>
+    /// Observations have been reviewed by the user with ID equal to the value of the `viewer_id` parameter
+    pub reviewed: Option<bool>,
 }
 
 /// struct for passing parameters to the method [`identifications_species_counts_get`]
@@ -673,7 +672,7 @@ pub struct IdentificationsSpeciesCountsGetParams {
     pub id_below: Option<String>,
     /// Pagination `page` number
     pub page: Option<String>,
-    /// Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted 
+    /// Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted
     pub per_page: Option<String>,
     /// Sort order
     pub order: Option<String>,
@@ -682,9 +681,8 @@ pub struct IdentificationsSpeciesCountsGetParams {
     /// Return only the record IDs
     pub only_id: Option<bool>,
     /// Source of the taxon for counting
-    pub taxon_of: Option<String>
+    pub taxon_of: Option<String>,
 }
-
 
 /// struct for typed errors of method [`identifications_categories_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -766,9 +764,11 @@ pub enum IdentificationsSpeciesCountsGetError {
     UnknownValue(serde_json::Value),
 }
 
-
-/// Given zero to many of following parameters, return counts of the categories of identifications matching the search criteria 
-pub async fn identifications_categories_get(configuration: &configuration::Configuration, params: IdentificationsCategoriesGetParams) -> Result<(), Error<IdentificationsCategoriesGetError>> {
+/// Given zero to many of following parameters, return counts of the categories of identifications matching the search criteria
+pub async fn identifications_categories_get(
+    configuration: &configuration::Configuration,
+    params: IdentificationsCategoriesGetParams,
+) -> Result<(), Error<IdentificationsCategoriesGetError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -810,124 +810,319 @@ pub async fn identifications_categories_get(configuration: &configuration::Confi
     let order_by = params.order_by;
     let only_id = params.only_id;
 
-
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/identifications/categories", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+    let local_var_uri_str = format!(
+        "{}/identifications/categories",
+        local_var_configuration.base_path
+    );
+    let mut local_var_req_builder =
+        local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
     if let Some(ref local_var_str) = current_taxon {
-        local_var_req_builder = local_var_req_builder.query(&[("current_taxon", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("current_taxon", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = own_observation {
-        local_var_req_builder = local_var_req_builder.query(&[("own_observation", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("own_observation", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = is_change {
-        local_var_req_builder = local_var_req_builder.query(&[("is_change", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("is_change", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = taxon_active {
-        local_var_req_builder = local_var_req_builder.query(&[("taxon_active", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("taxon_active", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observation_taxon_active {
-        local_var_req_builder = local_var_req_builder.query(&[("observation_taxon_active", &local_var_str.to_string())]);
+        local_var_req_builder = local_var_req_builder
+            .query(&[("observation_taxon_active", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = rank {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("rank".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("rank", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("rank".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "rank",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = observation_rank {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("observation_rank".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("observation_rank", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("observation_rank".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "observation_rank",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = user_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("user_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("user_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("user_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "user_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = user_login {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("user_login".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("user_login", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("user_login".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "user_login",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = current {
-        local_var_req_builder = local_var_req_builder.query(&[("current", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("current", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = category {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("category".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("category", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("category".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "category",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = place_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("place_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("place_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("place_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "place_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = quality_grade {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("quality_grade".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("quality_grade", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("quality_grade".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "quality_grade",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = observation_taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("observation_taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("observation_taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("observation_taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "observation_taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = iconic_taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("iconic_taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("iconic_taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("iconic_taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "iconic_taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = observation_iconic_taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("observation_iconic_taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("observation_iconic_taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("observation_iconic_taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "observation_iconic_taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = lrank {
-        local_var_req_builder = local_var_req_builder.query(&[("lrank", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("lrank", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = hrank {
-        local_var_req_builder = local_var_req_builder.query(&[("hrank", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("hrank", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observation_lrank {
-        local_var_req_builder = local_var_req_builder.query(&[("observation_lrank", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observation_lrank", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observation_hrank {
-        local_var_req_builder = local_var_req_builder.query(&[("observation_hrank", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observation_hrank", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = without_taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("without_taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("without_taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("without_taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "without_taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = without_observation_taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("without_observation_taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("without_observation_taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("without_observation_taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "without_observation_taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = d1 {
@@ -937,40 +1132,52 @@ pub async fn identifications_categories_get(configuration: &configuration::Confi
         local_var_req_builder = local_var_req_builder.query(&[("d2", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observation_created_d1 {
-        local_var_req_builder = local_var_req_builder.query(&[("observation_created_d1", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observation_created_d1", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observation_created_d2 {
-        local_var_req_builder = local_var_req_builder.query(&[("observation_created_d2", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observation_created_d2", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observed_d1 {
-        local_var_req_builder = local_var_req_builder.query(&[("observed_d1", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observed_d1", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observed_d2 {
-        local_var_req_builder = local_var_req_builder.query(&[("observed_d2", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observed_d2", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = id_above {
-        local_var_req_builder = local_var_req_builder.query(&[("id_above", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("id_above", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = id_below {
-        local_var_req_builder = local_var_req_builder.query(&[("id_below", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("id_below", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = page {
-        local_var_req_builder = local_var_req_builder.query(&[("page", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("page", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = per_page {
-        local_var_req_builder = local_var_req_builder.query(&[("per_page", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("per_page", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = order {
-        local_var_req_builder = local_var_req_builder.query(&[("order", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("order", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = order_by {
-        local_var_req_builder = local_var_req_builder.query(&[("order_by", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("order_by", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = only_id {
-        local_var_req_builder = local_var_req_builder.query(&[("only_id", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("only_id", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+        local_var_req_builder =
+            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
 
     let local_var_req = local_var_req_builder.build()?;
@@ -982,14 +1189,22 @@ pub async fn identifications_categories_get(configuration: &configuration::Confi
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         Ok(())
     } else {
-        let local_var_entity: Option<IdentificationsCategoriesGetError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        let local_var_entity: Option<IdentificationsCategoriesGetError> =
+            serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent {
+            status: local_var_status,
+            content: local_var_content,
+            entity: local_var_entity,
+        };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-/// Given zero to many of following parameters, returns identifications matching the search criteria 
-pub async fn identifications_get(configuration: &configuration::Configuration, params: IdentificationsGetParams) -> Result<(), Error<IdentificationsGetError>> {
+/// Given zero to many of following parameters, returns identifications matching the search criteria
+pub async fn identifications_get(
+    configuration: &configuration::Configuration,
+    params: IdentificationsGetParams,
+) -> Result<(), Error<IdentificationsGetError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -1030,125 +1245,317 @@ pub async fn identifications_get(configuration: &configuration::Configuration, p
     let order = params.order;
     let order_by = params.order_by;
     let only_id = params.only_id;
-
 
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/identifications", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
     if let Some(ref local_var_str) = current_taxon {
-        local_var_req_builder = local_var_req_builder.query(&[("current_taxon", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("current_taxon", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = own_observation {
-        local_var_req_builder = local_var_req_builder.query(&[("own_observation", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("own_observation", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = is_change {
-        local_var_req_builder = local_var_req_builder.query(&[("is_change", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("is_change", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = taxon_active {
-        local_var_req_builder = local_var_req_builder.query(&[("taxon_active", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("taxon_active", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observation_taxon_active {
-        local_var_req_builder = local_var_req_builder.query(&[("observation_taxon_active", &local_var_str.to_string())]);
+        local_var_req_builder = local_var_req_builder
+            .query(&[("observation_taxon_active", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = rank {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("rank".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("rank", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("rank".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "rank",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = observation_rank {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("observation_rank".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("observation_rank", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("observation_rank".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "observation_rank",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = user_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("user_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("user_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("user_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "user_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = user_login {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("user_login".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("user_login", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("user_login".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "user_login",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = current {
-        local_var_req_builder = local_var_req_builder.query(&[("current", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("current", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = category {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("category".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("category", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("category".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "category",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = place_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("place_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("place_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("place_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "place_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = quality_grade {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("quality_grade".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("quality_grade", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("quality_grade".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "quality_grade",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = observation_taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("observation_taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("observation_taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("observation_taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "observation_taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = iconic_taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("iconic_taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("iconic_taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("iconic_taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "iconic_taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = observation_iconic_taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("observation_iconic_taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("observation_iconic_taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("observation_iconic_taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "observation_iconic_taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = lrank {
-        local_var_req_builder = local_var_req_builder.query(&[("lrank", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("lrank", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = hrank {
-        local_var_req_builder = local_var_req_builder.query(&[("hrank", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("hrank", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observation_lrank {
-        local_var_req_builder = local_var_req_builder.query(&[("observation_lrank", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observation_lrank", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observation_hrank {
-        local_var_req_builder = local_var_req_builder.query(&[("observation_hrank", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observation_hrank", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = without_taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("without_taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("without_taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("without_taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "without_taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = without_observation_taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("without_observation_taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("without_observation_taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("without_observation_taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "without_observation_taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = d1 {
@@ -1158,40 +1565,52 @@ pub async fn identifications_get(configuration: &configuration::Configuration, p
         local_var_req_builder = local_var_req_builder.query(&[("d2", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observation_created_d1 {
-        local_var_req_builder = local_var_req_builder.query(&[("observation_created_d1", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observation_created_d1", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observation_created_d2 {
-        local_var_req_builder = local_var_req_builder.query(&[("observation_created_d2", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observation_created_d2", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observed_d1 {
-        local_var_req_builder = local_var_req_builder.query(&[("observed_d1", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observed_d1", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observed_d2 {
-        local_var_req_builder = local_var_req_builder.query(&[("observed_d2", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observed_d2", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = id_above {
-        local_var_req_builder = local_var_req_builder.query(&[("id_above", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("id_above", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = id_below {
-        local_var_req_builder = local_var_req_builder.query(&[("id_below", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("id_below", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = page {
-        local_var_req_builder = local_var_req_builder.query(&[("page", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("page", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = per_page {
-        local_var_req_builder = local_var_req_builder.query(&[("per_page", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("per_page", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = order {
-        local_var_req_builder = local_var_req_builder.query(&[("order", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("order", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = order_by {
-        local_var_req_builder = local_var_req_builder.query(&[("order_by", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("order_by", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = only_id {
-        local_var_req_builder = local_var_req_builder.query(&[("only_id", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("only_id", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+        local_var_req_builder =
+            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
 
     let local_var_req = local_var_req_builder.build()?;
@@ -1203,27 +1622,40 @@ pub async fn identifications_get(configuration: &configuration::Configuration, p
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         Ok(())
     } else {
-        let local_var_entity: Option<IdentificationsGetError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        let local_var_entity: Option<IdentificationsGetError> =
+            serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent {
+            status: local_var_status,
+            content: local_var_content,
+            entity: local_var_entity,
+        };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-/// Delete an identification. See description of `PUT /identifications/{id} for notes on withdrawing and restoring identifications. 
-pub async fn identifications_id_delete(configuration: &configuration::Configuration, params: IdentificationsIdDeleteParams) -> Result<(), Error<IdentificationsIdDeleteError>> {
+/// Delete an identification. See description of `PUT /identifications/{id} for notes on withdrawing and restoring identifications.
+pub async fn identifications_id_delete(
+    configuration: &configuration::Configuration,
+    params: IdentificationsIdDeleteParams,
+) -> Result<(), Error<IdentificationsIdDeleteError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
     let id = params.id;
 
-
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/identifications/{id}", local_var_configuration.base_path, id=id);
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::DELETE, local_var_uri_str.as_str());
+    let local_var_uri_str = format!(
+        "{}/identifications/{id}",
+        local_var_configuration.base_path,
+        id = id
+    );
+    let mut local_var_req_builder =
+        local_var_client.request(reqwest::Method::DELETE, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+        local_var_req_builder =
+            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
     if let Some(ref local_var_apikey) = local_var_configuration.api_key {
         let local_var_key = local_var_apikey.key.clone();
@@ -1243,27 +1675,44 @@ pub async fn identifications_id_delete(configuration: &configuration::Configurat
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         Ok(())
     } else {
-        let local_var_entity: Option<IdentificationsIdDeleteError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        let local_var_entity: Option<IdentificationsIdDeleteError> =
+            serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent {
+            status: local_var_status,
+            content: local_var_content,
+            entity: local_var_entity,
+        };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-/// Given an ID, or an array of IDs in comma-delimited format, returns corresponding identifications. A maximum of 30 results will be returned 
-pub async fn identifications_id_get(configuration: &configuration::Configuration, params: IdentificationsIdGetParams) -> Result<(), Error<IdentificationsIdGetError>> {
+/// Given an ID, or an array of IDs in comma-delimited format, returns corresponding identifications. A maximum of 30 results will be returned
+pub async fn identifications_id_get(
+    configuration: &configuration::Configuration,
+    params: IdentificationsIdGetParams,
+) -> Result<(), Error<IdentificationsIdGetError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
     let id = params.id;
 
-
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/identifications/{id}", local_var_configuration.base_path, id=id.into_iter().map(|n| n.to_string()).collect::<Vec<String>>().join(","));
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+    let local_var_uri_str = format!(
+        "{}/identifications/{id}",
+        local_var_configuration.base_path,
+        id = id
+            .into_iter()
+            .map(|n| n.to_string())
+            .collect::<Vec<String>>()
+            .join(",")
+    );
+    let mut local_var_req_builder =
+        local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+        local_var_req_builder =
+            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
 
     let local_var_req = local_var_req_builder.build()?;
@@ -1275,28 +1724,41 @@ pub async fn identifications_id_get(configuration: &configuration::Configuration
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         Ok(())
     } else {
-        let local_var_entity: Option<IdentificationsIdGetError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        let local_var_entity: Option<IdentificationsIdGetError> =
+            serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent {
+            status: local_var_status,
+            content: local_var_content,
+            entity: local_var_entity,
+        };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-/// Update an identification. Note that to \"withdraw\" an observation you send a `PUT` request to this endpoint and set the `current` attribute to false. To \"restore\" it you do the same but set `current` to `true`. Only one identification by a given user can be `current` for a given observation, so if you \"restore\" one all the other identifications by the authenticated user for the given observation will be withdrawn. 
-pub async fn identifications_id_put(configuration: &configuration::Configuration, params: IdentificationsIdPutParams) -> Result<(), Error<IdentificationsIdPutError>> {
+/// Update an identification. Note that to \"withdraw\" an observation you send a `PUT` request to this endpoint and set the `current` attribute to false. To \"restore\" it you do the same but set `current` to `true`. Only one identification by a given user can be `current` for a given observation, so if you \"restore\" one all the other identifications by the authenticated user for the given observation will be withdrawn.
+pub async fn identifications_id_put(
+    configuration: &configuration::Configuration,
+    params: IdentificationsIdPutParams,
+) -> Result<(), Error<IdentificationsIdPutError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
     let id = params.id;
     let body = params.body;
 
-
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/identifications/{id}", local_var_configuration.base_path, id=id);
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::PUT, local_var_uri_str.as_str());
+    let local_var_uri_str = format!(
+        "{}/identifications/{id}",
+        local_var_configuration.base_path,
+        id = id
+    );
+    let mut local_var_req_builder =
+        local_var_client.request(reqwest::Method::PUT, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+        local_var_req_builder =
+            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
     if let Some(ref local_var_apikey) = local_var_configuration.api_key {
         let local_var_key = local_var_apikey.key.clone();
@@ -1317,14 +1779,22 @@ pub async fn identifications_id_put(configuration: &configuration::Configuration
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         Ok(())
     } else {
-        let local_var_entity: Option<IdentificationsIdPutError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        let local_var_entity: Option<IdentificationsIdPutError> =
+            serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent {
+            status: local_var_status,
+            content: local_var_content,
+            entity: local_var_entity,
+        };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-/// Given zero to many of following parameters, returns creators of identifications matching the search criteria and the count of matching identifications, ordered by count descending 
-pub async fn identifications_identifiers_get(configuration: &configuration::Configuration, params: IdentificationsIdentifiersGetParams) -> Result<crate::models::UserCountsResponse, Error<IdentificationsIdentifiersGetError>> {
+/// Given zero to many of following parameters, returns creators of identifications matching the search criteria and the count of matching identifications, ordered by count descending
+pub async fn identifications_identifiers_get(
+    configuration: &configuration::Configuration,
+    params: IdentificationsIdentifiersGetParams,
+) -> Result<crate::models::UserCountsResponse, Error<IdentificationsIdentifiersGetError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -1366,124 +1836,319 @@ pub async fn identifications_identifiers_get(configuration: &configuration::Conf
     let order_by = params.order_by;
     let only_id = params.only_id;
 
-
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/identifications/identifiers", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+    let local_var_uri_str = format!(
+        "{}/identifications/identifiers",
+        local_var_configuration.base_path
+    );
+    let mut local_var_req_builder =
+        local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
     if let Some(ref local_var_str) = current_taxon {
-        local_var_req_builder = local_var_req_builder.query(&[("current_taxon", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("current_taxon", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = own_observation {
-        local_var_req_builder = local_var_req_builder.query(&[("own_observation", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("own_observation", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = is_change {
-        local_var_req_builder = local_var_req_builder.query(&[("is_change", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("is_change", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = taxon_active {
-        local_var_req_builder = local_var_req_builder.query(&[("taxon_active", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("taxon_active", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observation_taxon_active {
-        local_var_req_builder = local_var_req_builder.query(&[("observation_taxon_active", &local_var_str.to_string())]);
+        local_var_req_builder = local_var_req_builder
+            .query(&[("observation_taxon_active", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = rank {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("rank".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("rank", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("rank".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "rank",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = observation_rank {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("observation_rank".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("observation_rank", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("observation_rank".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "observation_rank",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = user_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("user_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("user_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("user_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "user_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = user_login {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("user_login".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("user_login", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("user_login".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "user_login",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = current {
-        local_var_req_builder = local_var_req_builder.query(&[("current", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("current", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = category {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("category".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("category", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("category".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "category",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = place_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("place_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("place_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("place_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "place_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = quality_grade {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("quality_grade".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("quality_grade", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("quality_grade".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "quality_grade",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = observation_taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("observation_taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("observation_taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("observation_taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "observation_taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = iconic_taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("iconic_taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("iconic_taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("iconic_taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "iconic_taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = observation_iconic_taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("observation_iconic_taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("observation_iconic_taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("observation_iconic_taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "observation_iconic_taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = lrank {
-        local_var_req_builder = local_var_req_builder.query(&[("lrank", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("lrank", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = hrank {
-        local_var_req_builder = local_var_req_builder.query(&[("hrank", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("hrank", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observation_lrank {
-        local_var_req_builder = local_var_req_builder.query(&[("observation_lrank", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observation_lrank", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observation_hrank {
-        local_var_req_builder = local_var_req_builder.query(&[("observation_hrank", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observation_hrank", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = without_taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("without_taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("without_taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("without_taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "without_taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = without_observation_taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("without_observation_taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("without_observation_taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("without_observation_taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "without_observation_taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = d1 {
@@ -1493,40 +2158,52 @@ pub async fn identifications_identifiers_get(configuration: &configuration::Conf
         local_var_req_builder = local_var_req_builder.query(&[("d2", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observation_created_d1 {
-        local_var_req_builder = local_var_req_builder.query(&[("observation_created_d1", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observation_created_d1", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observation_created_d2 {
-        local_var_req_builder = local_var_req_builder.query(&[("observation_created_d2", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observation_created_d2", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observed_d1 {
-        local_var_req_builder = local_var_req_builder.query(&[("observed_d1", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observed_d1", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observed_d2 {
-        local_var_req_builder = local_var_req_builder.query(&[("observed_d2", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observed_d2", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = id_above {
-        local_var_req_builder = local_var_req_builder.query(&[("id_above", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("id_above", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = id_below {
-        local_var_req_builder = local_var_req_builder.query(&[("id_below", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("id_below", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = page {
-        local_var_req_builder = local_var_req_builder.query(&[("page", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("page", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = per_page {
-        local_var_req_builder = local_var_req_builder.query(&[("per_page", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("per_page", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = order {
-        local_var_req_builder = local_var_req_builder.query(&[("order", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("order", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = order_by {
-        local_var_req_builder = local_var_req_builder.query(&[("order_by", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("order_by", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = only_id {
-        local_var_req_builder = local_var_req_builder.query(&[("only_id", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("only_id", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+        local_var_req_builder =
+            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
 
     let local_var_req = local_var_req_builder.build()?;
@@ -1538,14 +2215,22 @@ pub async fn identifications_identifiers_get(configuration: &configuration::Conf
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<IdentificationsIdentifiersGetError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        let local_var_entity: Option<IdentificationsIdentifiersGetError> =
+            serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent {
+            status: local_var_status,
+            content: local_var_content,
+            entity: local_var_entity,
+        };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-/// Given zero to many of following parameters, returns creators of observations of identifications matching the search criteria and the count of matching observations, ordered by count descending 
-pub async fn identifications_observers_get(configuration: &configuration::Configuration, params: IdentificationsObserversGetParams) -> Result<crate::models::UserCountsResponse, Error<IdentificationsObserversGetError>> {
+/// Given zero to many of following parameters, returns creators of observations of identifications matching the search criteria and the count of matching observations, ordered by count descending
+pub async fn identifications_observers_get(
+    configuration: &configuration::Configuration,
+    params: IdentificationsObserversGetParams,
+) -> Result<crate::models::UserCountsResponse, Error<IdentificationsObserversGetError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -1587,124 +2272,319 @@ pub async fn identifications_observers_get(configuration: &configuration::Config
     let order_by = params.order_by;
     let only_id = params.only_id;
 
-
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/identifications/observers", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+    let local_var_uri_str = format!(
+        "{}/identifications/observers",
+        local_var_configuration.base_path
+    );
+    let mut local_var_req_builder =
+        local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
     if let Some(ref local_var_str) = current_taxon {
-        local_var_req_builder = local_var_req_builder.query(&[("current_taxon", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("current_taxon", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = own_observation {
-        local_var_req_builder = local_var_req_builder.query(&[("own_observation", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("own_observation", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = is_change {
-        local_var_req_builder = local_var_req_builder.query(&[("is_change", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("is_change", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = taxon_active {
-        local_var_req_builder = local_var_req_builder.query(&[("taxon_active", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("taxon_active", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observation_taxon_active {
-        local_var_req_builder = local_var_req_builder.query(&[("observation_taxon_active", &local_var_str.to_string())]);
+        local_var_req_builder = local_var_req_builder
+            .query(&[("observation_taxon_active", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = rank {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("rank".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("rank", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("rank".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "rank",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = observation_rank {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("observation_rank".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("observation_rank", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("observation_rank".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "observation_rank",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = user_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("user_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("user_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("user_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "user_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = user_login {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("user_login".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("user_login", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("user_login".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "user_login",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = current {
-        local_var_req_builder = local_var_req_builder.query(&[("current", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("current", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = category {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("category".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("category", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("category".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "category",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = place_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("place_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("place_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("place_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "place_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = quality_grade {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("quality_grade".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("quality_grade", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("quality_grade".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "quality_grade",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = observation_taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("observation_taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("observation_taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("observation_taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "observation_taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = iconic_taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("iconic_taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("iconic_taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("iconic_taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "iconic_taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = observation_iconic_taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("observation_iconic_taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("observation_iconic_taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("observation_iconic_taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "observation_iconic_taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = lrank {
-        local_var_req_builder = local_var_req_builder.query(&[("lrank", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("lrank", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = hrank {
-        local_var_req_builder = local_var_req_builder.query(&[("hrank", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("hrank", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observation_lrank {
-        local_var_req_builder = local_var_req_builder.query(&[("observation_lrank", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observation_lrank", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observation_hrank {
-        local_var_req_builder = local_var_req_builder.query(&[("observation_hrank", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observation_hrank", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = without_taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("without_taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("without_taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("without_taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "without_taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = without_observation_taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("without_observation_taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("without_observation_taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("without_observation_taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "without_observation_taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = d1 {
@@ -1714,40 +2594,52 @@ pub async fn identifications_observers_get(configuration: &configuration::Config
         local_var_req_builder = local_var_req_builder.query(&[("d2", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observation_created_d1 {
-        local_var_req_builder = local_var_req_builder.query(&[("observation_created_d1", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observation_created_d1", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observation_created_d2 {
-        local_var_req_builder = local_var_req_builder.query(&[("observation_created_d2", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observation_created_d2", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observed_d1 {
-        local_var_req_builder = local_var_req_builder.query(&[("observed_d1", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observed_d1", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observed_d2 {
-        local_var_req_builder = local_var_req_builder.query(&[("observed_d2", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observed_d2", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = id_above {
-        local_var_req_builder = local_var_req_builder.query(&[("id_above", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("id_above", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = id_below {
-        local_var_req_builder = local_var_req_builder.query(&[("id_below", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("id_below", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = page {
-        local_var_req_builder = local_var_req_builder.query(&[("page", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("page", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = per_page {
-        local_var_req_builder = local_var_req_builder.query(&[("per_page", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("per_page", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = order {
-        local_var_req_builder = local_var_req_builder.query(&[("order", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("order", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = order_by {
-        local_var_req_builder = local_var_req_builder.query(&[("order_by", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("order_by", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = only_id {
-        local_var_req_builder = local_var_req_builder.query(&[("only_id", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("only_id", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+        local_var_req_builder =
+            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
 
     let local_var_req = local_var_req_builder.build()?;
@@ -1759,27 +2651,36 @@ pub async fn identifications_observers_get(configuration: &configuration::Config
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<IdentificationsObserversGetError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        let local_var_entity: Option<IdentificationsObserversGetError> =
+            serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent {
+            status: local_var_status,
+            content: local_var_content,
+            entity: local_var_entity,
+        };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
 /// Create an identification
-pub async fn identifications_post(configuration: &configuration::Configuration, params: IdentificationsPostParams) -> Result<(), Error<IdentificationsPostError>> {
+pub async fn identifications_post(
+    configuration: &configuration::Configuration,
+    params: IdentificationsPostParams,
+) -> Result<(), Error<IdentificationsPostError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
     let body = params.body;
 
-
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/identifications", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+        local_var_req_builder =
+            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
     if let Some(ref local_var_apikey) = local_var_configuration.api_key {
         let local_var_key = local_var_apikey.key.clone();
@@ -1800,14 +2701,22 @@ pub async fn identifications_post(configuration: &configuration::Configuration, 
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         Ok(())
     } else {
-        let local_var_entity: Option<IdentificationsPostError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        let local_var_entity: Option<IdentificationsPostError> =
+            serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent {
+            status: local_var_status,
+            content: local_var_content,
+            entity: local_var_entity,
+        };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-/// Returns an array of objects each containing an identification and a taxon. Returns IDs representing the earliest occurrence of taxa associated with identifications in the filtered set of results 
-pub async fn identifications_recent_taxa_get(configuration: &configuration::Configuration, params: IdentificationsRecentTaxaGetParams) -> Result<(), Error<IdentificationsRecentTaxaGetError>> {
+/// Returns an array of objects each containing an identification and a taxon. Returns IDs representing the earliest occurrence of taxa associated with identifications in the filtered set of results
+pub async fn identifications_recent_taxa_get(
+    configuration: &configuration::Configuration,
+    params: IdentificationsRecentTaxaGetParams,
+) -> Result<(), Error<IdentificationsRecentTaxaGetError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -1849,124 +2758,319 @@ pub async fn identifications_recent_taxa_get(configuration: &configuration::Conf
     let order_by = params.order_by;
     let only_id = params.only_id;
 
-
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/identifications/recent_taxa", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+    let local_var_uri_str = format!(
+        "{}/identifications/recent_taxa",
+        local_var_configuration.base_path
+    );
+    let mut local_var_req_builder =
+        local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
     if let Some(ref local_var_str) = current_taxon {
-        local_var_req_builder = local_var_req_builder.query(&[("current_taxon", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("current_taxon", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = own_observation {
-        local_var_req_builder = local_var_req_builder.query(&[("own_observation", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("own_observation", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = is_change {
-        local_var_req_builder = local_var_req_builder.query(&[("is_change", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("is_change", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = taxon_active {
-        local_var_req_builder = local_var_req_builder.query(&[("taxon_active", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("taxon_active", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observation_taxon_active {
-        local_var_req_builder = local_var_req_builder.query(&[("observation_taxon_active", &local_var_str.to_string())]);
+        local_var_req_builder = local_var_req_builder
+            .query(&[("observation_taxon_active", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = rank {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("rank".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("rank", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("rank".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "rank",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = observation_rank {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("observation_rank".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("observation_rank", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("observation_rank".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "observation_rank",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = user_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("user_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("user_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("user_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "user_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = user_login {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("user_login".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("user_login", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("user_login".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "user_login",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = current {
-        local_var_req_builder = local_var_req_builder.query(&[("current", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("current", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = category {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("category".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("category", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("category".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "category",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = place_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("place_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("place_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("place_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "place_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = quality_grade {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("quality_grade".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("quality_grade", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("quality_grade".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "quality_grade",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = observation_taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("observation_taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("observation_taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("observation_taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "observation_taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = iconic_taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("iconic_taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("iconic_taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("iconic_taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "iconic_taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = observation_iconic_taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("observation_iconic_taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("observation_iconic_taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("observation_iconic_taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "observation_iconic_taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = lrank {
-        local_var_req_builder = local_var_req_builder.query(&[("lrank", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("lrank", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = hrank {
-        local_var_req_builder = local_var_req_builder.query(&[("hrank", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("hrank", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observation_lrank {
-        local_var_req_builder = local_var_req_builder.query(&[("observation_lrank", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observation_lrank", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observation_hrank {
-        local_var_req_builder = local_var_req_builder.query(&[("observation_hrank", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observation_hrank", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = without_taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("without_taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("without_taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("without_taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "without_taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = without_observation_taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("without_observation_taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("without_observation_taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("without_observation_taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "without_observation_taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = d1 {
@@ -1976,40 +3080,52 @@ pub async fn identifications_recent_taxa_get(configuration: &configuration::Conf
         local_var_req_builder = local_var_req_builder.query(&[("d2", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observation_created_d1 {
-        local_var_req_builder = local_var_req_builder.query(&[("observation_created_d1", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observation_created_d1", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observation_created_d2 {
-        local_var_req_builder = local_var_req_builder.query(&[("observation_created_d2", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observation_created_d2", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observed_d1 {
-        local_var_req_builder = local_var_req_builder.query(&[("observed_d1", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observed_d1", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observed_d2 {
-        local_var_req_builder = local_var_req_builder.query(&[("observed_d2", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observed_d2", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = id_above {
-        local_var_req_builder = local_var_req_builder.query(&[("id_above", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("id_above", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = id_below {
-        local_var_req_builder = local_var_req_builder.query(&[("id_below", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("id_below", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = page {
-        local_var_req_builder = local_var_req_builder.query(&[("page", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("page", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = per_page {
-        local_var_req_builder = local_var_req_builder.query(&[("per_page", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("per_page", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = order {
-        local_var_req_builder = local_var_req_builder.query(&[("order", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("order", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = order_by {
-        local_var_req_builder = local_var_req_builder.query(&[("order_by", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("order_by", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = only_id {
-        local_var_req_builder = local_var_req_builder.query(&[("only_id", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("only_id", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+        local_var_req_builder =
+            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
 
     let local_var_req = local_var_req_builder.build()?;
@@ -2021,14 +3137,22 @@ pub async fn identifications_recent_taxa_get(configuration: &configuration::Conf
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         Ok(())
     } else {
-        let local_var_entity: Option<IdentificationsRecentTaxaGetError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        let local_var_entity: Option<IdentificationsRecentTaxaGetError> =
+            serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent {
+            status: local_var_status,
+            content: local_var_content,
+            entity: local_var_entity,
+        };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-/// Returns species attached to IDs of observations of this taxon, or attached to observations identified as this species, ordered by combined frequency descending. This will only return species in the same iconic taxon, and will never return descendants of the chosen taxon 
-pub async fn identifications_similar_species_get(configuration: &configuration::Configuration, params: IdentificationsSimilarSpeciesGetParams) -> Result<(), Error<IdentificationsSimilarSpeciesGetError>> {
+/// Returns species attached to IDs of observations of this taxon, or attached to observations identified as this species, ordered by combined frequency descending. This will only return species in the same iconic taxon, and will never return descendants of the chosen taxon
+pub async fn identifications_similar_species_get(
+    configuration: &configuration::Configuration,
+    params: IdentificationsSimilarSpeciesGetParams,
+) -> Result<(), Error<IdentificationsSimilarSpeciesGetError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -2113,203 +3237,488 @@ pub async fn identifications_similar_species_get(configuration: &configuration::
     let viewer_id = params.viewer_id;
     let reviewed = params.reviewed;
 
-
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/identifications/similar_species", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+    let local_var_uri_str = format!(
+        "{}/identifications/similar_species",
+        local_var_configuration.base_path
+    );
+    let mut local_var_req_builder =
+        local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
     if let Some(ref local_var_str) = acc {
         local_var_req_builder = local_var_req_builder.query(&[("acc", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = captive {
-        local_var_req_builder = local_var_req_builder.query(&[("captive", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("captive", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = endemic {
-        local_var_req_builder = local_var_req_builder.query(&[("endemic", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("endemic", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = geo {
         local_var_req_builder = local_var_req_builder.query(&[("geo", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = id_please {
-        local_var_req_builder = local_var_req_builder.query(&[("id_please", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("id_please", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = identified {
-        local_var_req_builder = local_var_req_builder.query(&[("identified", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("identified", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = introduced {
-        local_var_req_builder = local_var_req_builder.query(&[("introduced", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("introduced", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = mappable {
-        local_var_req_builder = local_var_req_builder.query(&[("mappable", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("mappable", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = native {
-        local_var_req_builder = local_var_req_builder.query(&[("native", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("native", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = out_of_range {
-        local_var_req_builder = local_var_req_builder.query(&[("out_of_range", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("out_of_range", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = pcid {
-        local_var_req_builder = local_var_req_builder.query(&[("pcid", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("pcid", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = photos {
-        local_var_req_builder = local_var_req_builder.query(&[("photos", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("photos", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = popular {
-        local_var_req_builder = local_var_req_builder.query(&[("popular", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("popular", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = sounds {
-        local_var_req_builder = local_var_req_builder.query(&[("sounds", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("sounds", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = taxon_is_active {
-        local_var_req_builder = local_var_req_builder.query(&[("taxon_is_active", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("taxon_is_active", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = threatened {
-        local_var_req_builder = local_var_req_builder.query(&[("threatened", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("threatened", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = verifiable {
-        local_var_req_builder = local_var_req_builder.query(&[("verifiable", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("verifiable", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = licensed {
-        local_var_req_builder = local_var_req_builder.query(&[("licensed", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("licensed", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = photo_licensed {
-        local_var_req_builder = local_var_req_builder.query(&[("photo_licensed", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("photo_licensed", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = not_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("not_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("not_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("not_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "not_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = license {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("license".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("license", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("license".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "license",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = ofv_datatype {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("ofv_datatype".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("ofv_datatype", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("ofv_datatype".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "ofv_datatype",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = photo_license {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("photo_license".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("photo_license", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("photo_license".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "photo_license",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = place_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("place_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("place_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("place_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "place_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = project_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("project_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("project_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("project_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "project_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = rank {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("rank".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("rank", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("rank".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "rank",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = site_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("site_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("site_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("site_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "site_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = sound_license {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("sound_license".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("sound_license", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("sound_license".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "sound_license",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = without_taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("without_taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("without_taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("without_taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "without_taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = taxon_name {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("taxon_name".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("taxon_name", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("taxon_name".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "taxon_name",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = user_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("user_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("user_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("user_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "user_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = user_login {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("user_login".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("user_login", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("user_login".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "user_login",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = ident_user_id {
-        local_var_req_builder = local_var_req_builder.query(&[("ident_user_id", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("ident_user_id", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = day {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("day".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("day", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("day".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "day",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = month {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("month".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("month", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("month".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "month",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = year {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("year".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("year", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("year".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "year",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = term_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("term_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("term_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("term_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "term_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = term_value_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("term_value_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("term_value_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("term_value_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "term_value_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = without_term_id {
-        local_var_req_builder = local_var_req_builder.query(&[("without_term_id", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("without_term_id", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = without_term_value_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("without_term_value_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("without_term_value_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("without_term_value_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "without_term_value_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = acc_above {
-        local_var_req_builder = local_var_req_builder.query(&[("acc_above", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("acc_above", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = acc_below {
-        local_var_req_builder = local_var_req_builder.query(&[("acc_below", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("acc_below", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = acc_below_or_unknown {
-        local_var_req_builder = local_var_req_builder.query(&[("acc_below_or_unknown", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("acc_below_or_unknown", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = d1 {
         local_var_req_builder = local_var_req_builder.query(&[("d1", &local_var_str.to_string())]);
@@ -2318,22 +3727,28 @@ pub async fn identifications_similar_species_get(configuration: &configuration::
         local_var_req_builder = local_var_req_builder.query(&[("d2", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = created_d1 {
-        local_var_req_builder = local_var_req_builder.query(&[("created_d1", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("created_d1", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = created_d2 {
-        local_var_req_builder = local_var_req_builder.query(&[("created_d2", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("created_d2", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = created_on {
-        local_var_req_builder = local_var_req_builder.query(&[("created_on", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("created_on", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observed_on {
-        local_var_req_builder = local_var_req_builder.query(&[("observed_on", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observed_on", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = unobserved_by_user_id {
-        local_var_req_builder = local_var_req_builder.query(&[("unobserved_by_user_id", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("unobserved_by_user_id", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = apply_project_rules_for {
-        local_var_req_builder = local_var_req_builder.query(&[("apply_project_rules_for", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("apply_project_rules_for", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = cs {
         local_var_req_builder = local_var_req_builder.query(&[("cs", &local_var_str.to_string())]);
@@ -2343,42 +3758,99 @@ pub async fn identifications_similar_species_get(configuration: &configuration::
     }
     if let Some(ref local_var_str) = csi {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("csi".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("csi", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("csi".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "csi",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = geoprivacy {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("geoprivacy".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("geoprivacy", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("geoprivacy".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "geoprivacy",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = taxon_geoprivacy {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("taxon_geoprivacy".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("taxon_geoprivacy", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("taxon_geoprivacy".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "taxon_geoprivacy",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = hrank {
-        local_var_req_builder = local_var_req_builder.query(&[("hrank", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("hrank", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = lrank {
-        local_var_req_builder = local_var_req_builder.query(&[("lrank", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("lrank", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = iconic_taxa {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("iconic_taxa".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("iconic_taxa", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("iconic_taxa".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "iconic_taxa",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = id_above {
-        local_var_req_builder = local_var_req_builder.query(&[("id_above", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("id_above", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = id_below {
-        local_var_req_builder = local_var_req_builder.query(&[("id_below", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("id_below", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = identifications {
-        local_var_req_builder = local_var_req_builder.query(&[("identifications", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("identifications", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = lat {
         local_var_req_builder = local_var_req_builder.query(&[("lat", &local_var_str.to_string())]);
@@ -2387,50 +3859,64 @@ pub async fn identifications_similar_species_get(configuration: &configuration::
         local_var_req_builder = local_var_req_builder.query(&[("lng", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = radius {
-        local_var_req_builder = local_var_req_builder.query(&[("radius", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("radius", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = nelat {
-        local_var_req_builder = local_var_req_builder.query(&[("nelat", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("nelat", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = nelng {
-        local_var_req_builder = local_var_req_builder.query(&[("nelng", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("nelng", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = swlat {
-        local_var_req_builder = local_var_req_builder.query(&[("swlat", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("swlat", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = swlng {
-        local_var_req_builder = local_var_req_builder.query(&[("swlng", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("swlng", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = list_id {
-        local_var_req_builder = local_var_req_builder.query(&[("list_id", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("list_id", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = not_in_project {
-        local_var_req_builder = local_var_req_builder.query(&[("not_in_project", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("not_in_project", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = not_matching_project_rules_for {
-        local_var_req_builder = local_var_req_builder.query(&[("not_matching_project_rules_for", &local_var_str.to_string())]);
+        local_var_req_builder = local_var_req_builder
+            .query(&[("not_matching_project_rules_for", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = q {
         local_var_req_builder = local_var_req_builder.query(&[("q", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = search_on {
-        local_var_req_builder = local_var_req_builder.query(&[("search_on", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("search_on", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = quality_grade {
-        local_var_req_builder = local_var_req_builder.query(&[("quality_grade", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("quality_grade", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = updated_since {
-        local_var_req_builder = local_var_req_builder.query(&[("updated_since", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("updated_since", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = viewer_id {
-        local_var_req_builder = local_var_req_builder.query(&[("viewer_id", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("viewer_id", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = reviewed {
-        local_var_req_builder = local_var_req_builder.query(&[("reviewed", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("reviewed", &local_var_str.to_string())]);
     }
     local_var_req_builder = local_var_req_builder.query(&[("taxon_id", &taxon_id.to_string())]);
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+        local_var_req_builder =
+            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
 
     let local_var_req = local_var_req_builder.build()?;
@@ -2442,14 +3928,22 @@ pub async fn identifications_similar_species_get(configuration: &configuration::
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         Ok(())
     } else {
-        let local_var_entity: Option<IdentificationsSimilarSpeciesGetError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        let local_var_entity: Option<IdentificationsSimilarSpeciesGetError> =
+            serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent {
+            status: local_var_status,
+            content: local_var_content,
+            entity: local_var_entity,
+        };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-/// Given zero to many of following parameters, returns `leaf taxa` associated with identifications matching the search criteria and the count of identifications they are associated with, ordered by count descending. `Leaf taxa` are the leaves of the taxonomic tree containing only the taxa associated with observations matching the search criteria. 
-pub async fn identifications_species_counts_get(configuration: &configuration::Configuration, params: IdentificationsSpeciesCountsGetParams) -> Result<crate::models::SpeciesCountsResponse, Error<IdentificationsSpeciesCountsGetError>> {
+/// Given zero to many of following parameters, returns `leaf taxa` associated with identifications matching the search criteria and the count of identifications they are associated with, ordered by count descending. `Leaf taxa` are the leaves of the taxonomic tree containing only the taxa associated with observations matching the search criteria.
+pub async fn identifications_species_counts_get(
+    configuration: &configuration::Configuration,
+    params: IdentificationsSpeciesCountsGetParams,
+) -> Result<crate::models::SpeciesCountsResponse, Error<IdentificationsSpeciesCountsGetError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -2492,124 +3986,319 @@ pub async fn identifications_species_counts_get(configuration: &configuration::C
     let only_id = params.only_id;
     let taxon_of = params.taxon_of;
 
-
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/identifications/species_counts", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+    let local_var_uri_str = format!(
+        "{}/identifications/species_counts",
+        local_var_configuration.base_path
+    );
+    let mut local_var_req_builder =
+        local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
     if let Some(ref local_var_str) = current_taxon {
-        local_var_req_builder = local_var_req_builder.query(&[("current_taxon", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("current_taxon", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = own_observation {
-        local_var_req_builder = local_var_req_builder.query(&[("own_observation", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("own_observation", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = is_change {
-        local_var_req_builder = local_var_req_builder.query(&[("is_change", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("is_change", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = taxon_active {
-        local_var_req_builder = local_var_req_builder.query(&[("taxon_active", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("taxon_active", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observation_taxon_active {
-        local_var_req_builder = local_var_req_builder.query(&[("observation_taxon_active", &local_var_str.to_string())]);
+        local_var_req_builder = local_var_req_builder
+            .query(&[("observation_taxon_active", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = rank {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("rank".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("rank", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("rank".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "rank",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = observation_rank {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("observation_rank".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("observation_rank", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("observation_rank".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "observation_rank",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = user_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("user_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("user_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("user_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "user_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = user_login {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("user_login".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("user_login", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("user_login".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "user_login",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = current {
-        local_var_req_builder = local_var_req_builder.query(&[("current", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("current", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = category {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("category".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("category", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("category".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "category",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = place_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("place_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("place_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("place_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "place_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = quality_grade {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("quality_grade".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("quality_grade", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("quality_grade".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "quality_grade",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = observation_taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("observation_taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("observation_taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("observation_taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "observation_taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = iconic_taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("iconic_taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("iconic_taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("iconic_taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "iconic_taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = observation_iconic_taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("observation_iconic_taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("observation_iconic_taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("observation_iconic_taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "observation_iconic_taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = lrank {
-        local_var_req_builder = local_var_req_builder.query(&[("lrank", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("lrank", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = hrank {
-        local_var_req_builder = local_var_req_builder.query(&[("hrank", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("hrank", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observation_lrank {
-        local_var_req_builder = local_var_req_builder.query(&[("observation_lrank", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observation_lrank", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observation_hrank {
-        local_var_req_builder = local_var_req_builder.query(&[("observation_hrank", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observation_hrank", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = without_taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("without_taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("without_taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("without_taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "without_taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = without_observation_taxon_id {
         local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("without_observation_taxon_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
-            _ => local_var_req_builder.query(&[("without_observation_taxon_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
+            "multi" => local_var_req_builder.query(
+                &local_var_str
+                    .into_iter()
+                    .map(|p| ("without_observation_taxon_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => local_var_req_builder.query(&[(
+                "without_observation_taxon_id",
+                &local_var_str
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
     }
     if let Some(ref local_var_str) = d1 {
@@ -2619,43 +4308,56 @@ pub async fn identifications_species_counts_get(configuration: &configuration::C
         local_var_req_builder = local_var_req_builder.query(&[("d2", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observation_created_d1 {
-        local_var_req_builder = local_var_req_builder.query(&[("observation_created_d1", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observation_created_d1", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observation_created_d2 {
-        local_var_req_builder = local_var_req_builder.query(&[("observation_created_d2", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observation_created_d2", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observed_d1 {
-        local_var_req_builder = local_var_req_builder.query(&[("observed_d1", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observed_d1", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = observed_d2 {
-        local_var_req_builder = local_var_req_builder.query(&[("observed_d2", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("observed_d2", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = id_above {
-        local_var_req_builder = local_var_req_builder.query(&[("id_above", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("id_above", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = id_below {
-        local_var_req_builder = local_var_req_builder.query(&[("id_below", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("id_below", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = page {
-        local_var_req_builder = local_var_req_builder.query(&[("page", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("page", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = per_page {
-        local_var_req_builder = local_var_req_builder.query(&[("per_page", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("per_page", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = order {
-        local_var_req_builder = local_var_req_builder.query(&[("order", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("order", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = order_by {
-        local_var_req_builder = local_var_req_builder.query(&[("order_by", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("order_by", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = only_id {
-        local_var_req_builder = local_var_req_builder.query(&[("only_id", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("only_id", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = taxon_of {
-        local_var_req_builder = local_var_req_builder.query(&[("taxon_of", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("taxon_of", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+        local_var_req_builder =
+            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
 
     let local_var_req = local_var_req_builder.build()?;
@@ -2667,9 +4369,13 @@ pub async fn identifications_species_counts_get(configuration: &configuration::C
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<IdentificationsSpeciesCountsGetError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        let local_var_entity: Option<IdentificationsSpeciesCountsGetError> =
+            serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent {
+            status: local_var_status,
+            content: local_var_content,
+            entity: local_var_entity,
+        };
         Err(Error::ResponseError(local_var_error))
     }
 }
-

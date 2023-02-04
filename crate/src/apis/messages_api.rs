@@ -1,18 +1,17 @@
 /*
  * iNaturalist API
  *
- * # https://api.inaturalist.org/v1/  [iNaturalist](https://www.inaturalist.org/) is a global community of naturalists, scientists, and members of the public sharing over a million wildlife sightings to teach one another about the natural world while creating high quality citizen science data for science and conservation. The iNaturalist technology infrastructure and open source software is administered by the [California Academy of Sciences](https://www.calacademy.org/) as part of their mission to explore, explain, and sustain life on Earth.  These API methods return data in JSON/JSONP and PNG response formats. They are meant to supplement the existing [iNaturalist API](https://www.inaturalist.org/pages/api+reference), implemented in Ruby on Rails, which has more functionality and supports more write operations, but tends to be slower and have less consistent response formats. Visit our [developers page](https://www.inaturalist.org/pages/developers) for more information. Write operations that expect and return JSON describe a single `body` parameter that represents the request body, which should be specified as JSON. See the \"Model\" of each body parameter for attributes that we accept in these JSON objects.  Multiple values for a single URL parameter should be separated by commas, e.g. `taxon_id=1,2,3`.  Map tiles are generated using the [node-mapnik](https://github.com/mapnik/node-mapnik) library, following the XYZ map tiling scheme. The \"Observation Tile\" methods accept nearly all the parameters of the observation search APIs, and will generate map tiles reflecting the same observations returned by searches. These \"Observation Tile\" methods have corresponding [UTFGrid](https://github.com/mapbox/utfgrid-spec) JSON responses which return information needed to make interactive maps.  Authentication in the Node API is handled via JSON Web Tokens (JWT). To obtain one, make an [OAuth-authenticated request](http://www.inaturalist.org/pages/api+reference#auth) to https://www.inaturalist.org/users/api_token. Each JWT will expire after 24 hours. Authentication required for all PUT and POST requests. Some GET requests will also include private information like hidden coordinates if the authenticated user has permission to view them.  iNaturalist Website: https://www.inaturalist.org/  Open Source Software: https://github.com/inaturalist/  ## Terms of Use  Use of this API is subject to the iNaturalist [Terms of Service](https://www.inaturalist.org/terms) and [Privacy Policy](https://www.inaturalist.org/privacy). We will block any use of our API that violates our Terms or Privacy Policy without notice. The API is intended to support application development, not data scraping. For pre- generated data exports, see https://www.inaturalist.org/pages/developers.  Please note that we throttle API usage to a max of 100 requests per minute, though we ask that you try to keep it to 60 requests per minute or lower, and to keep under 10,000 requests per day. If we notice usage that has serious impact on our performance we may institute blocks without notification.  Terms of Service: https://www.inaturalist.org/terms  Privacy Policy: https://www.inaturalist.org/privacy 
+ * # https://api.inaturalist.org/v1/  [iNaturalist](https://www.inaturalist.org/) is a global community of naturalists, scientists, and members of the public sharing over a million wildlife sightings to teach one another about the natural world while creating high quality citizen science data for science and conservation. The iNaturalist technology infrastructure and open source software is administered by the [California Academy of Sciences](https://www.calacademy.org/) as part of their mission to explore, explain, and sustain life on Earth.  These API methods return data in JSON/JSONP and PNG response formats. They are meant to supplement the existing [iNaturalist API](https://www.inaturalist.org/pages/api+reference), implemented in Ruby on Rails, which has more functionality and supports more write operations, but tends to be slower and have less consistent response formats. Visit our [developers page](https://www.inaturalist.org/pages/developers) for more information. Write operations that expect and return JSON describe a single `body` parameter that represents the request body, which should be specified as JSON. See the \"Model\" of each body parameter for attributes that we accept in these JSON objects.  Multiple values for a single URL parameter should be separated by commas, e.g. `taxon_id=1,2,3`.  Map tiles are generated using the [node-mapnik](https://github.com/mapnik/node-mapnik) library, following the XYZ map tiling scheme. The \"Observation Tile\" methods accept nearly all the parameters of the observation search APIs, and will generate map tiles reflecting the same observations returned by searches. These \"Observation Tile\" methods have corresponding [UTFGrid](https://github.com/mapbox/utfgrid-spec) JSON responses which return information needed to make interactive maps.  Authentication in the Node API is handled via JSON Web Tokens (JWT). To obtain one, make an [OAuth-authenticated request](http://www.inaturalist.org/pages/api+reference#auth) to https://www.inaturalist.org/users/api_token. Each JWT will expire after 24 hours. Authentication required for all PUT and POST requests. Some GET requests will also include private information like hidden coordinates if the authenticated user has permission to view them.  iNaturalist Website: https://www.inaturalist.org/  Open Source Software: https://github.com/inaturalist/  ## Terms of Use  Use of this API is subject to the iNaturalist [Terms of Service](https://www.inaturalist.org/terms) and [Privacy Policy](https://www.inaturalist.org/privacy). We will block any use of our API that violates our Terms or Privacy Policy without notice. The API is intended to support application development, not data scraping. For pre- generated data exports, see https://www.inaturalist.org/pages/developers.  Please note that we throttle API usage to a max of 100 requests per minute, though we ask that you try to keep it to 60 requests per minute or lower, and to keep under 10,000 requests per day. If we notice usage that has serious impact on our performance we may institute blocks without notification.  Terms of Service: https://www.inaturalist.org/terms  Privacy Policy: https://www.inaturalist.org/privacy
  *
  * The version of the OpenAPI document: 1.3.0
- * 
+ *
  * Generated by: https://openapi-generator.tech
  */
 
-
 use reqwest;
 
+use super::{configuration, Error};
 use crate::apis::ResponseContent;
-use super::{Error, configuration};
 
 /// struct for passing parameters to the method [`messages_get`]
 #[derive(Clone, Debug, Default)]
@@ -25,30 +24,29 @@ pub struct MessagesGetParams {
     pub q: Option<String>,
     /// User ID or username of correspondent to filter by
     pub user_id: Option<String>,
-    /// Groups results by `thread_id`, only shows the latest message per thread, and includes a `thread_messages_count` attribute showing the total number of messages in that thread. Note that this will not work with the `q` param, and it probably should only be used with `box=any` because the `thread_messages_count` will be inaccurate when you restrict it to `inbox` or `sent`. 
-    pub threads: Option<bool>
+    /// Groups results by `thread_id`, only shows the latest message per thread, and includes a `thread_messages_count` attribute showing the total number of messages in that thread. Note that this will not work with the `q` param, and it probably should only be used with `box=any` because the `thread_messages_count` will be inaccurate when you restrict it to `inbox` or `sent`.
+    pub threads: Option<bool>,
 }
 
 /// struct for passing parameters to the method [`messages_id_delete`]
 #[derive(Clone, Debug, Default)]
 pub struct MessagesIdDeleteParams {
     /// ID of the record
-    pub id: i32
+    pub id: i32,
 }
 
 /// struct for passing parameters to the method [`messages_id_get`]
 #[derive(Clone, Debug, Default)]
 pub struct MessagesIdGetParams {
     /// ID of the record
-    pub id: i32
+    pub id: i32,
 }
 
 /// struct for passing parameters to the method [`messages_post`]
 #[derive(Clone, Debug, Default)]
 pub struct MessagesPostParams {
-    pub body: Option<crate::models::PostMessage>
+    pub body: Option<crate::models::PostMessage>,
 }
-
 
 /// struct for typed errors of method [`messages_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -91,9 +89,11 @@ pub enum MessagesUnreadGetError {
     UnknownValue(serde_json::Value),
 }
 
-
 /// Show the user's inbox or sent box
-pub async fn messages_get(configuration: &configuration::Configuration, params: MessagesGetParams) -> Result<(), Error<MessagesGetError>> {
+pub async fn messages_get(
+    configuration: &configuration::Configuration,
+    params: MessagesGetParams,
+) -> Result<(), Error<MessagesGetError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
@@ -103,14 +103,15 @@ pub async fn messages_get(configuration: &configuration::Configuration, params: 
     let user_id = params.user_id;
     let threads = params.threads;
 
-
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/messages", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
     if let Some(ref local_var_str) = page {
-        local_var_req_builder = local_var_req_builder.query(&[("page", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("page", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = r#box {
         local_var_req_builder = local_var_req_builder.query(&[("box", &local_var_str.to_string())]);
@@ -119,13 +120,16 @@ pub async fn messages_get(configuration: &configuration::Configuration, params: 
         local_var_req_builder = local_var_req_builder.query(&[("q", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = user_id {
-        local_var_req_builder = local_var_req_builder.query(&[("user_id", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("user_id", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = threads {
-        local_var_req_builder = local_var_req_builder.query(&[("threads", &local_var_str.to_string())]);
+        local_var_req_builder =
+            local_var_req_builder.query(&[("threads", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+        local_var_req_builder =
+            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
     if let Some(ref local_var_apikey) = local_var_configuration.api_key {
         let local_var_key = local_var_apikey.key.clone();
@@ -145,27 +149,40 @@ pub async fn messages_get(configuration: &configuration::Configuration, params: 
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         Ok(())
     } else {
-        let local_var_entity: Option<MessagesGetError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        let local_var_entity: Option<MessagesGetError> =
+            serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent {
+            status: local_var_status,
+            content: local_var_content,
+            entity: local_var_entity,
+        };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-/// This will all of the authenticated user's copies of the messages in tha thread to which the specified message belongs. 
-pub async fn messages_id_delete(configuration: &configuration::Configuration, params: MessagesIdDeleteParams) -> Result<(), Error<MessagesIdDeleteError>> {
+/// This will all of the authenticated user's copies of the messages in tha thread to which the specified message belongs.
+pub async fn messages_id_delete(
+    configuration: &configuration::Configuration,
+    params: MessagesIdDeleteParams,
+) -> Result<(), Error<MessagesIdDeleteError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
     let id = params.id;
 
-
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/messages/{id}", local_var_configuration.base_path, id=id);
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::DELETE, local_var_uri_str.as_str());
+    let local_var_uri_str = format!(
+        "{}/messages/{id}",
+        local_var_configuration.base_path,
+        id = id
+    );
+    let mut local_var_req_builder =
+        local_var_client.request(reqwest::Method::DELETE, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+        local_var_req_builder =
+            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
     if let Some(ref local_var_apikey) = local_var_configuration.api_key {
         let local_var_key = local_var_apikey.key.clone();
@@ -185,27 +202,40 @@ pub async fn messages_id_delete(configuration: &configuration::Configuration, pa
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         Ok(())
     } else {
-        let local_var_entity: Option<MessagesIdDeleteError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        let local_var_entity: Option<MessagesIdDeleteError> =
+            serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent {
+            status: local_var_status,
+            content: local_var_content,
+            entity: local_var_entity,
+        };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-/// Retrieves all messages in the thread the specified message belongs to and marks them all as read. 
-pub async fn messages_id_get(configuration: &configuration::Configuration, params: MessagesIdGetParams) -> Result<serde_json::Value, Error<MessagesIdGetError>> {
+/// Retrieves all messages in the thread the specified message belongs to and marks them all as read.
+pub async fn messages_id_get(
+    configuration: &configuration::Configuration,
+    params: MessagesIdGetParams,
+) -> Result<serde_json::Value, Error<MessagesIdGetError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
     let id = params.id;
 
-
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/messages/{id}", local_var_configuration.base_path, id=id);
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+    let local_var_uri_str = format!(
+        "{}/messages/{id}",
+        local_var_configuration.base_path,
+        id = id
+    );
+    let mut local_var_req_builder =
+        local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+        local_var_req_builder =
+            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
     if let Some(ref local_var_apikey) = local_var_configuration.api_key {
         let local_var_key = local_var_apikey.key.clone();
@@ -225,27 +255,36 @@ pub async fn messages_id_get(configuration: &configuration::Configuration, param
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<MessagesIdGetError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        let local_var_entity: Option<MessagesIdGetError> =
+            serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent {
+            status: local_var_status,
+            content: local_var_content,
+            entity: local_var_entity,
+        };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
 /// Create and deliver a new message to another user
-pub async fn messages_post(configuration: &configuration::Configuration, params: MessagesPostParams) -> Result<crate::models::Message, Error<MessagesPostError>> {
+pub async fn messages_post(
+    configuration: &configuration::Configuration,
+    params: MessagesPostParams,
+) -> Result<crate::models::Message, Error<MessagesPostError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
     let body = params.body;
 
-
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/messages", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        local_var_client.request(reqwest::Method::POST, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+        local_var_req_builder =
+            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
     if let Some(ref local_var_apikey) = local_var_configuration.api_key {
         let local_var_key = local_var_apikey.key.clone();
@@ -266,25 +305,33 @@ pub async fn messages_post(configuration: &configuration::Configuration, params:
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<MessagesPostError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        let local_var_entity: Option<MessagesPostError> =
+            serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent {
+            status: local_var_status,
+            content: local_var_content,
+            entity: local_var_entity,
+        };
         Err(Error::ResponseError(local_var_error))
     }
 }
 
-pub async fn messages_unread_get(configuration: &configuration::Configuration) -> Result<serde_json::Value, Error<MessagesUnreadGetError>> {
+pub async fn messages_unread_get(
+    configuration: &configuration::Configuration,
+) -> Result<serde_json::Value, Error<MessagesUnreadGetError>> {
     let local_var_configuration = configuration;
 
     // unbox the parameters
 
-
     let local_var_client = &local_var_configuration.client;
 
     let local_var_uri_str = format!("{}/messages/unread", local_var_configuration.base_path);
-    let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+    let mut local_var_req_builder =
+        local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+        local_var_req_builder =
+            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
     if let Some(ref local_var_apikey) = local_var_configuration.api_key {
         let local_var_key = local_var_apikey.key.clone();
@@ -304,9 +351,13 @@ pub async fn messages_unread_get(configuration: &configuration::Configuration) -
     if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
         serde_json::from_str(&local_var_content).map_err(Error::from)
     } else {
-        let local_var_entity: Option<MessagesUnreadGetError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent { status: local_var_status, content: local_var_content, entity: local_var_entity };
+        let local_var_entity: Option<MessagesUnreadGetError> =
+            serde_json::from_str(&local_var_content).ok();
+        let local_var_error = ResponseContent {
+            status: local_var_status,
+            content: local_var_content,
+            entity: local_var_entity,
+        };
         Err(Error::ResponseError(local_var_error))
     }
 }
-
