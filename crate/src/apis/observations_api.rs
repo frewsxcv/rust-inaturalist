@@ -2411,7 +2411,8 @@ pub async fn observations_id_get(configuration: &configuration::Configuration, p
 
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/observations/{id}", local_var_configuration.base_path, id=id.join(",").as_ref());
+    let local_var_uri_str = format!("{}/observations/{id}", local_var_configuration.base_path, id=id.into_iter().map(|n| n.to_string()).collect::<Vec<String>>().join(","));
+
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
