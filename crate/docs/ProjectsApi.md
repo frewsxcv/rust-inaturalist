@@ -20,7 +20,7 @@ Method | HTTP request | Description
 
 ## projects_autocomplete_get
 
-> crate::models::ProjectsResponse projects_autocomplete_get(q, id, not_id, lat, lng, place_id, radius, featured, noteworthy, site_id, rule_details, _type, member_id, has_params, has_posts, per_page)
+> crate::models::ProjectsResponse projects_autocomplete_get(q, id, not_id, lat, lng, place_id, radius, featured, noteworthy, site_id, rule_details, r#type, member_id, has_params, has_posts, per_page)
 Project Autocomplete
 
 Given an string, returns projects with titles starting with the search term 
@@ -41,7 +41,7 @@ Name | Type | Description  | Required | Notes
 **noteworthy** | Option<**String**> | Must be marked noteworthy for the relevant site |  |
 **site_id** | Option<**i32**> | Site ID that applies to `featured` and `noteworthy`. Defaults to the site of the authenticated user, or to the main iNaturalist site https://www.inaturalist.org  |  |
 **rule_details** | Option<**String**> | Return more information about project rules, for example return a full taxon object instead of simply an ID  |  |
-**_type** | Option<[**Vec<String>**](String.md)> | Projects must be of this type |  |
+**r#type** | Option<[**Vec<String>**](String.md)> | Projects must be of this type |  |
 **member_id** | Option<**i32**> | Project must have member with this user ID |  |
 **has_params** | Option<**bool**> | Must have search parameter requirements |  |
 **has_posts** | Option<**bool**> | Must have posts |  |
@@ -65,7 +65,7 @@ No authorization required
 
 ## projects_get
 
-> crate::models::ProjectsResponse projects_get(q, id, not_id, lat, lng, place_id, radius, featured, noteworthy, site_id, rule_details, _type, member_id, has_params, has_posts, per_page, order_by)
+> crate::models::ProjectsResponse projects_get(q, id, not_id, lat, lng, place_id, radius, featured, noteworthy, site_id, rule_details, r#type, member_id, has_params, has_posts, per_page, order_by)
 Project Search
 
 Given zero to many of following parameters, returns projects matching the search criteria 
@@ -86,12 +86,12 @@ Name | Type | Description  | Required | Notes
 **noteworthy** | Option<**String**> | Must be marked noteworthy for the relevant site |  |
 **site_id** | Option<**i32**> | Site ID that applies to `featured` and `noteworthy`. Defaults to the site of the authenticated user, or to the main iNaturalist site https://www.inaturalist.org  |  |
 **rule_details** | Option<**String**> | Return more information about project rules, for example return a full taxon object instead of simply an ID  |  |
-**_type** | Option<[**Vec<String>**](String.md)> | Projects must be of this type |  |
+**r#type** | Option<[**Vec<String>**](String.md)> | Projects must be of this type |  |
 **member_id** | Option<**i32**> | Project must have member with this user ID |  |
 **has_params** | Option<**bool**> | Must have search parameter requirements |  |
 **has_posts** | Option<**bool**> | Must have posts |  |
 **per_page** | Option<**String**> | Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted  |  |
-**order_by** | Option<**String**> | Sort order. `distance` only applies if `lat` and `lng` are specified. `featured` only applies if `featured` or `noteworthy` are true  |  |[default to desc]
+**order_by** | Option<**String**> | Sort field |  |
 
 ### Return type
 

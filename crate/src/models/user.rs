@@ -19,6 +19,8 @@ pub struct User {
     pub icon_content_type: Option<String>,
     #[serde(rename = "icon_file_name", skip_serializing_if = "Option::is_none")]
     pub icon_file_name: Option<String>,
+    #[serde(rename = "icon", skip_serializing_if = "Option::is_none")]
+    pub icon: Option<String>,
     #[serde(rename = "icon_url", skip_serializing_if = "Option::is_none")]
     pub icon_url: Option<String>,
     #[serde(rename = "login", skip_serializing_if = "Option::is_none")]
@@ -33,6 +35,7 @@ impl User {
             id: None,
             icon_content_type: None,
             icon_file_name: None,
+            icon: None,
             icon_url: None,
             login: None,
             name: None,

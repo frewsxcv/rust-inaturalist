@@ -14,7 +14,7 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct PolygonGeoJson {
     #[serde(rename = "type", skip_serializing_if = "Option::is_none")]
-    pub _type: Option<String>,
+    pub r#type: Option<String>,
     #[serde(rename = "coordinates", skip_serializing_if = "Option::is_none")]
     pub coordinates: Option<Vec<Vec<Vec<f64>>>>,
 }
@@ -22,7 +22,7 @@ pub struct PolygonGeoJson {
 impl PolygonGeoJson {
     pub fn new() -> PolygonGeoJson {
         PolygonGeoJson {
-            _type: None,
+            r#type: None,
             coordinates: None,
         }
     }

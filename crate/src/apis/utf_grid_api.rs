@@ -105,6 +105,8 @@ pub struct ColoredHeatmapZoomXyGridJsonGetParams {
     pub term_id: Option<Vec<i32>>,
     /// Must have an annotation using this controlled value ID. Must be combined with the `term_id` parameter 
     pub term_value_id: Option<Vec<i32>>,
+    /// Exclude observations with annotations using this controlled value ID. 
+    pub without_term_id: Option<i32>,
     /// Exclude observations with annotations using this controlled value ID. Must be combined with the `term_id` parameter 
     pub without_term_value_id: Option<Vec<i32>>,
     /// Must have a positional accuracy above this value (meters)
@@ -276,6 +278,8 @@ pub struct GridZoomXyGridJsonGetParams {
     pub term_id: Option<Vec<i32>>,
     /// Must have an annotation using this controlled value ID. Must be combined with the `term_id` parameter 
     pub term_value_id: Option<Vec<i32>>,
+    /// Exclude observations with annotations using this controlled value ID. 
+    pub without_term_id: Option<i32>,
     /// Exclude observations with annotations using this controlled value ID. Must be combined with the `term_id` parameter 
     pub without_term_value_id: Option<Vec<i32>>,
     /// Must have a positional accuracy above this value (meters)
@@ -447,6 +451,8 @@ pub struct HeatmapZoomXyGridJsonGetParams {
     pub term_id: Option<Vec<i32>>,
     /// Must have an annotation using this controlled value ID. Must be combined with the `term_id` parameter 
     pub term_value_id: Option<Vec<i32>>,
+    /// Exclude observations with annotations using this controlled value ID. 
+    pub without_term_id: Option<i32>,
     /// Exclude observations with annotations using this controlled value ID. Must be combined with the `term_id` parameter 
     pub without_term_value_id: Option<Vec<i32>>,
     /// Must have a positional accuracy above this value (meters)
@@ -618,6 +624,8 @@ pub struct PointsZoomXyGridJsonGetParams {
     pub term_id: Option<Vec<i32>>,
     /// Must have an annotation using this controlled value ID. Must be combined with the `term_id` parameter 
     pub term_value_id: Option<Vec<i32>>,
+    /// Exclude observations with annotations using this controlled value ID. 
+    pub without_term_id: Option<i32>,
     /// Exclude observations with annotations using this controlled value ID. Must be combined with the `term_id` parameter 
     pub without_term_value_id: Option<Vec<i32>>,
     /// Must have a positional accuracy above this value (meters)
@@ -781,6 +789,7 @@ pub async fn colored_heatmap_zoom_xy_grid_json_get(configuration: &configuration
     let year = params.year;
     let term_id = params.term_id;
     let term_value_id = params.term_value_id;
+    let without_term_id = params.without_term_id;
     let without_term_value_id = params.without_term_value_id;
     let acc_above = params.acc_above;
     let acc_below = params.acc_below;
@@ -1010,6 +1019,9 @@ pub async fn colored_heatmap_zoom_xy_grid_json_get(configuration: &configuration
             _ => local_var_req_builder.query(&[("term_value_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
         };
     }
+    if let Some(ref local_var_str) = without_term_id {
+        local_var_req_builder = local_var_req_builder.query(&[("without_term_id", &local_var_str.to_string())]);
+    }
     if let Some(ref local_var_str) = without_term_value_id {
         local_var_req_builder = match "csv" {
             "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("without_term_value_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
@@ -1210,6 +1222,7 @@ pub async fn grid_zoom_xy_grid_json_get(configuration: &configuration::Configura
     let year = params.year;
     let term_id = params.term_id;
     let term_value_id = params.term_value_id;
+    let without_term_id = params.without_term_id;
     let without_term_value_id = params.without_term_value_id;
     let acc_above = params.acc_above;
     let acc_below = params.acc_below;
@@ -1439,6 +1452,9 @@ pub async fn grid_zoom_xy_grid_json_get(configuration: &configuration::Configura
             _ => local_var_req_builder.query(&[("term_value_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
         };
     }
+    if let Some(ref local_var_str) = without_term_id {
+        local_var_req_builder = local_var_req_builder.query(&[("without_term_id", &local_var_str.to_string())]);
+    }
     if let Some(ref local_var_str) = without_term_value_id {
         local_var_req_builder = match "csv" {
             "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("without_term_value_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
@@ -1639,6 +1655,7 @@ pub async fn heatmap_zoom_xy_grid_json_get(configuration: &configuration::Config
     let year = params.year;
     let term_id = params.term_id;
     let term_value_id = params.term_value_id;
+    let without_term_id = params.without_term_id;
     let without_term_value_id = params.without_term_value_id;
     let acc_above = params.acc_above;
     let acc_below = params.acc_below;
@@ -1868,6 +1885,9 @@ pub async fn heatmap_zoom_xy_grid_json_get(configuration: &configuration::Config
             _ => local_var_req_builder.query(&[("term_value_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
         };
     }
+    if let Some(ref local_var_str) = without_term_id {
+        local_var_req_builder = local_var_req_builder.query(&[("without_term_id", &local_var_str.to_string())]);
+    }
     if let Some(ref local_var_str) = without_term_value_id {
         local_var_req_builder = match "csv" {
             "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("without_term_value_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
@@ -2068,6 +2088,7 @@ pub async fn points_zoom_xy_grid_json_get(configuration: &configuration::Configu
     let year = params.year;
     let term_id = params.term_id;
     let term_value_id = params.term_value_id;
+    let without_term_id = params.without_term_id;
     let without_term_value_id = params.without_term_value_id;
     let acc_above = params.acc_above;
     let acc_below = params.acc_below;
@@ -2296,6 +2317,9 @@ pub async fn points_zoom_xy_grid_json_get(configuration: &configuration::Configu
             "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("term_value_id".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
             _ => local_var_req_builder.query(&[("term_value_id", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
         };
+    }
+    if let Some(ref local_var_str) = without_term_id {
+        local_var_req_builder = local_var_req_builder.query(&[("without_term_id", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = without_term_value_id {
         local_var_req_builder = match "csv" {

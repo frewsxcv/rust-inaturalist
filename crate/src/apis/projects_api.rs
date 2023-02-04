@@ -40,7 +40,7 @@ pub struct ProjectsAutocompleteGetParams {
     /// Return more information about project rules, for example return a full taxon object instead of simply an ID 
     pub rule_details: Option<String>,
     /// Projects must be of this type
-    pub _type: Option<Vec<String>>,
+    pub r#type: Option<Vec<String>>,
     /// Project must have member with this user ID
     pub member_id: Option<i32>,
     /// Must have search parameter requirements
@@ -77,7 +77,7 @@ pub struct ProjectsGetParams {
     /// Return more information about project rules, for example return a full taxon object instead of simply an ID 
     pub rule_details: Option<String>,
     /// Projects must be of this type
-    pub _type: Option<Vec<String>>,
+    pub r#type: Option<Vec<String>>,
     /// Project must have member with this user ID
     pub member_id: Option<i32>,
     /// Must have search parameter requirements
@@ -86,7 +86,7 @@ pub struct ProjectsGetParams {
     pub has_posts: Option<bool>,
     /// Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted 
     pub per_page: Option<String>,
-    /// Sort order. `distance` only applies if `lat` and `lng` are specified. `featured` only applies if `featured` or `noteworthy` are true 
+    /// Sort field
     pub order_by: Option<String>
 }
 
@@ -264,7 +264,7 @@ pub async fn projects_autocomplete_get(configuration: &configuration::Configurat
     let noteworthy = params.noteworthy;
     let site_id = params.site_id;
     let rule_details = params.rule_details;
-    let _type = params._type;
+    let r#type = params.r#type;
     let member_id = params.member_id;
     let has_params = params.has_params;
     let has_posts = params.has_posts;
@@ -316,7 +316,7 @@ pub async fn projects_autocomplete_get(configuration: &configuration::Configurat
     if let Some(ref local_var_str) = rule_details {
         local_var_req_builder = local_var_req_builder.query(&[("rule_details", &local_var_str.to_string())]);
     }
-    if let Some(ref local_var_str) = _type {
+    if let Some(ref local_var_str) = r#type {
         local_var_req_builder = match "csv" {
             "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("type".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
             _ => local_var_req_builder.query(&[("type", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
@@ -369,7 +369,7 @@ pub async fn projects_get(configuration: &configuration::Configuration, params: 
     let noteworthy = params.noteworthy;
     let site_id = params.site_id;
     let rule_details = params.rule_details;
-    let _type = params._type;
+    let r#type = params.r#type;
     let member_id = params.member_id;
     let has_params = params.has_params;
     let has_posts = params.has_posts;
@@ -424,7 +424,7 @@ pub async fn projects_get(configuration: &configuration::Configuration, params: 
     if let Some(ref local_var_str) = rule_details {
         local_var_req_builder = local_var_req_builder.query(&[("rule_details", &local_var_str.to_string())]);
     }
-    if let Some(ref local_var_str) = _type {
+    if let Some(ref local_var_str) = r#type {
         local_var_req_builder = match "csv" {
             "multi" => local_var_req_builder.query(&local_var_str.into_iter().map(|p| ("type".to_owned(), p.to_string())).collect::<Vec<(std::string::String, std::string::String)>>()),
             _ => local_var_req_builder.query(&[("type", &local_var_str.into_iter().map(|p| p.to_string()).collect::<Vec<String>>().join(",").to_string())]),
@@ -517,7 +517,7 @@ pub async fn projects_id_get(configuration: &configuration::Configuration, param
 
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/projects/{id}", local_var_configuration.base_path, id=id.iter().map(ToString::to_string).collect::<Vec<_>>().join(","));
+    let local_var_uri_str = format!("{}/projects/{id}", local_var_configuration.base_path, id=id.join(",").as_ref());
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
     if let Some(ref local_var_str) = rule_details {

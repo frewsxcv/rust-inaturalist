@@ -182,10 +182,10 @@ Class | Method | HTTP request | Description
 *TaxaApi* | [**taxa_autocomplete_get**](docs/TaxaApi.md#taxa_autocomplete_get) | **GET** /taxa/autocomplete | Taxon Autocomplete
 *TaxaApi* | [**taxa_get**](docs/TaxaApi.md#taxa_get) | **GET** /taxa | Taxon Search
 *TaxaApi* | [**taxa_id_get**](docs/TaxaApi.md#taxa_id_get) | **GET** /taxa/{id} | Taxon Details
-*UTFGridApi* | [**colored_heatmap_zoom_xy_grid_json_get**](docs/UTFGridApi.md#colored_heatmap_zoom_xy_grid_json_get) | **GET** /colored_heatmap/{zoom}/{x}/{y}.grid.json | Colored Heatmap Tiles UTFGrid
-*UTFGridApi* | [**grid_zoom_xy_grid_json_get**](docs/UTFGridApi.md#grid_zoom_xy_grid_json_get) | **GET** /grid/{zoom}/{x}/{y}.grid.json | Grid Tiles UTFGrid
-*UTFGridApi* | [**heatmap_zoom_xy_grid_json_get**](docs/UTFGridApi.md#heatmap_zoom_xy_grid_json_get) | **GET** /heatmap/{zoom}/{x}/{y}.grid.json | Heatmap Tiles UTFGrid
-*UTFGridApi* | [**points_zoom_xy_grid_json_get**](docs/UTFGridApi.md#points_zoom_xy_grid_json_get) | **GET** /points/{zoom}/{x}/{y}.grid.json | Points Tiles UTFGrid
+*UtfGridApi* | [**colored_heatmap_zoom_xy_grid_json_get**](docs/UtfGridApi.md#colored_heatmap_zoom_xy_grid_json_get) | **GET** /colored_heatmap/{zoom}/{x}/{y}.grid.json | Colored Heatmap Tiles UTFGrid
+*UtfGridApi* | [**grid_zoom_xy_grid_json_get**](docs/UtfGridApi.md#grid_zoom_xy_grid_json_get) | **GET** /grid/{zoom}/{x}/{y}.grid.json | Grid Tiles UTFGrid
+*UtfGridApi* | [**heatmap_zoom_xy_grid_json_get**](docs/UtfGridApi.md#heatmap_zoom_xy_grid_json_get) | **GET** /heatmap/{zoom}/{x}/{y}.grid.json | Heatmap Tiles UTFGrid
+*UtfGridApi* | [**points_zoom_xy_grid_json_get**](docs/UtfGridApi.md#points_zoom_xy_grid_json_get) | **GET** /points/{zoom}/{x}/{y}.grid.json | Points Tiles UTFGrid
 *UsersApi* | [**users_autocomplete_get**](docs/UsersApi.md#users_autocomplete_get) | **GET** /users/autocomplete | User Autocomplete
 *UsersApi* | [**users_id_get**](docs/UsersApi.md#users_id_get) | **GET** /users/{id} | User Details
 *UsersApi* | [**users_id_mute_delete**](docs/UsersApi.md#users_id_mute_delete) | **DELETE** /users/{id}/mute | Unmute a User

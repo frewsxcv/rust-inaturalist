@@ -54,7 +54,7 @@ pub async fn photos_post(configuration: &configuration::Configuration, params: P
         };
         local_var_req_builder = local_var_req_builder.header("Authorization", local_var_value);
     };
-    let local_var_form = reqwest::multipart::Form::new();
+    let mut local_var_form = reqwest::multipart::Form::new();
     // TODO: support file upload for 'file' parameter
     local_var_req_builder = local_var_req_builder.multipart(local_var_form);
 

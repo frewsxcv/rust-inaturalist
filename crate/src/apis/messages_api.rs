@@ -20,7 +20,7 @@ pub struct MessagesGetParams {
     /// Pagination `page` number
     pub page: Option<String>,
     /// Whether to view messages the user has received (default) or messages the user has sent
-    pub _box: Option<String>,
+    pub r#box: Option<String>,
     /// Search query for subject and body
     pub q: Option<String>,
     /// User ID or username of correspondent to filter by
@@ -98,7 +98,7 @@ pub async fn messages_get(configuration: &configuration::Configuration, params: 
 
     // unbox the parameters
     let page = params.page;
-    let _box = params._box;
+    let r#box = params.r#box;
     let q = params.q;
     let user_id = params.user_id;
     let threads = params.threads;
@@ -112,7 +112,7 @@ pub async fn messages_get(configuration: &configuration::Configuration, params: 
     if let Some(ref local_var_str) = page {
         local_var_req_builder = local_var_req_builder.query(&[("page", &local_var_str.to_string())]);
     }
-    if let Some(ref local_var_str) = _box {
+    if let Some(ref local_var_str) = r#box {
         local_var_req_builder = local_var_req_builder.query(&[("box", &local_var_str.to_string())]);
     }
     if let Some(ref local_var_str) = q {

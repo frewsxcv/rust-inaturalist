@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 ## messages_get
 
-> messages_get(page, _box, q, user_id, threads)
+> messages_get(page, r#box, q, user_id, threads)
 Retrieve messages for the authenticated user. This does not mark them as read.
 
 Show the user's inbox or sent box
@@ -25,7 +25,7 @@ Show the user's inbox or sent box
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **page** | Option<**String**> | Pagination `page` number |  |
-**_box** | Option<**String**> | Whether to view messages the user has received (default) or messages the user has sent |  |[default to inbox]
+**r#box** | Option<**String**> | Whether to view messages the user has received (default) or messages the user has sent |  |[default to inbox]
 **q** | Option<**String**> | Search query for subject and body |  |
 **user_id** | Option<**String**> | User ID or username of correspondent to filter by |  |
 **threads** | Option<**bool**> | Groups results by `thread_id`, only shows the latest message per thread, and includes a `thread_messages_count` attribute showing the total number of messages in that thread. Note that this will not work with the `q` param, and it probably should only be used with `box=any` because the `thread_messages_count` will be inaccurate when you restrict it to `inbox` or `sent`.  |  |[default to false]

@@ -50,7 +50,7 @@ No authorization required
 
 ## taxa_get
 
-> crate::models::TaxaShowResponse taxa_get(q, is_active, taxon_id, parent_id, rank, rank_level, id_above, id_below, per_page, locale, preferred_place_id, only_id, all_names)
+> crate::models::TaxaShowResponse taxa_get(q, is_active, taxon_id, parent_id, rank, rank_level, id_above, id_below, per_page, locale, preferred_place_id, only_id, all_names, order, order_by)
 Taxon Search
 
 Given zero to many of following parameters, returns taxa matching the search criteria 
@@ -73,6 +73,8 @@ Name | Type | Description  | Required | Notes
 **preferred_place_id** | Option<**i32**> | Place preference for regional taxon common names  |  |
 **only_id** | Option<**bool**> | Return only the record IDs |  |
 **all_names** | Option<**bool**> | Include all taxon names in the response |  |
+**order** | Option<**String**> | Sort order |  |[default to desc]
+**order_by** | Option<**String**> | Sort field |  |[default to observations_count]
 
 ### Return type
 

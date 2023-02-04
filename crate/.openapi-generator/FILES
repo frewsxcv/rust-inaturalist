@@ -112,7 +112,6 @@ docs/TaxonConservationStatus.md
 docs/TaxonConservationStatusAllOf.md
 docs/TaxonPhoto.md
 docs/TaxonPhotoAllOf.md
-docs/UTFGridApi.md
 docs/UpdateProjectObservation.md
 docs/UpdateProjectObservationProjectObservation.md
 docs/User.md
@@ -120,6 +119,7 @@ docs/UserCountsResponse.md
 docs/UserCountsResponseAllOf.md
 docs/UserCountsResponseAllOfResults.md
 docs/UsersApi.md
+docs/UtfGridApi.md
 docs/UtfGridResponse.md
 git_push.sh
 src/apis/annotations_api.rs

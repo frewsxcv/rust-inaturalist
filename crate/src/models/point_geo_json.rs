@@ -14,7 +14,7 @@
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct PointGeoJson {
     #[serde(rename = "type", skip_serializing_if = "Option::is_none")]
-    pub _type: Option<String>,
+    pub r#type: Option<String>,
     /// an array of [long, lat]
     #[serde(rename = "coordinates", skip_serializing_if = "Option::is_none")]
     pub coordinates: Option<Vec<f64>>,
@@ -23,7 +23,7 @@ pub struct PointGeoJson {
 impl PointGeoJson {
     pub fn new() -> PointGeoJson {
         PointGeoJson {
-            _type: None,
+            r#type: None,
             coordinates: None,
         }
     }

@@ -27,7 +27,7 @@ pub struct ObservationPhotosIdPutParams {
     /// ID of the record
     pub id: i32,
     /// Position in which the photo is displayed for the observation
-    pub observation_photo_position: Option<i32>,
+    pub observation_photo_left_square_bracket_position_right_square_bracket: Option<i32>,
     /// The photo
     pub file: Option<std::path::PathBuf>
 }
@@ -36,9 +36,9 @@ pub struct ObservationPhotosIdPutParams {
 #[derive(Clone, Debug, Default)]
 pub struct ObservationPhotosPostParams {
     /// Observation ID
-    pub observation_photo_observation_id: Option<i32>,
+    pub observation_photo_left_square_bracket_observation_id_right_square_bracket: Option<i32>,
     /// Observation UUID
-    pub observation_photo_uuid: Option<String>,
+    pub observation_photo_left_square_bracket_uuid_right_square_bracket: Option<String>,
     /// The photo
     pub file: Option<std::path::PathBuf>
 }
@@ -112,7 +112,7 @@ pub async fn observation_photos_id_put(configuration: &configuration::Configurat
 
     // unbox the parameters
     let id = params.id;
-    let observation_photo_position = params.observation_photo_position;
+    let observation_photo_left_square_bracket_position_right_square_bracket = params.observation_photo_left_square_bracket_position_right_square_bracket;
     let file = params.file;
 
 
@@ -133,7 +133,7 @@ pub async fn observation_photos_id_put(configuration: &configuration::Configurat
         local_var_req_builder = local_var_req_builder.header("Authorization", local_var_value);
     };
     let mut local_var_form = reqwest::multipart::Form::new();
-    if let Some(local_var_param_value) = observation_photo_position {
+    if let Some(local_var_param_value) = observation_photo_left_square_bracket_position_right_square_bracket {
         local_var_form = local_var_form.text("observation_photo[position]", local_var_param_value.to_string());
     }
     // TODO: support file upload for 'file' parameter
@@ -159,8 +159,8 @@ pub async fn observation_photos_post(configuration: &configuration::Configuratio
     let local_var_configuration = configuration;
 
     // unbox the parameters
-    let observation_photo_observation_id = params.observation_photo_observation_id;
-    let observation_photo_uuid = params.observation_photo_uuid;
+    let observation_photo_left_square_bracket_observation_id_right_square_bracket = params.observation_photo_left_square_bracket_observation_id_right_square_bracket;
+    let observation_photo_left_square_bracket_uuid_right_square_bracket = params.observation_photo_left_square_bracket_uuid_right_square_bracket;
     let file = params.file;
 
 
@@ -181,10 +181,10 @@ pub async fn observation_photos_post(configuration: &configuration::Configuratio
         local_var_req_builder = local_var_req_builder.header("Authorization", local_var_value);
     };
     let mut local_var_form = reqwest::multipart::Form::new();
-    if let Some(local_var_param_value) = observation_photo_observation_id {
+    if let Some(local_var_param_value) = observation_photo_left_square_bracket_observation_id_right_square_bracket {
         local_var_form = local_var_form.text("observation_photo[observation_id]", local_var_param_value.to_string());
     }
-    if let Some(local_var_param_value) = observation_photo_uuid {
+    if let Some(local_var_param_value) = observation_photo_left_square_bracket_uuid_right_square_bracket {
         local_var_form = local_var_form.text("observation_photo[uuid]", local_var_param_value.to_string());
     }
     // TODO: support file upload for 'file' parameter

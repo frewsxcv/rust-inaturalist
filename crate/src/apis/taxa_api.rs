@@ -65,7 +65,11 @@ pub struct TaxaGetParams {
     /// Return only the record IDs
     pub only_id: Option<bool>,
     /// Include all taxon names in the response
-    pub all_names: Option<bool>
+    pub all_names: Option<bool>,
+    /// Sort order
+    pub order: Option<String>,
+    /// Sort field
+    pub order_by: Option<String>
 }
 
 /// struct for passing parameters to the method [`taxa_id_get`]
@@ -190,6 +194,8 @@ pub async fn taxa_get(configuration: &configuration::Configuration, params: Taxa
     let preferred_place_id = params.preferred_place_id;
     let only_id = params.only_id;
     let all_names = params.all_names;
+    let order = params.order;
+    let order_by = params.order_by;
 
 
     let local_var_client = &local_var_configuration.client;
@@ -242,6 +248,12 @@ pub async fn taxa_get(configuration: &configuration::Configuration, params: Taxa
     if let Some(ref local_var_str) = all_names {
         local_var_req_builder = local_var_req_builder.query(&[("all_names", &local_var_str.to_string())]);
     }
+    if let Some(ref local_var_str) = order {
+        local_var_req_builder = local_var_req_builder.query(&[("order", &local_var_str.to_string())]);
+    }
+    if let Some(ref local_var_str) = order_by {
+        local_var_req_builder = local_var_req_builder.query(&[("order_by", &local_var_str.to_string())]);
+    }
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
         local_var_req_builder = local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
     }
@@ -271,7 +283,7 @@ pub async fn taxa_id_get(configuration: &configuration::Configuration, params: T
 
     let local_var_client = &local_var_configuration.client;
 
-    let local_var_uri_str = format!("{}/taxa/{id}", local_var_configuration.base_path, id=id.iter().map(ToString::to_string).collect::<Vec<_>>().join(","));
+    let local_var_uri_str = format!("{}/taxa/{id}", local_var_configuration.base_path, id=id.join(",").as_ref());
     let mut local_var_req_builder = local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
 
     if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {

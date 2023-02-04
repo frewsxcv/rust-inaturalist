@@ -1,19 +1,19 @@
-# \UTFGridApi
+# \UtfGridApi
 
 All URIs are relative to */v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**colored_heatmap_zoom_xy_grid_json_get**](UTFGridApi.md#colored_heatmap_zoom_xy_grid_json_get) | **GET** /colored_heatmap/{zoom}/{x}/{y}.grid.json | Colored Heatmap Tiles UTFGrid
-[**grid_zoom_xy_grid_json_get**](UTFGridApi.md#grid_zoom_xy_grid_json_get) | **GET** /grid/{zoom}/{x}/{y}.grid.json | Grid Tiles UTFGrid
-[**heatmap_zoom_xy_grid_json_get**](UTFGridApi.md#heatmap_zoom_xy_grid_json_get) | **GET** /heatmap/{zoom}/{x}/{y}.grid.json | Heatmap Tiles UTFGrid
-[**points_zoom_xy_grid_json_get**](UTFGridApi.md#points_zoom_xy_grid_json_get) | **GET** /points/{zoom}/{x}/{y}.grid.json | Points Tiles UTFGrid
+[**colored_heatmap_zoom_xy_grid_json_get**](UtfGridApi.md#colored_heatmap_zoom_xy_grid_json_get) | **GET** /colored_heatmap/{zoom}/{x}/{y}.grid.json | Colored Heatmap Tiles UTFGrid
+[**grid_zoom_xy_grid_json_get**](UtfGridApi.md#grid_zoom_xy_grid_json_get) | **GET** /grid/{zoom}/{x}/{y}.grid.json | Grid Tiles UTFGrid
+[**heatmap_zoom_xy_grid_json_get**](UtfGridApi.md#heatmap_zoom_xy_grid_json_get) | **GET** /heatmap/{zoom}/{x}/{y}.grid.json | Heatmap Tiles UTFGrid
+[**points_zoom_xy_grid_json_get**](UtfGridApi.md#points_zoom_xy_grid_json_get) | **GET** /points/{zoom}/{x}/{y}.grid.json | Points Tiles UTFGrid
 
 
 
 ## colored_heatmap_zoom_xy_grid_json_get
 
-> crate::models::UtfGridResponse colored_heatmap_zoom_xy_grid_json_get(zoom, x, y, color, acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, day, month, year, term_id, term_value_id, without_term_value_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, q, search_on, quality_grade, updated_since, viewer_id, reviewed)
+> crate::models::UtfGridResponse colored_heatmap_zoom_xy_grid_json_get(zoom, x, y, color, acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, day, month, year, term_id, term_value_id, without_term_id, without_term_value_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, q, search_on, quality_grade, updated_since, viewer_id, reviewed)
 Colored Heatmap Tiles UTFGrid
 
 Given zero to many of following parameters, returns a JSON file following the UTFGrid spec, representing observations matching the search criteria 
@@ -67,6 +67,7 @@ Name | Type | Description  | Required | Notes
 **year** | Option<[**Vec<String>**](String.md)> | Must be observed within this year |  |
 **term_id** | Option<[**Vec<i32>**](i32.md)> | Must have an annotation using this controlled term ID |  |
 **term_value_id** | Option<[**Vec<i32>**](i32.md)> | Must have an annotation using this controlled value ID. Must be combined with the `term_id` parameter  |  |
+**without_term_id** | Option<**i32**> | Exclude observations with annotations using this controlled value ID.  |  |
 **without_term_value_id** | Option<[**Vec<i32>**](i32.md)> | Exclude observations with annotations using this controlled value ID. Must be combined with the `term_id` parameter  |  |
 **acc_above** | Option<**String**> | Must have a positional accuracy above this value (meters) |  |
 **acc_below** | Option<**String**> | Must have a positional accuracy below this value (meters) |  |
@@ -125,7 +126,7 @@ No authorization required
 
 ## grid_zoom_xy_grid_json_get
 
-> crate::models::UtfGridResponse grid_zoom_xy_grid_json_get(zoom, x, y, color, acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, day, month, year, term_id, term_value_id, without_term_value_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, q, search_on, quality_grade, updated_since, viewer_id, reviewed)
+> crate::models::UtfGridResponse grid_zoom_xy_grid_json_get(zoom, x, y, color, acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, day, month, year, term_id, term_value_id, without_term_id, without_term_value_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, q, search_on, quality_grade, updated_since, viewer_id, reviewed)
 Grid Tiles UTFGrid
 
 Given zero to many of following parameters, returns a JSON file following the UTFGrid spec, representing observations matching the search criteria 
@@ -179,6 +180,7 @@ Name | Type | Description  | Required | Notes
 **year** | Option<[**Vec<String>**](String.md)> | Must be observed within this year |  |
 **term_id** | Option<[**Vec<i32>**](i32.md)> | Must have an annotation using this controlled term ID |  |
 **term_value_id** | Option<[**Vec<i32>**](i32.md)> | Must have an annotation using this controlled value ID. Must be combined with the `term_id` parameter  |  |
+**without_term_id** | Option<**i32**> | Exclude observations with annotations using this controlled value ID.  |  |
 **without_term_value_id** | Option<[**Vec<i32>**](i32.md)> | Exclude observations with annotations using this controlled value ID. Must be combined with the `term_id` parameter  |  |
 **acc_above** | Option<**String**> | Must have a positional accuracy above this value (meters) |  |
 **acc_below** | Option<**String**> | Must have a positional accuracy below this value (meters) |  |
@@ -237,7 +239,7 @@ No authorization required
 
 ## heatmap_zoom_xy_grid_json_get
 
-> crate::models::UtfGridResponse heatmap_zoom_xy_grid_json_get(zoom, x, y, color, acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, day, month, year, term_id, term_value_id, without_term_value_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, q, search_on, quality_grade, updated_since, viewer_id, reviewed)
+> crate::models::UtfGridResponse heatmap_zoom_xy_grid_json_get(zoom, x, y, color, acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, day, month, year, term_id, term_value_id, without_term_id, without_term_value_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, q, search_on, quality_grade, updated_since, viewer_id, reviewed)
 Heatmap Tiles UTFGrid
 
 Given zero to many of following parameters, returns a JSON file following the UTFGrid spec, representing observations matching the search criteria 
@@ -291,6 +293,7 @@ Name | Type | Description  | Required | Notes
 **year** | Option<[**Vec<String>**](String.md)> | Must be observed within this year |  |
 **term_id** | Option<[**Vec<i32>**](i32.md)> | Must have an annotation using this controlled term ID |  |
 **term_value_id** | Option<[**Vec<i32>**](i32.md)> | Must have an annotation using this controlled value ID. Must be combined with the `term_id` parameter  |  |
+**without_term_id** | Option<**i32**> | Exclude observations with annotations using this controlled value ID.  |  |
 **without_term_value_id** | Option<[**Vec<i32>**](i32.md)> | Exclude observations with annotations using this controlled value ID. Must be combined with the `term_id` parameter  |  |
 **acc_above** | Option<**String**> | Must have a positional accuracy above this value (meters) |  |
 **acc_below** | Option<**String**> | Must have a positional accuracy below this value (meters) |  |
@@ -349,7 +352,7 @@ No authorization required
 
 ## points_zoom_xy_grid_json_get
 
-> crate::models::UtfGridResponse points_zoom_xy_grid_json_get(zoom, x, y, color, acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, day, month, year, term_id, term_value_id, without_term_value_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, q, search_on, quality_grade, updated_since, viewer_id, reviewed)
+> crate::models::UtfGridResponse points_zoom_xy_grid_json_get(zoom, x, y, color, acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, day, month, year, term_id, term_value_id, without_term_id, without_term_value_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, q, search_on, quality_grade, updated_since, viewer_id, reviewed)
 Points Tiles UTFGrid
 
 Given zero to many of following parameters, returns a JSON file following the UTFGrid spec, representing observations matching the search criteria 
@@ -403,6 +406,7 @@ Name | Type | Description  | Required | Notes
 **year** | Option<[**Vec<String>**](String.md)> | Must be observed within this year |  |
 **term_id** | Option<[**Vec<i32>**](i32.md)> | Must have an annotation using this controlled term ID |  |
 **term_value_id** | Option<[**Vec<i32>**](i32.md)> | Must have an annotation using this controlled value ID. Must be combined with the `term_id` parameter  |  |
+**without_term_id** | Option<**i32**> | Exclude observations with annotations using this controlled value ID.  |  |
 **without_term_value_id** | Option<[**Vec<i32>**](i32.md)> | Exclude observations with annotations using this controlled value ID. Must be combined with the `term_id` parameter  |  |
 **acc_above** | Option<**String**> | Must have a positional accuracy above this value (meters) |  |
 **acc_below** | Option<**String**> | Must have a positional accuracy below this value (meters) |  |

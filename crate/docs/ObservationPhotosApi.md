@@ -42,7 +42,7 @@ Name | Type | Description  | Required | Notes
 
 ## observation_photos_id_put
 
-> observation_photos_id_put(id, observation_photo_position, file)
+> observation_photos_id_put(id, observation_photo_left_square_bracket_position_right_square_bracket, file)
 Observation Photo Update
 
 Update an observation photo
@@ -53,7 +53,7 @@ Update an observation photo
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **i32** | ID of the record | [required] |
-**observation_photo_position** | Option<**i32**> | Position in which the photo is displayed for the observation |  |
+**observation_photo_left_square_bracket_position_right_square_bracket** | Option<**i32**> | Position in which the photo is displayed for the observation |  |
 **file** | Option<**std::path::PathBuf**> | The photo |  |
 
 ### Return type
@@ -74,7 +74,7 @@ Name | Type | Description  | Required | Notes
 
 ## observation_photos_post
 
-> observation_photos_post(observation_photo_observation_id, observation_photo_uuid, file)
+> observation_photos_post(observation_photo_left_square_bracket_observation_id_right_square_bracket, observation_photo_left_square_bracket_uuid_right_square_bracket, file)
 Observation Photo Create
 
 Create an observation photo 
@@ -84,8 +84,8 @@ Create an observation photo
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**observation_photo_observation_id** | Option<**i32**> | Observation ID |  |
-**observation_photo_uuid** | Option<**String**> | Observation UUID |  |
+**observation_photo_left_square_bracket_observation_id_right_square_bracket** | Option<**i32**> | Observation ID |  |
+**observation_photo_left_square_bracket_uuid_right_square_bracket** | Option<**String**> | Observation UUID |  |
 **file** | Option<**std::path::PathBuf**> | The photo |  |
 
 ### Return type

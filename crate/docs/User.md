@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **id** | Option<**i32**> |  | [optional]
 **icon_content_type** | Option<**String**> |  | [optional]
 **icon_file_name** | Option<**String**> |  | [optional]
+**icon** | Option<**String**> |  | [optional]
 **icon_url** | Option<**String**> |  | [optional]
 **login** | Option<**String**> |  | [optional]
 **name** | Option<**String**> |  | [optional]
