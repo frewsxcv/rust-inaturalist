@@ -35,7 +35,7 @@ pub async fn photos_post(
     let local_var_configuration = configuration;
 
     // unbox the parameters
-    let file = params.file;
+    let _file = params.file;
 
     let local_var_client = &local_var_configuration.client;
 
@@ -55,7 +55,7 @@ pub async fn photos_post(
         };
         local_var_req_builder = local_var_req_builder.header("Authorization", local_var_value);
     };
-    let mut local_var_form = reqwest::multipart::Form::new();
+    let local_var_form = reqwest::multipart::Form::new();
     // TODO: support file upload for 'file' parameter
     local_var_req_builder = local_var_req_builder.multipart(local_var_form);
 

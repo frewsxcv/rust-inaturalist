@@ -127,7 +127,7 @@ pub async fn observation_photos_id_put(
     let id = params.id;
     let observation_photo_left_square_bracket_position_right_square_bracket =
         params.observation_photo_left_square_bracket_position_right_square_bracket;
-    let file = params.file;
+    let _file = params.file;
 
     let local_var_client = &local_var_configuration.client;
 
@@ -195,7 +195,7 @@ pub async fn observation_photos_post(
         params.observation_photo_left_square_bracket_observation_id_right_square_bracket;
     let observation_photo_left_square_bracket_uuid_right_square_bracket =
         params.observation_photo_left_square_bracket_uuid_right_square_bracket;
-    let file = params.file;
+    let _file = params.file;
 
     let local_var_client = &local_var_configuration.client;
 
