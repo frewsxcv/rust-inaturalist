@@ -12,7 +12,6 @@ Name | Type | Description | Notes
 **preferred_common_name** | Option<**String**> |  | [optional]
 **rank** | Option<**String**> |  | [optional]
 **rank_level** | Option<**i32**> |  | [optional]
-**ancestor_ids** | Option<**Vec<i32>**> |  | [optional]
 **default_photo** | Option<[**crate::models::TaxonPhoto**](TaxonPhoto.md)> |  | [optional]
 **matched_term** | Option<**String**> |  | [optional]
 **observations_count** | Option<**i32**> |  | [optional]

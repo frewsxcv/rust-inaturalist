@@ -29,8 +29,6 @@ pub struct AutocompleteTaxon {
     pub rank: Option<String>,
     #[serde(rename = "rank_level", skip_serializing_if = "Option::is_none")]
     pub rank_level: Option<i32>,
-    #[serde(rename = "ancestor_ids", skip_serializing_if = "Option::is_none")]
-    pub ancestor_ids: Option<Vec<i32>>,
     #[serde(rename = "default_photo", skip_serializing_if = "Option::is_none")]
     pub default_photo: Option<Box<crate::models::TaxonPhoto>>,
     #[serde(rename = "matched_term", skip_serializing_if = "Option::is_none")]
@@ -50,7 +48,6 @@ impl AutocompleteTaxon {
             preferred_common_name: None,
             rank: None,
             rank_level: None,
-            ancestor_ids: None,
             default_photo: None,
             matched_term: None,
             observations_count: None,

@@ -10,8 +10,6 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct AutocompleteTaxonAllOf {
-    #[serde(rename = "ancestor_ids", skip_serializing_if = "Option::is_none")]
-    pub ancestor_ids: Option<Vec<i32>>,
     #[serde(rename = "default_photo", skip_serializing_if = "Option::is_none")]
     pub default_photo: Option<Box<crate::models::TaxonPhoto>>,
     #[serde(rename = "matched_term", skip_serializing_if = "Option::is_none")]
@@ -23,7 +21,6 @@ pub struct AutocompleteTaxonAllOf {
 impl AutocompleteTaxonAllOf {
     pub fn new() -> AutocompleteTaxonAllOf {
         AutocompleteTaxonAllOf {
-            ancestor_ids: None,
             default_photo: None,
             matched_term: None,
             observations_count: None,

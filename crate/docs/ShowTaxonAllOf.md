@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**ancestor_ids** | Option<**Vec<i32>**> |  | [optional]
 **colors** | Option<[**Vec<crate::models::Color>**](Color.md)> |  | [optional]
 **conservation_status** | Option<[**crate::models::ConservationStatus**](ConservationStatus.md)> |  | [optional]
 **conservation_statuses** | Option<[**Vec<crate::models::TaxonConservationStatus>**](TaxonConservationStatus.md)> |  | [optional]

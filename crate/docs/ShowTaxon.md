@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **preferred_common_name** | Option<**String**> |  | [optional]
 **rank** | Option<**String**> |  | [optional]
 **rank_level** | Option<**i32**> |  | [optional]
+**ancestor_ids** | Option<**Vec<i32>**> |  | [optional]
 **colors** | Option<[**Vec<crate::models::Color>**](Color.md)> |  | [optional]
 **conservation_status** | Option<[**crate::models::ConservationStatus**](ConservationStatus.md)> |  | [optional]
 **conservation_statuses** | Option<[**Vec<crate::models::TaxonConservationStatus>**](TaxonConservationStatus.md)> |  | [optional]

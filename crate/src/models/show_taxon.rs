@@ -29,6 +29,8 @@ pub struct ShowTaxon {
     pub rank: Option<String>,
     #[serde(rename = "rank_level", skip_serializing_if = "Option::is_none")]
     pub rank_level: Option<i32>,
+    #[serde(rename = "ancestor_ids", skip_serializing_if = "Option::is_none")]
+    pub ancestor_ids: Option<Vec<i32>>,
     #[serde(rename = "colors", skip_serializing_if = "Option::is_none")]
     pub colors: Option<Vec<crate::models::Color>>,
     #[serde(
@@ -68,6 +70,7 @@ impl ShowTaxon {
             preferred_common_name: None,
             rank: None,
             rank_level: None,
+            ancestor_ids: None,
             colors: None,
             conservation_status: None,
             conservation_statuses: None,

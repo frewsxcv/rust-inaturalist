@@ -10,6 +10,8 @@
 
 #[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
 pub struct ShowTaxonAllOf {
+    #[serde(rename = "ancestor_ids", skip_serializing_if = "Option::is_none")]
+    pub ancestor_ids: Option<Vec<i32>>,
     #[serde(rename = "colors", skip_serializing_if = "Option::is_none")]
     pub colors: Option<Vec<crate::models::Color>>,
     #[serde(
@@ -41,6 +43,7 @@ pub struct ShowTaxonAllOf {
 impl ShowTaxonAllOf {
     pub fn new() -> ShowTaxonAllOf {
         ShowTaxonAllOf {
+            ancestor_ids: None,
             colors: None,
             conservation_status: None,
             conservation_statuses: None,
