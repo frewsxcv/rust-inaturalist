@@ -28,7 +28,7 @@ pub struct ObservationTaxon {
     #[serde(rename = "rank", skip_serializing_if = "Option::is_none")]
     pub rank: Option<String>,
     #[serde(rename = "rank_level", skip_serializing_if = "Option::is_none")]
-    pub rank_level: Option<i32>,
+    pub rank_level: Option<f32>,
     #[serde(rename = "ancestor_ids", skip_serializing_if = "Option::is_none")]
     pub ancestor_ids: Option<Vec<i32>>,
     #[serde(rename = "ancestry", skip_serializing_if = "Option::is_none")]

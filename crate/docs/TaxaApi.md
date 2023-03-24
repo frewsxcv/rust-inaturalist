@@ -26,7 +26,7 @@ Name | Type | Description  | Required | Notes
 **is_active** | Option<**bool**> | Taxon is `active` |  |
 **taxon_id** | Option<[**Vec<String>**](String.md)> | Only show taxa with this ID, or its descendants |  |
 **rank** | Option<[**Vec<String>**](String.md)> | Taxon must have this rank |  |
-**rank_level** | Option<**i32**> | Taxon must have this rank level. Some example values are 70 (kingdom), 60 (phylum), 50 (class), 40 (order), 30 (family), 20 (genus), 10 (species), 5 (subspecies)  |  |
+**rank_level** | Option<**f32**> | Taxon must have this rank level. Some example values are 70 (kingdom), 60 (phylum), 50 (class), 40 (order), 30 (family), 20 (genus), 10 (species), 5 (subspecies)  |  |
 **per_page** | Option<**String**> | Number of results to return in a `page`. The maximum value is 30 for this endpoint |  |
 **locale** | Option<**String**> | Locale preference for taxon common names  |  |
 **preferred_place_id** | Option<**i32**> | Place preference for regional taxon common names  |  |
@@ -65,7 +65,7 @@ Name | Type | Description  | Required | Notes
 **taxon_id** | Option<[**Vec<String>**](String.md)> | Only show taxa with this ID, or its descendants |  |
 **parent_id** | Option<**i32**> | Taxon's parent must have this ID |  |
 **rank** | Option<[**Vec<String>**](String.md)> | Taxon must have this rank |  |
-**rank_level** | Option<**i32**> | Taxon must have this rank level. Some example values are 70 (kingdom), 60 (phylum), 50 (class), 40 (order), 30 (family), 20 (genus), 10 (species), 5 (subspecies)  |  |
+**rank_level** | Option<**f32**> | Taxon must have this rank level. Some example values are 70 (kingdom), 60 (phylum), 50 (class), 40 (order), 30 (family), 20 (genus), 10 (species), 5 (subspecies)  |  |
 **id_above** | Option<**String**> | Must have an ID above this value |  |
 **id_below** | Option<**String**> | Must have an ID below this value |  |
 **per_page** | Option<**String**> | Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted  |  |

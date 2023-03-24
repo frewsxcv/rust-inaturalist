@@ -25,7 +25,7 @@ pub struct TaxaAutocompleteGetParams {
     /// Taxon must have this rank
     pub rank: Option<Vec<String>>,
     /// Taxon must have this rank level. Some example values are 70 (kingdom), 60 (phylum), 50 (class), 40 (order), 30 (family), 20 (genus), 10 (species), 5 (subspecies)
-    pub rank_level: Option<i32>,
+    pub rank_level: Option<f32>,
     /// Number of results to return in a `page`. The maximum value is 30 for this endpoint
     pub per_page: Option<String>,
     /// Locale preference for taxon common names
@@ -50,7 +50,7 @@ pub struct TaxaGetParams {
     /// Taxon must have this rank
     pub rank: Option<Vec<String>>,
     /// Taxon must have this rank level. Some example values are 70 (kingdom), 60 (phylum), 50 (class), 40 (order), 30 (family), 20 (genus), 10 (species), 5 (subspecies)
-    pub rank_level: Option<i32>,
+    pub rank_level: Option<f32>,
     /// Must have an ID above this value
     pub id_above: Option<String>,
     /// Must have an ID below this value

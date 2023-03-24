@@ -54,7 +54,7 @@ Given an ID, or an array of IDs in comma-delimited format, returns corresponding
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | [**Vec<String>**](String.md) | Must have this ID or slug | [required] |
-**admin_level** | Option<[**Vec<i32>**](i32.md)> | Admin level of a place, or an array of admin levels in comma-delimited format. Supported admin levels are: -1 (continent), 0 (country), 1 (state), 2 (county), 3 (town), 10 (park) |  |
+**admin_level** | Option<[**Vec<i32>**](i32.md)> | Admin level of a place, or an array of admin levels in comma-delimited format. Supported admin levels are: -10 (continent), 0 (country), 10 (state), 20 (county), 30 (town), 100 (park) |  |
 
 ### Return type
 

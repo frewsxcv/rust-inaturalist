@@ -27,7 +27,7 @@ pub struct PlacesAutocompleteGetParams {
 pub struct PlacesIdGetParams {
     /// Must have this ID or slug
     pub id: Vec<String>,
-    /// Admin level of a place, or an array of admin levels in comma-delimited format. Supported admin levels are: -1 (continent), 0 (country), 1 (state), 2 (county), 3 (town), 10 (park)
+    /// Admin level of a place, or an array of admin levels in comma-delimited format. Supported admin levels are: -10 (continent), 0 (country), 10 (state), 20 (county), 30 (town), 100 (park)
     pub admin_level: Option<Vec<i32>>,
 }
 

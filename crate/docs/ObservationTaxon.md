@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **name** | Option<**String**> |  | [optional]
 **preferred_common_name** | Option<**String**> |  | [optional]
 **rank** | Option<**String**> |  | [optional]
-**rank_level** | Option<**i32**> |  | [optional]
+**rank_level** | Option<**f32**> |  | [optional]
 **ancestor_ids** | Option<**Vec<i32>**> |  | [optional]
 **ancestry** | Option<**String**> |  | [optional]
 **conservation_status** | Option<[**crate::models::RawConservationStatus**](RawConservationStatus.md)> |  | [optional]
