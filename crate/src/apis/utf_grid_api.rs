@@ -1,20 +1,20 @@
 /*
  * iNaturalist API
  *
- * # https://api.inaturalist.org/v1/  [iNaturalist](https://www.inaturalist.org/) is a global community of naturalists, scientists, and members of the public sharing over a million wildlife sightings to teach one another about the natural world while creating high quality citizen science data for science and conservation. The iNaturalist technology infrastructure and open source software is administered by the [California Academy of Sciences](https://www.calacademy.org/) as part of their mission to explore, explain, and sustain life on Earth.  These API methods return data in JSON/JSONP and PNG response formats. They are meant to supplement the existing [iNaturalist API](https://www.inaturalist.org/pages/api+reference), implemented in Ruby on Rails, which has more functionality and supports more write operations, but tends to be slower and have less consistent response formats. Visit our [developers page](https://www.inaturalist.org/pages/developers) for more information. Write operations that expect and return JSON describe a single `body` parameter that represents the request body, which should be specified as JSON. See the \"Model\" of each body parameter for attributes that we accept in these JSON objects.  Multiple values for a single URL parameter should be separated by commas, e.g. `taxon_id=1,2,3`.  Map tiles are generated using the [node-mapnik](https://github.com/mapnik/node-mapnik) library, following the XYZ map tiling scheme. The \"Observation Tile\" methods accept nearly all the parameters of the observation search APIs, and will generate map tiles reflecting the same observations returned by searches. These \"Observation Tile\" methods have corresponding [UTFGrid](https://github.com/mapbox/utfgrid-spec) JSON responses which return information needed to make interactive maps.  Authentication in the Node API is handled via JSON Web Tokens (JWT). To obtain one, make an [OAuth-authenticated request](http://www.inaturalist.org/pages/api+reference#auth) to https://www.inaturalist.org/users/api_token. Each JWT will expire after 24 hours. Authentication required for all PUT and POST requests. Some GET requests will also include private information like hidden coordinates if the authenticated user has permission to view them.  iNaturalist Website: https://www.inaturalist.org/  Open Source Software: https://github.com/inaturalist/  ## Terms of Use  Use of this API is subject to the iNaturalist [Terms of Service](https://www.inaturalist.org/terms) and [Privacy Policy](https://www.inaturalist.org/privacy). We will block any use of our API that violates our Terms or Privacy Policy without notice. The API is intended to support application development, not data scraping. For pre- generated data exports, see https://www.inaturalist.org/pages/developers.  Please note that we throttle API usage to a max of 100 requests per minute, though we ask that you try to keep it to 60 requests per minute or lower, and to keep under 10,000 requests per day. If we notice usage that has serious impact on our performance we may institute blocks without notification.  Terms of Service: https://www.inaturalist.org/terms  Privacy Policy: https://www.inaturalist.org/privacy
+ * # https://api.inaturalist.org/v1/  [iNaturalist](https://www.inaturalist.org/) is a global community of naturalists, scientists, and members of the public sharing over a million wildlife sightings to teach one another about the natural world while creating high quality citizen science data for science and conservation.  These API methods return data in JSON/JSONP and PNG response formats. They are meant to supplement the existing [iNaturalist API](https://www.inaturalist.org/pages/api+reference), implemented in Ruby on Rails, which has more functionality and supports more write operations, but tends to be slower and have less consistent response formats. Visit our [developers page](https://www.inaturalist.org/pages/developers) for more information. Write operations that expect and return JSON describe a single `body` parameter that represents the request body, which should be specified as JSON. See the \"Model\" of each body parameter for attributes that we accept in these JSON objects.  Multiple values for a single URL parameter should be separated by commas, e.g. `taxon_id=1,2,3`.  Map tiles are generated using the [node-mapnik](https://github.com/mapnik/node-mapnik) library, following the XYZ map tiling scheme. The \"Observation Tile\" methods accept nearly all the parameters of the observation search APIs, and will generate map tiles reflecting the same observations returned by searches. These \"Observation Tile\" methods have corresponding [UTFGrid](https://github.com/mapbox/utfgrid-spec) JSON responses which return information needed to make interactive maps.  Authentication in the Node API is handled via JSON Web Tokens (JWT). To obtain one, make an [OAuth-authenticated request](http://www.inaturalist.org/pages/api+reference#auth) to https://www.inaturalist.org/users/api_token. Each JWT will expire after 24 hours. Authentication required for all PUT and POST requests. Some GET requests will also include private information like hidden coordinates if the authenticated user has permission to view them.  Photos served from https://static.inaturalist.org and https://inaturalist-open-data.s3.amazonaws.com have multiple size variants and not all size variants are returned in responses. To access other sizes, the photo URL can be modified to replace only the size qualifier (each variant shares the exact same extension). The domain a photo is hosted under reflects the license under which the photo is being shared, and the domain may change over time if the license changes. Photos in the `inaturalist-open-data` domain are shared under open licenses. These can be accessed in bulk in the [iNaturalist AWS Open Dataset]( https://registry.opendata.aws/inaturalist-open-data/). Photos in the `static.inaturalist.org` domain do not have open licenses.  The available photo sizes are: * original (max 2048px in either dimension) * large (max 1024px in either dimension) * medium (max 500px in either dimension) * small (max 240px in either dimension) * thumb (max 100px in either dimension) * square (75px square)  iNaturalist Website: https://www.inaturalist.org/  Open Source Software: https://github.com/inaturalist/  ## Terms of Use  Use of this API is subject to the iNaturalist [Terms of Service](https://www.inaturalist.org/terms) and [Privacy Policy](https://www.inaturalist.org/privacy). We will block any use of our API that violates our Terms or Privacy Policy without notice. The API is intended to support application development, not data scraping. For pre- generated data exports, see https://www.inaturalist.org/pages/developers.  Please note that we throttle API usage to a max of 100 requests per minute, though we ask that you try to keep it to 60 requests per minute or lower, and to keep under 10,000 requests per day. If we notice usage that has serious impact on our performance we may institute blocks without notification.  Terms of Service: https://www.inaturalist.org/terms  Privacy Policy: https://www.inaturalist.org/privacy
  *
  * The version of the OpenAPI document: 1.3.0
  *
  * Generated by: https://openapi-generator.tech
  */
 
+use super::{configuration, ContentType, Error};
+use crate::{apis::ResponseContent, models};
 use reqwest;
-
-use super::{configuration, Error};
-use crate::apis::ResponseContent;
+use serde::{de::Error as _, Deserialize, Serialize};
 
 /// struct for passing parameters to the method [`colored_heatmap_zoom_xy_grid_json_get`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct ColoredHeatmapZoomXyGridJsonGetParams {
     /// Zoom level. Z coordinate in the XYZ tiling scheme
     pub zoom: i32,
@@ -62,6 +62,8 @@ pub struct ColoredHeatmapZoomXyGridJsonGetParams {
     pub licensed: Option<bool>,
     /// License attribute of at least one photo of an observation must not be null
     pub photo_licensed: Option<bool>,
+    /// Observation taxon is expected nearby
+    pub expected_nearby: Option<bool>,
     /// Must have this ID
     pub id: Option<Vec<String>>,
     /// Must not have this ID
@@ -94,12 +96,20 @@ pub struct ColoredHeatmapZoomXyGridJsonGetParams {
     pub user_login: Option<Vec<String>>,
     /// Observations identified by a particular user
     pub ident_user_id: Option<i32>,
+    /// Must be observed within this hour of the day
+    pub hour: Option<Vec<String>>,
     /// Must be observed within this day of the month
     pub day: Option<Vec<String>>,
     /// Must be observed within this month
     pub month: Option<Vec<String>>,
     /// Must be observed within this year
     pub year: Option<Vec<String>>,
+    /// Must be created within this day of the month
+    pub created_day: Option<Vec<String>>,
+    /// Must be created within this month
+    pub created_month: Option<Vec<String>>,
+    /// Must be created within this year
+    pub created_year: Option<Vec<String>>,
     /// Must have an annotation using this controlled term ID
     pub term_id: Option<Vec<i32>>,
     /// Must have an annotation using this controlled value ID. Must be combined with the `term_id` parameter
@@ -108,6 +118,10 @@ pub struct ColoredHeatmapZoomXyGridJsonGetParams {
     pub without_term_id: Option<i32>,
     /// Exclude observations with annotations using this controlled value ID. Must be combined with the `term_id` parameter
     pub without_term_value_id: Option<Vec<i32>>,
+    /// Must be combined with the `term_value_id` or the `without_term_value_id` parameter. Must have an annotation using this controlled term ID and associated term value IDs or be missing this annotation.
+    pub term_id_or_unknown: Option<Vec<i32>>,
+    /// Must have an annotation created by this user
+    pub annotation_user_id: Option<Vec<String>>,
     /// Must have a positional accuracy above this value (meters)
     pub acc_above: Option<String>,
     /// Must have a positional accuracy below this value (meters)
@@ -140,6 +154,8 @@ pub struct ColoredHeatmapZoomXyGridJsonGetParams {
     pub geoprivacy: Option<Vec<String>>,
     /// Filter observations by the most conservative geoprivacy applied by a conservation status associated with one of the taxa proposed in the current identifications.
     pub taxon_geoprivacy: Option<Vec<String>>,
+    /// Must have `geoprivacy` or `taxon_geoprivacy` fields matching these values
+    pub obscuration: Option<Vec<String>>,
     /// Taxon must have this rank or lower
     pub hrank: Option<String>,
     /// Taxon must have this rank or higher
@@ -172,6 +188,8 @@ pub struct ColoredHeatmapZoomXyGridJsonGetParams {
     pub not_in_project: Option<String>,
     /// Must not match the rules of the project with this ID or slug
     pub not_matching_project_rules_for: Option<String>,
+    /// Must included in this observation accuracy experiment
+    pub observation_accuracy_experiment_id: Option<Vec<i32>>,
     /// Search observation properties. Can be combined with `search_on`
     pub q: Option<String>,
     /// Properties to search on, when combined with `q`. Searches across all properties by default
@@ -187,7 +205,7 @@ pub struct ColoredHeatmapZoomXyGridJsonGetParams {
 }
 
 /// struct for passing parameters to the method [`grid_zoom_xy_grid_json_get`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct GridZoomXyGridJsonGetParams {
     /// Zoom level. Z coordinate in the XYZ tiling scheme
     pub zoom: i32,
@@ -235,6 +253,8 @@ pub struct GridZoomXyGridJsonGetParams {
     pub licensed: Option<bool>,
     /// License attribute of at least one photo of an observation must not be null
     pub photo_licensed: Option<bool>,
+    /// Observation taxon is expected nearby
+    pub expected_nearby: Option<bool>,
     /// Must have this ID
     pub id: Option<Vec<String>>,
     /// Must not have this ID
@@ -267,12 +287,20 @@ pub struct GridZoomXyGridJsonGetParams {
     pub user_login: Option<Vec<String>>,
     /// Observations identified by a particular user
     pub ident_user_id: Option<i32>,
+    /// Must be observed within this hour of the day
+    pub hour: Option<Vec<String>>,
     /// Must be observed within this day of the month
     pub day: Option<Vec<String>>,
     /// Must be observed within this month
     pub month: Option<Vec<String>>,
     /// Must be observed within this year
     pub year: Option<Vec<String>>,
+    /// Must be created within this day of the month
+    pub created_day: Option<Vec<String>>,
+    /// Must be created within this month
+    pub created_month: Option<Vec<String>>,
+    /// Must be created within this year
+    pub created_year: Option<Vec<String>>,
     /// Must have an annotation using this controlled term ID
     pub term_id: Option<Vec<i32>>,
     /// Must have an annotation using this controlled value ID. Must be combined with the `term_id` parameter
@@ -281,6 +309,10 @@ pub struct GridZoomXyGridJsonGetParams {
     pub without_term_id: Option<i32>,
     /// Exclude observations with annotations using this controlled value ID. Must be combined with the `term_id` parameter
     pub without_term_value_id: Option<Vec<i32>>,
+    /// Must be combined with the `term_value_id` or the `without_term_value_id` parameter. Must have an annotation using this controlled term ID and associated term value IDs or be missing this annotation.
+    pub term_id_or_unknown: Option<Vec<i32>>,
+    /// Must have an annotation created by this user
+    pub annotation_user_id: Option<Vec<String>>,
     /// Must have a positional accuracy above this value (meters)
     pub acc_above: Option<String>,
     /// Must have a positional accuracy below this value (meters)
@@ -313,6 +345,8 @@ pub struct GridZoomXyGridJsonGetParams {
     pub geoprivacy: Option<Vec<String>>,
     /// Filter observations by the most conservative geoprivacy applied by a conservation status associated with one of the taxa proposed in the current identifications.
     pub taxon_geoprivacy: Option<Vec<String>>,
+    /// Must have `geoprivacy` or `taxon_geoprivacy` fields matching these values
+    pub obscuration: Option<Vec<String>>,
     /// Taxon must have this rank or lower
     pub hrank: Option<String>,
     /// Taxon must have this rank or higher
@@ -345,6 +379,8 @@ pub struct GridZoomXyGridJsonGetParams {
     pub not_in_project: Option<String>,
     /// Must not match the rules of the project with this ID or slug
     pub not_matching_project_rules_for: Option<String>,
+    /// Must included in this observation accuracy experiment
+    pub observation_accuracy_experiment_id: Option<Vec<i32>>,
     /// Search observation properties. Can be combined with `search_on`
     pub q: Option<String>,
     /// Properties to search on, when combined with `q`. Searches across all properties by default
@@ -360,7 +396,7 @@ pub struct GridZoomXyGridJsonGetParams {
 }
 
 /// struct for passing parameters to the method [`heatmap_zoom_xy_grid_json_get`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct HeatmapZoomXyGridJsonGetParams {
     /// Zoom level. Z coordinate in the XYZ tiling scheme
     pub zoom: i32,
@@ -408,6 +444,8 @@ pub struct HeatmapZoomXyGridJsonGetParams {
     pub licensed: Option<bool>,
     /// License attribute of at least one photo of an observation must not be null
     pub photo_licensed: Option<bool>,
+    /// Observation taxon is expected nearby
+    pub expected_nearby: Option<bool>,
     /// Must have this ID
     pub id: Option<Vec<String>>,
     /// Must not have this ID
@@ -440,12 +478,20 @@ pub struct HeatmapZoomXyGridJsonGetParams {
     pub user_login: Option<Vec<String>>,
     /// Observations identified by a particular user
     pub ident_user_id: Option<i32>,
+    /// Must be observed within this hour of the day
+    pub hour: Option<Vec<String>>,
     /// Must be observed within this day of the month
     pub day: Option<Vec<String>>,
     /// Must be observed within this month
     pub month: Option<Vec<String>>,
     /// Must be observed within this year
     pub year: Option<Vec<String>>,
+    /// Must be created within this day of the month
+    pub created_day: Option<Vec<String>>,
+    /// Must be created within this month
+    pub created_month: Option<Vec<String>>,
+    /// Must be created within this year
+    pub created_year: Option<Vec<String>>,
     /// Must have an annotation using this controlled term ID
     pub term_id: Option<Vec<i32>>,
     /// Must have an annotation using this controlled value ID. Must be combined with the `term_id` parameter
@@ -454,6 +500,10 @@ pub struct HeatmapZoomXyGridJsonGetParams {
     pub without_term_id: Option<i32>,
     /// Exclude observations with annotations using this controlled value ID. Must be combined with the `term_id` parameter
     pub without_term_value_id: Option<Vec<i32>>,
+    /// Must be combined with the `term_value_id` or the `without_term_value_id` parameter. Must have an annotation using this controlled term ID and associated term value IDs or be missing this annotation.
+    pub term_id_or_unknown: Option<Vec<i32>>,
+    /// Must have an annotation created by this user
+    pub annotation_user_id: Option<Vec<String>>,
     /// Must have a positional accuracy above this value (meters)
     pub acc_above: Option<String>,
     /// Must have a positional accuracy below this value (meters)
@@ -486,6 +536,8 @@ pub struct HeatmapZoomXyGridJsonGetParams {
     pub geoprivacy: Option<Vec<String>>,
     /// Filter observations by the most conservative geoprivacy applied by a conservation status associated with one of the taxa proposed in the current identifications.
     pub taxon_geoprivacy: Option<Vec<String>>,
+    /// Must have `geoprivacy` or `taxon_geoprivacy` fields matching these values
+    pub obscuration: Option<Vec<String>>,
     /// Taxon must have this rank or lower
     pub hrank: Option<String>,
     /// Taxon must have this rank or higher
@@ -518,6 +570,8 @@ pub struct HeatmapZoomXyGridJsonGetParams {
     pub not_in_project: Option<String>,
     /// Must not match the rules of the project with this ID or slug
     pub not_matching_project_rules_for: Option<String>,
+    /// Must included in this observation accuracy experiment
+    pub observation_accuracy_experiment_id: Option<Vec<i32>>,
     /// Search observation properties. Can be combined with `search_on`
     pub q: Option<String>,
     /// Properties to search on, when combined with `q`. Searches across all properties by default
@@ -533,7 +587,7 @@ pub struct HeatmapZoomXyGridJsonGetParams {
 }
 
 /// struct for passing parameters to the method [`points_zoom_xy_grid_json_get`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct PointsZoomXyGridJsonGetParams {
     /// Zoom level. Z coordinate in the XYZ tiling scheme
     pub zoom: i32,
@@ -581,6 +635,8 @@ pub struct PointsZoomXyGridJsonGetParams {
     pub licensed: Option<bool>,
     /// License attribute of at least one photo of an observation must not be null
     pub photo_licensed: Option<bool>,
+    /// Observation taxon is expected nearby
+    pub expected_nearby: Option<bool>,
     /// Must have this ID
     pub id: Option<Vec<String>>,
     /// Must not have this ID
@@ -613,12 +669,20 @@ pub struct PointsZoomXyGridJsonGetParams {
     pub user_login: Option<Vec<String>>,
     /// Observations identified by a particular user
     pub ident_user_id: Option<i32>,
+    /// Must be observed within this hour of the day
+    pub hour: Option<Vec<String>>,
     /// Must be observed within this day of the month
     pub day: Option<Vec<String>>,
     /// Must be observed within this month
     pub month: Option<Vec<String>>,
     /// Must be observed within this year
     pub year: Option<Vec<String>>,
+    /// Must be created within this day of the month
+    pub created_day: Option<Vec<String>>,
+    /// Must be created within this month
+    pub created_month: Option<Vec<String>>,
+    /// Must be created within this year
+    pub created_year: Option<Vec<String>>,
     /// Must have an annotation using this controlled term ID
     pub term_id: Option<Vec<i32>>,
     /// Must have an annotation using this controlled value ID. Must be combined with the `term_id` parameter
@@ -627,6 +691,10 @@ pub struct PointsZoomXyGridJsonGetParams {
     pub without_term_id: Option<i32>,
     /// Exclude observations with annotations using this controlled value ID. Must be combined with the `term_id` parameter
     pub without_term_value_id: Option<Vec<i32>>,
+    /// Must be combined with the `term_value_id` or the `without_term_value_id` parameter. Must have an annotation using this controlled term ID and associated term value IDs or be missing this annotation.
+    pub term_id_or_unknown: Option<Vec<i32>>,
+    /// Must have an annotation created by this user
+    pub annotation_user_id: Option<Vec<String>>,
     /// Must have a positional accuracy above this value (meters)
     pub acc_above: Option<String>,
     /// Must have a positional accuracy below this value (meters)
@@ -659,6 +727,8 @@ pub struct PointsZoomXyGridJsonGetParams {
     pub geoprivacy: Option<Vec<String>>,
     /// Filter observations by the most conservative geoprivacy applied by a conservation status associated with one of the taxa proposed in the current identifications.
     pub taxon_geoprivacy: Option<Vec<String>>,
+    /// Must have `geoprivacy` or `taxon_geoprivacy` fields matching these values
+    pub obscuration: Option<Vec<String>>,
     /// Taxon must have this rank or lower
     pub hrank: Option<String>,
     /// Taxon must have this rank or higher
@@ -691,6 +761,8 @@ pub struct PointsZoomXyGridJsonGetParams {
     pub not_in_project: Option<String>,
     /// Must not match the rules of the project with this ID or slug
     pub not_matching_project_rules_for: Option<String>,
+    /// Must included in this observation accuracy experiment
+    pub observation_accuracy_experiment_id: Option<Vec<i32>>,
     /// Search observation properties. Can be combined with `search_on`
     pub q: Option<String>,
     /// Properties to search on, when combined with `q`. Searches across all properties by default
@@ -709,7 +781,7 @@ pub struct PointsZoomXyGridJsonGetParams {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum ColoredHeatmapZoomXyGridJsonGetError {
-    DefaultResponse(crate::models::Error),
+    DefaultResponse(models::Error),
     UnknownValue(serde_json::Value),
 }
 
@@ -717,7 +789,7 @@ pub enum ColoredHeatmapZoomXyGridJsonGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum GridZoomXyGridJsonGetError {
-    DefaultResponse(crate::models::Error),
+    DefaultResponse(models::Error),
     UnknownValue(serde_json::Value),
 }
 
@@ -725,7 +797,7 @@ pub enum GridZoomXyGridJsonGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum HeatmapZoomXyGridJsonGetError {
-    DefaultResponse(crate::models::Error),
+    DefaultResponse(models::Error),
     UnknownValue(serde_json::Value),
 }
 
@@ -733,7 +805,7 @@ pub enum HeatmapZoomXyGridJsonGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum PointsZoomXyGridJsonGetError {
-    DefaultResponse(crate::models::Error),
+    DefaultResponse(models::Error),
     UnknownValue(serde_json::Value),
 }
 
@@ -741,196 +813,90 @@ pub enum PointsZoomXyGridJsonGetError {
 pub async fn colored_heatmap_zoom_xy_grid_json_get(
     configuration: &configuration::Configuration,
     params: ColoredHeatmapZoomXyGridJsonGetParams,
-) -> Result<crate::models::UtfGridResponse, Error<ColoredHeatmapZoomXyGridJsonGetError>> {
-    let local_var_configuration = configuration;
-
-    // unbox the parameters
-    let zoom = params.zoom;
-    let x = params.x;
-    let y = params.y;
-    let color = params.color;
-    let acc = params.acc;
-    let captive = params.captive;
-    let endemic = params.endemic;
-    let geo = params.geo;
-    let id_please = params.id_please;
-    let identified = params.identified;
-    let introduced = params.introduced;
-    let mappable = params.mappable;
-    let native = params.native;
-    let out_of_range = params.out_of_range;
-    let pcid = params.pcid;
-    let photos = params.photos;
-    let popular = params.popular;
-    let sounds = params.sounds;
-    let taxon_is_active = params.taxon_is_active;
-    let threatened = params.threatened;
-    let verifiable = params.verifiable;
-    let licensed = params.licensed;
-    let photo_licensed = params.photo_licensed;
-    let id = params.id;
-    let not_id = params.not_id;
-    let license = params.license;
-    let ofv_datatype = params.ofv_datatype;
-    let photo_license = params.photo_license;
-    let place_id = params.place_id;
-    let project_id = params.project_id;
-    let rank = params.rank;
-    let site_id = params.site_id;
-    let sound_license = params.sound_license;
-    let taxon_id = params.taxon_id;
-    let without_taxon_id = params.without_taxon_id;
-    let taxon_name = params.taxon_name;
-    let user_id = params.user_id;
-    let user_login = params.user_login;
-    let ident_user_id = params.ident_user_id;
-    let day = params.day;
-    let month = params.month;
-    let year = params.year;
-    let term_id = params.term_id;
-    let term_value_id = params.term_value_id;
-    let without_term_id = params.without_term_id;
-    let without_term_value_id = params.without_term_value_id;
-    let acc_above = params.acc_above;
-    let acc_below = params.acc_below;
-    let acc_below_or_unknown = params.acc_below_or_unknown;
-    let d1 = params.d1;
-    let d2 = params.d2;
-    let created_d1 = params.created_d1;
-    let created_d2 = params.created_d2;
-    let created_on = params.created_on;
-    let observed_on = params.observed_on;
-    let unobserved_by_user_id = params.unobserved_by_user_id;
-    let apply_project_rules_for = params.apply_project_rules_for;
-    let cs = params.cs;
-    let csa = params.csa;
-    let csi = params.csi;
-    let geoprivacy = params.geoprivacy;
-    let taxon_geoprivacy = params.taxon_geoprivacy;
-    let hrank = params.hrank;
-    let lrank = params.lrank;
-    let iconic_taxa = params.iconic_taxa;
-    let id_above = params.id_above;
-    let id_below = params.id_below;
-    let identifications = params.identifications;
-    let lat = params.lat;
-    let lng = params.lng;
-    let radius = params.radius;
-    let nelat = params.nelat;
-    let nelng = params.nelng;
-    let swlat = params.swlat;
-    let swlng = params.swlng;
-    let list_id = params.list_id;
-    let not_in_project = params.not_in_project;
-    let not_matching_project_rules_for = params.not_matching_project_rules_for;
-    let q = params.q;
-    let search_on = params.search_on;
-    let quality_grade = params.quality_grade;
-    let updated_since = params.updated_since;
-    let viewer_id = params.viewer_id;
-    let reviewed = params.reviewed;
-
-    let local_var_client = &local_var_configuration.client;
-
-    let local_var_uri_str = format!(
+) -> Result<models::UtfGridResponse, Error<ColoredHeatmapZoomXyGridJsonGetError>> {
+    let uri_str = format!(
         "{}/colored_heatmap/{zoom}/{x}/{y}.grid.json",
-        local_var_configuration.base_path,
-        zoom = zoom,
-        x = x,
-        y = y
+        configuration.base_path,
+        zoom = params.zoom,
+        x = params.x,
+        y = params.y
     );
-    let mut local_var_req_builder =
-        local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
-    if let Some(ref local_var_str) = color {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("color", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.color {
+        req_builder = req_builder.query(&[("color", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = acc {
-        local_var_req_builder = local_var_req_builder.query(&[("acc", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.acc {
+        req_builder = req_builder.query(&[("acc", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = captive {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("captive", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.captive {
+        req_builder = req_builder.query(&[("captive", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = endemic {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("endemic", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.endemic {
+        req_builder = req_builder.query(&[("endemic", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = geo {
-        local_var_req_builder = local_var_req_builder.query(&[("geo", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.geo {
+        req_builder = req_builder.query(&[("geo", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = id_please {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("id_please", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.id_please {
+        req_builder = req_builder.query(&[("id_please", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = identified {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("identified", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.identified {
+        req_builder = req_builder.query(&[("identified", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = introduced {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("introduced", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.introduced {
+        req_builder = req_builder.query(&[("introduced", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = mappable {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("mappable", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.mappable {
+        req_builder = req_builder.query(&[("mappable", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = native {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("native", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.native {
+        req_builder = req_builder.query(&[("native", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = out_of_range {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("out_of_range", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.out_of_range {
+        req_builder = req_builder.query(&[("out_of_range", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = pcid {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("pcid", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.pcid {
+        req_builder = req_builder.query(&[("pcid", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = photos {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("photos", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.photos {
+        req_builder = req_builder.query(&[("photos", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = popular {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("popular", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.popular {
+        req_builder = req_builder.query(&[("popular", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = sounds {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("sounds", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.sounds {
+        req_builder = req_builder.query(&[("sounds", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = taxon_is_active {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("taxon_is_active", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.taxon_is_active {
+        req_builder = req_builder.query(&[("taxon_is_active", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = threatened {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("threatened", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.threatened {
+        req_builder = req_builder.query(&[("threatened", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = verifiable {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("verifiable", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.verifiable {
+        req_builder = req_builder.query(&[("verifiable", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = licensed {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("licensed", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.licensed {
+        req_builder = req_builder.query(&[("licensed", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = photo_licensed {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("photo_licensed", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.photo_licensed {
+        req_builder = req_builder.query(&[("photo_licensed", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.expected_nearby {
+        req_builder = req_builder.query(&[("expected_nearby", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -939,17 +905,17 @@ pub async fn colored_heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = not_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.not_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("not_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "not_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -958,17 +924,17 @@ pub async fn colored_heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = license {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.license {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("license".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "license",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -977,17 +943,17 @@ pub async fn colored_heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = ofv_datatype {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.ofv_datatype {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("ofv_datatype".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "ofv_datatype",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -996,17 +962,17 @@ pub async fn colored_heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = photo_license {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.photo_license {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("photo_license".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "photo_license",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -1015,17 +981,17 @@ pub async fn colored_heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = place_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.place_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("place_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "place_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -1034,17 +1000,17 @@ pub async fn colored_heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = project_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.project_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("project_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "project_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -1053,17 +1019,17 @@ pub async fn colored_heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = rank {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.rank {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("rank".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "rank",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -1072,17 +1038,17 @@ pub async fn colored_heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = site_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.site_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("site_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "site_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -1091,17 +1057,17 @@ pub async fn colored_heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = sound_license {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.sound_license {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("sound_license".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "sound_license",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -1110,17 +1076,17 @@ pub async fn colored_heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = taxon_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.taxon_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("taxon_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "taxon_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -1129,17 +1095,17 @@ pub async fn colored_heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = without_taxon_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.without_taxon_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("without_taxon_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "without_taxon_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -1148,17 +1114,17 @@ pub async fn colored_heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = taxon_name {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.taxon_name {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("taxon_name".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "taxon_name",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -1167,17 +1133,17 @@ pub async fn colored_heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = user_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.user_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("user_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "user_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -1186,17 +1152,17 @@ pub async fn colored_heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = user_login {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.user_login {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("user_login".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "user_login",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -1205,21 +1171,39 @@ pub async fn colored_heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = ident_user_id {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("ident_user_id", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.ident_user_id {
+        req_builder = req_builder.query(&[("ident_user_id", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = day {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.hour {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
+                    .into_iter()
+                    .map(|p| ("hour".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => req_builder.query(&[(
+                "hour",
+                &param_value
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
+        };
+    }
+    if let Some(ref param_value) = params.day {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("day".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "day",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -1228,17 +1212,17 @@ pub async fn colored_heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = month {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.month {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("month".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "month",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -1247,17 +1231,17 @@ pub async fn colored_heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = year {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.year {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("year".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "year",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -1266,17 +1250,74 @@ pub async fn colored_heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = term_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.created_day {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
+                    .into_iter()
+                    .map(|p| ("created_day".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => req_builder.query(&[(
+                "created_day",
+                &param_value
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
+        };
+    }
+    if let Some(ref param_value) = params.created_month {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
+                    .into_iter()
+                    .map(|p| ("created_month".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => req_builder.query(&[(
+                "created_month",
+                &param_value
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
+        };
+    }
+    if let Some(ref param_value) = params.created_year {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
+                    .into_iter()
+                    .map(|p| ("created_year".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => req_builder.query(&[(
+                "created_year",
+                &param_value
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
+        };
+    }
+    if let Some(ref param_value) = params.term_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("term_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "term_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -1285,17 +1326,17 @@ pub async fn colored_heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = term_value_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.term_value_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("term_value_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "term_value_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -1304,21 +1345,20 @@ pub async fn colored_heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = without_term_id {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("without_term_id", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.without_term_id {
+        req_builder = req_builder.query(&[("without_term_id", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = without_term_value_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.without_term_value_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("without_term_value_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "without_term_value_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -1327,65 +1367,94 @@ pub async fn colored_heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = acc_above {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("acc_above", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.term_id_or_unknown {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
+                    .into_iter()
+                    .map(|p| ("term_id_or_unknown".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => req_builder.query(&[(
+                "term_id_or_unknown",
+                &param_value
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
+        };
     }
-    if let Some(ref local_var_str) = acc_below {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("acc_below", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.annotation_user_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
+                    .into_iter()
+                    .map(|p| ("annotation_user_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => req_builder.query(&[(
+                "annotation_user_id",
+                &param_value
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
+        };
     }
-    if let Some(ref local_var_str) = acc_below_or_unknown {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("acc_below_or_unknown", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.acc_above {
+        req_builder = req_builder.query(&[("acc_above", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = d1 {
-        local_var_req_builder = local_var_req_builder.query(&[("d1", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.acc_below {
+        req_builder = req_builder.query(&[("acc_below", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = d2 {
-        local_var_req_builder = local_var_req_builder.query(&[("d2", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.acc_below_or_unknown {
+        req_builder = req_builder.query(&[("acc_below_or_unknown", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = created_d1 {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("created_d1", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.d1 {
+        req_builder = req_builder.query(&[("d1", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = created_d2 {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("created_d2", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.d2 {
+        req_builder = req_builder.query(&[("d2", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = created_on {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("created_on", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.created_d1 {
+        req_builder = req_builder.query(&[("created_d1", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = observed_on {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("observed_on", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.created_d2 {
+        req_builder = req_builder.query(&[("created_d2", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = unobserved_by_user_id {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("unobserved_by_user_id", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.created_on {
+        req_builder = req_builder.query(&[("created_on", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = apply_project_rules_for {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("apply_project_rules_for", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.observed_on {
+        req_builder = req_builder.query(&[("observed_on", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = cs {
-        local_var_req_builder = local_var_req_builder.query(&[("cs", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.unobserved_by_user_id {
+        req_builder = req_builder.query(&[("unobserved_by_user_id", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = csa {
-        local_var_req_builder = local_var_req_builder.query(&[("csa", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.apply_project_rules_for {
+        req_builder = req_builder.query(&[("apply_project_rules_for", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = csi {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.cs {
+        req_builder = req_builder.query(&[("cs", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.csa {
+        req_builder = req_builder.query(&[("csa", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.csi {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("csi".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "csi",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -1394,17 +1463,17 @@ pub async fn colored_heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = geoprivacy {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.geoprivacy {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("geoprivacy".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "geoprivacy",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -1413,17 +1482,17 @@ pub async fn colored_heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = taxon_geoprivacy {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.taxon_geoprivacy {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("taxon_geoprivacy".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "taxon_geoprivacy",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -1432,25 +1501,42 @@ pub async fn colored_heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = hrank {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("hrank", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.obscuration {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
+                    .into_iter()
+                    .map(|p| ("obscuration".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => req_builder.query(&[(
+                "obscuration",
+                &param_value
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
+        };
     }
-    if let Some(ref local_var_str) = lrank {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("lrank", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.hrank {
+        req_builder = req_builder.query(&[("hrank", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = iconic_taxa {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.lrank {
+        req_builder = req_builder.query(&[("lrank", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.iconic_taxa {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("iconic_taxa".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "iconic_taxa",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -1459,101 +1545,119 @@ pub async fn colored_heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = id_above {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("id_above", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.id_above {
+        req_builder = req_builder.query(&[("id_above", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = id_below {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("id_below", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.id_below {
+        req_builder = req_builder.query(&[("id_below", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = identifications {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("identifications", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.identifications {
+        req_builder = req_builder.query(&[("identifications", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = lat {
-        local_var_req_builder = local_var_req_builder.query(&[("lat", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.lat {
+        req_builder = req_builder.query(&[("lat", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = lng {
-        local_var_req_builder = local_var_req_builder.query(&[("lng", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.lng {
+        req_builder = req_builder.query(&[("lng", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = radius {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("radius", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.radius {
+        req_builder = req_builder.query(&[("radius", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = nelat {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("nelat", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.nelat {
+        req_builder = req_builder.query(&[("nelat", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = nelng {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("nelng", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.nelng {
+        req_builder = req_builder.query(&[("nelng", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = swlat {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("swlat", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.swlat {
+        req_builder = req_builder.query(&[("swlat", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = swlng {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("swlng", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.swlng {
+        req_builder = req_builder.query(&[("swlng", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = list_id {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("list_id", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.list_id {
+        req_builder = req_builder.query(&[("list_id", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = not_in_project {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("not_in_project", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.not_in_project {
+        req_builder = req_builder.query(&[("not_in_project", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = not_matching_project_rules_for {
-        local_var_req_builder = local_var_req_builder
-            .query(&[("not_matching_project_rules_for", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.not_matching_project_rules_for {
+        req_builder =
+            req_builder.query(&[("not_matching_project_rules_for", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = q {
-        local_var_req_builder = local_var_req_builder.query(&[("q", &local_var_str.to_string())]);
-    }
-    if let Some(ref local_var_str) = search_on {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("search_on", &local_var_str.to_string())]);
-    }
-    if let Some(ref local_var_str) = quality_grade {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("quality_grade", &local_var_str.to_string())]);
-    }
-    if let Some(ref local_var_str) = updated_since {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("updated_since", &local_var_str.to_string())]);
-    }
-    if let Some(ref local_var_str) = viewer_id {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("viewer_id", &local_var_str.to_string())]);
-    }
-    if let Some(ref local_var_str) = reviewed {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("reviewed", &local_var_str.to_string())]);
-    }
-    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder =
-            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
-    }
-
-    let local_var_req = local_var_req_builder.build()?;
-    let local_var_resp = local_var_client.execute(local_var_req).await?;
-
-    let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
-
-    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
-    } else {
-        let local_var_entity: Option<ColoredHeatmapZoomXyGridJsonGetError> =
-            serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
+    if let Some(ref param_value) = params.observation_accuracy_experiment_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
+                    .into_iter()
+                    .map(|p| {
+                        (
+                            "observation_accuracy_experiment_id".to_owned(),
+                            p.to_string(),
+                        )
+                    })
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => req_builder.query(&[(
+                "observation_accuracy_experiment_id",
+                &param_value
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
-        Err(Error::ResponseError(local_var_error))
+    }
+    if let Some(ref param_value) = params.q {
+        req_builder = req_builder.query(&[("q", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.search_on {
+        req_builder = req_builder.query(&[("search_on", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.quality_grade {
+        req_builder = req_builder.query(&[("quality_grade", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.updated_since {
+        req_builder = req_builder.query(&[("updated_since", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.viewer_id {
+        req_builder = req_builder.query(&[("viewer_id", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.reviewed {
+        req_builder = req_builder.query(&[("reviewed", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UtfGridResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UtfGridResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<ColoredHeatmapZoomXyGridJsonGetError> =
+            serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent {
+            status,
+            content,
+            entity,
+        }))
     }
 }
 
@@ -1561,196 +1665,90 @@ pub async fn colored_heatmap_zoom_xy_grid_json_get(
 pub async fn grid_zoom_xy_grid_json_get(
     configuration: &configuration::Configuration,
     params: GridZoomXyGridJsonGetParams,
-) -> Result<crate::models::UtfGridResponse, Error<GridZoomXyGridJsonGetError>> {
-    let local_var_configuration = configuration;
-
-    // unbox the parameters
-    let zoom = params.zoom;
-    let x = params.x;
-    let y = params.y;
-    let color = params.color;
-    let acc = params.acc;
-    let captive = params.captive;
-    let endemic = params.endemic;
-    let geo = params.geo;
-    let id_please = params.id_please;
-    let identified = params.identified;
-    let introduced = params.introduced;
-    let mappable = params.mappable;
-    let native = params.native;
-    let out_of_range = params.out_of_range;
-    let pcid = params.pcid;
-    let photos = params.photos;
-    let popular = params.popular;
-    let sounds = params.sounds;
-    let taxon_is_active = params.taxon_is_active;
-    let threatened = params.threatened;
-    let verifiable = params.verifiable;
-    let licensed = params.licensed;
-    let photo_licensed = params.photo_licensed;
-    let id = params.id;
-    let not_id = params.not_id;
-    let license = params.license;
-    let ofv_datatype = params.ofv_datatype;
-    let photo_license = params.photo_license;
-    let place_id = params.place_id;
-    let project_id = params.project_id;
-    let rank = params.rank;
-    let site_id = params.site_id;
-    let sound_license = params.sound_license;
-    let taxon_id = params.taxon_id;
-    let without_taxon_id = params.without_taxon_id;
-    let taxon_name = params.taxon_name;
-    let user_id = params.user_id;
-    let user_login = params.user_login;
-    let ident_user_id = params.ident_user_id;
-    let day = params.day;
-    let month = params.month;
-    let year = params.year;
-    let term_id = params.term_id;
-    let term_value_id = params.term_value_id;
-    let without_term_id = params.without_term_id;
-    let without_term_value_id = params.without_term_value_id;
-    let acc_above = params.acc_above;
-    let acc_below = params.acc_below;
-    let acc_below_or_unknown = params.acc_below_or_unknown;
-    let d1 = params.d1;
-    let d2 = params.d2;
-    let created_d1 = params.created_d1;
-    let created_d2 = params.created_d2;
-    let created_on = params.created_on;
-    let observed_on = params.observed_on;
-    let unobserved_by_user_id = params.unobserved_by_user_id;
-    let apply_project_rules_for = params.apply_project_rules_for;
-    let cs = params.cs;
-    let csa = params.csa;
-    let csi = params.csi;
-    let geoprivacy = params.geoprivacy;
-    let taxon_geoprivacy = params.taxon_geoprivacy;
-    let hrank = params.hrank;
-    let lrank = params.lrank;
-    let iconic_taxa = params.iconic_taxa;
-    let id_above = params.id_above;
-    let id_below = params.id_below;
-    let identifications = params.identifications;
-    let lat = params.lat;
-    let lng = params.lng;
-    let radius = params.radius;
-    let nelat = params.nelat;
-    let nelng = params.nelng;
-    let swlat = params.swlat;
-    let swlng = params.swlng;
-    let list_id = params.list_id;
-    let not_in_project = params.not_in_project;
-    let not_matching_project_rules_for = params.not_matching_project_rules_for;
-    let q = params.q;
-    let search_on = params.search_on;
-    let quality_grade = params.quality_grade;
-    let updated_since = params.updated_since;
-    let viewer_id = params.viewer_id;
-    let reviewed = params.reviewed;
-
-    let local_var_client = &local_var_configuration.client;
-
-    let local_var_uri_str = format!(
+) -> Result<models::UtfGridResponse, Error<GridZoomXyGridJsonGetError>> {
+    let uri_str = format!(
         "{}/grid/{zoom}/{x}/{y}.grid.json",
-        local_var_configuration.base_path,
-        zoom = zoom,
-        x = x,
-        y = y
+        configuration.base_path,
+        zoom = params.zoom,
+        x = params.x,
+        y = params.y
     );
-    let mut local_var_req_builder =
-        local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
-    if let Some(ref local_var_str) = color {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("color", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.color {
+        req_builder = req_builder.query(&[("color", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = acc {
-        local_var_req_builder = local_var_req_builder.query(&[("acc", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.acc {
+        req_builder = req_builder.query(&[("acc", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = captive {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("captive", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.captive {
+        req_builder = req_builder.query(&[("captive", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = endemic {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("endemic", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.endemic {
+        req_builder = req_builder.query(&[("endemic", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = geo {
-        local_var_req_builder = local_var_req_builder.query(&[("geo", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.geo {
+        req_builder = req_builder.query(&[("geo", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = id_please {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("id_please", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.id_please {
+        req_builder = req_builder.query(&[("id_please", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = identified {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("identified", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.identified {
+        req_builder = req_builder.query(&[("identified", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = introduced {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("introduced", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.introduced {
+        req_builder = req_builder.query(&[("introduced", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = mappable {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("mappable", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.mappable {
+        req_builder = req_builder.query(&[("mappable", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = native {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("native", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.native {
+        req_builder = req_builder.query(&[("native", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = out_of_range {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("out_of_range", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.out_of_range {
+        req_builder = req_builder.query(&[("out_of_range", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = pcid {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("pcid", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.pcid {
+        req_builder = req_builder.query(&[("pcid", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = photos {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("photos", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.photos {
+        req_builder = req_builder.query(&[("photos", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = popular {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("popular", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.popular {
+        req_builder = req_builder.query(&[("popular", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = sounds {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("sounds", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.sounds {
+        req_builder = req_builder.query(&[("sounds", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = taxon_is_active {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("taxon_is_active", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.taxon_is_active {
+        req_builder = req_builder.query(&[("taxon_is_active", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = threatened {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("threatened", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.threatened {
+        req_builder = req_builder.query(&[("threatened", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = verifiable {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("verifiable", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.verifiable {
+        req_builder = req_builder.query(&[("verifiable", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = licensed {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("licensed", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.licensed {
+        req_builder = req_builder.query(&[("licensed", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = photo_licensed {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("photo_licensed", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.photo_licensed {
+        req_builder = req_builder.query(&[("photo_licensed", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.expected_nearby {
+        req_builder = req_builder.query(&[("expected_nearby", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -1759,17 +1757,17 @@ pub async fn grid_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = not_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.not_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("not_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "not_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -1778,17 +1776,17 @@ pub async fn grid_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = license {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.license {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("license".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "license",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -1797,17 +1795,17 @@ pub async fn grid_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = ofv_datatype {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.ofv_datatype {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("ofv_datatype".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "ofv_datatype",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -1816,17 +1814,17 @@ pub async fn grid_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = photo_license {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.photo_license {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("photo_license".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "photo_license",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -1835,17 +1833,17 @@ pub async fn grid_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = place_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.place_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("place_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "place_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -1854,17 +1852,17 @@ pub async fn grid_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = project_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.project_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("project_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "project_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -1873,17 +1871,17 @@ pub async fn grid_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = rank {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.rank {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("rank".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "rank",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -1892,17 +1890,17 @@ pub async fn grid_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = site_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.site_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("site_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "site_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -1911,17 +1909,17 @@ pub async fn grid_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = sound_license {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.sound_license {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("sound_license".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "sound_license",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -1930,17 +1928,17 @@ pub async fn grid_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = taxon_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.taxon_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("taxon_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "taxon_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -1949,17 +1947,17 @@ pub async fn grid_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = without_taxon_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.without_taxon_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("without_taxon_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "without_taxon_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -1968,17 +1966,17 @@ pub async fn grid_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = taxon_name {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.taxon_name {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("taxon_name".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "taxon_name",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -1987,17 +1985,17 @@ pub async fn grid_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = user_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.user_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("user_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "user_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -2006,17 +2004,17 @@ pub async fn grid_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = user_login {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.user_login {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("user_login".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "user_login",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -2025,21 +2023,39 @@ pub async fn grid_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = ident_user_id {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("ident_user_id", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.ident_user_id {
+        req_builder = req_builder.query(&[("ident_user_id", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = day {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.hour {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
+                    .into_iter()
+                    .map(|p| ("hour".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => req_builder.query(&[(
+                "hour",
+                &param_value
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
+        };
+    }
+    if let Some(ref param_value) = params.day {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("day".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "day",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -2048,17 +2064,17 @@ pub async fn grid_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = month {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.month {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("month".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "month",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -2067,17 +2083,17 @@ pub async fn grid_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = year {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.year {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("year".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "year",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -2086,17 +2102,74 @@ pub async fn grid_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = term_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.created_day {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
+                    .into_iter()
+                    .map(|p| ("created_day".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => req_builder.query(&[(
+                "created_day",
+                &param_value
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
+        };
+    }
+    if let Some(ref param_value) = params.created_month {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
+                    .into_iter()
+                    .map(|p| ("created_month".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => req_builder.query(&[(
+                "created_month",
+                &param_value
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
+        };
+    }
+    if let Some(ref param_value) = params.created_year {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
+                    .into_iter()
+                    .map(|p| ("created_year".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => req_builder.query(&[(
+                "created_year",
+                &param_value
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
+        };
+    }
+    if let Some(ref param_value) = params.term_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("term_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "term_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -2105,17 +2178,17 @@ pub async fn grid_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = term_value_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.term_value_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("term_value_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "term_value_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -2124,21 +2197,20 @@ pub async fn grid_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = without_term_id {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("without_term_id", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.without_term_id {
+        req_builder = req_builder.query(&[("without_term_id", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = without_term_value_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.without_term_value_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("without_term_value_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "without_term_value_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -2147,65 +2219,94 @@ pub async fn grid_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = acc_above {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("acc_above", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.term_id_or_unknown {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
+                    .into_iter()
+                    .map(|p| ("term_id_or_unknown".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => req_builder.query(&[(
+                "term_id_or_unknown",
+                &param_value
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
+        };
     }
-    if let Some(ref local_var_str) = acc_below {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("acc_below", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.annotation_user_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
+                    .into_iter()
+                    .map(|p| ("annotation_user_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => req_builder.query(&[(
+                "annotation_user_id",
+                &param_value
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
+        };
     }
-    if let Some(ref local_var_str) = acc_below_or_unknown {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("acc_below_or_unknown", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.acc_above {
+        req_builder = req_builder.query(&[("acc_above", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = d1 {
-        local_var_req_builder = local_var_req_builder.query(&[("d1", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.acc_below {
+        req_builder = req_builder.query(&[("acc_below", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = d2 {
-        local_var_req_builder = local_var_req_builder.query(&[("d2", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.acc_below_or_unknown {
+        req_builder = req_builder.query(&[("acc_below_or_unknown", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = created_d1 {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("created_d1", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.d1 {
+        req_builder = req_builder.query(&[("d1", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = created_d2 {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("created_d2", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.d2 {
+        req_builder = req_builder.query(&[("d2", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = created_on {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("created_on", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.created_d1 {
+        req_builder = req_builder.query(&[("created_d1", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = observed_on {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("observed_on", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.created_d2 {
+        req_builder = req_builder.query(&[("created_d2", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = unobserved_by_user_id {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("unobserved_by_user_id", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.created_on {
+        req_builder = req_builder.query(&[("created_on", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = apply_project_rules_for {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("apply_project_rules_for", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.observed_on {
+        req_builder = req_builder.query(&[("observed_on", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = cs {
-        local_var_req_builder = local_var_req_builder.query(&[("cs", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.unobserved_by_user_id {
+        req_builder = req_builder.query(&[("unobserved_by_user_id", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = csa {
-        local_var_req_builder = local_var_req_builder.query(&[("csa", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.apply_project_rules_for {
+        req_builder = req_builder.query(&[("apply_project_rules_for", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = csi {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.cs {
+        req_builder = req_builder.query(&[("cs", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.csa {
+        req_builder = req_builder.query(&[("csa", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.csi {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("csi".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "csi",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -2214,17 +2315,17 @@ pub async fn grid_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = geoprivacy {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.geoprivacy {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("geoprivacy".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "geoprivacy",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -2233,17 +2334,17 @@ pub async fn grid_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = taxon_geoprivacy {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.taxon_geoprivacy {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("taxon_geoprivacy".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "taxon_geoprivacy",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -2252,25 +2353,42 @@ pub async fn grid_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = hrank {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("hrank", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.obscuration {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
+                    .into_iter()
+                    .map(|p| ("obscuration".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => req_builder.query(&[(
+                "obscuration",
+                &param_value
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
+        };
     }
-    if let Some(ref local_var_str) = lrank {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("lrank", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.hrank {
+        req_builder = req_builder.query(&[("hrank", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = iconic_taxa {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.lrank {
+        req_builder = req_builder.query(&[("lrank", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.iconic_taxa {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("iconic_taxa".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "iconic_taxa",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -2279,101 +2397,118 @@ pub async fn grid_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = id_above {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("id_above", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.id_above {
+        req_builder = req_builder.query(&[("id_above", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = id_below {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("id_below", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.id_below {
+        req_builder = req_builder.query(&[("id_below", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = identifications {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("identifications", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.identifications {
+        req_builder = req_builder.query(&[("identifications", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = lat {
-        local_var_req_builder = local_var_req_builder.query(&[("lat", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.lat {
+        req_builder = req_builder.query(&[("lat", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = lng {
-        local_var_req_builder = local_var_req_builder.query(&[("lng", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.lng {
+        req_builder = req_builder.query(&[("lng", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = radius {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("radius", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.radius {
+        req_builder = req_builder.query(&[("radius", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = nelat {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("nelat", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.nelat {
+        req_builder = req_builder.query(&[("nelat", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = nelng {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("nelng", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.nelng {
+        req_builder = req_builder.query(&[("nelng", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = swlat {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("swlat", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.swlat {
+        req_builder = req_builder.query(&[("swlat", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = swlng {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("swlng", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.swlng {
+        req_builder = req_builder.query(&[("swlng", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = list_id {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("list_id", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.list_id {
+        req_builder = req_builder.query(&[("list_id", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = not_in_project {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("not_in_project", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.not_in_project {
+        req_builder = req_builder.query(&[("not_in_project", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = not_matching_project_rules_for {
-        local_var_req_builder = local_var_req_builder
-            .query(&[("not_matching_project_rules_for", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.not_matching_project_rules_for {
+        req_builder =
+            req_builder.query(&[("not_matching_project_rules_for", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = q {
-        local_var_req_builder = local_var_req_builder.query(&[("q", &local_var_str.to_string())]);
-    }
-    if let Some(ref local_var_str) = search_on {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("search_on", &local_var_str.to_string())]);
-    }
-    if let Some(ref local_var_str) = quality_grade {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("quality_grade", &local_var_str.to_string())]);
-    }
-    if let Some(ref local_var_str) = updated_since {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("updated_since", &local_var_str.to_string())]);
-    }
-    if let Some(ref local_var_str) = viewer_id {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("viewer_id", &local_var_str.to_string())]);
-    }
-    if let Some(ref local_var_str) = reviewed {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("reviewed", &local_var_str.to_string())]);
-    }
-    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder =
-            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
-    }
-
-    let local_var_req = local_var_req_builder.build()?;
-    let local_var_resp = local_var_client.execute(local_var_req).await?;
-
-    let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
-
-    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
-    } else {
-        let local_var_entity: Option<GridZoomXyGridJsonGetError> =
-            serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
+    if let Some(ref param_value) = params.observation_accuracy_experiment_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
+                    .into_iter()
+                    .map(|p| {
+                        (
+                            "observation_accuracy_experiment_id".to_owned(),
+                            p.to_string(),
+                        )
+                    })
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => req_builder.query(&[(
+                "observation_accuracy_experiment_id",
+                &param_value
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
-        Err(Error::ResponseError(local_var_error))
+    }
+    if let Some(ref param_value) = params.q {
+        req_builder = req_builder.query(&[("q", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.search_on {
+        req_builder = req_builder.query(&[("search_on", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.quality_grade {
+        req_builder = req_builder.query(&[("quality_grade", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.updated_since {
+        req_builder = req_builder.query(&[("updated_since", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.viewer_id {
+        req_builder = req_builder.query(&[("viewer_id", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.reviewed {
+        req_builder = req_builder.query(&[("reviewed", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UtfGridResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UtfGridResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<GridZoomXyGridJsonGetError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent {
+            status,
+            content,
+            entity,
+        }))
     }
 }
 
@@ -2381,196 +2516,90 @@ pub async fn grid_zoom_xy_grid_json_get(
 pub async fn heatmap_zoom_xy_grid_json_get(
     configuration: &configuration::Configuration,
     params: HeatmapZoomXyGridJsonGetParams,
-) -> Result<crate::models::UtfGridResponse, Error<HeatmapZoomXyGridJsonGetError>> {
-    let local_var_configuration = configuration;
-
-    // unbox the parameters
-    let zoom = params.zoom;
-    let x = params.x;
-    let y = params.y;
-    let color = params.color;
-    let acc = params.acc;
-    let captive = params.captive;
-    let endemic = params.endemic;
-    let geo = params.geo;
-    let id_please = params.id_please;
-    let identified = params.identified;
-    let introduced = params.introduced;
-    let mappable = params.mappable;
-    let native = params.native;
-    let out_of_range = params.out_of_range;
-    let pcid = params.pcid;
-    let photos = params.photos;
-    let popular = params.popular;
-    let sounds = params.sounds;
-    let taxon_is_active = params.taxon_is_active;
-    let threatened = params.threatened;
-    let verifiable = params.verifiable;
-    let licensed = params.licensed;
-    let photo_licensed = params.photo_licensed;
-    let id = params.id;
-    let not_id = params.not_id;
-    let license = params.license;
-    let ofv_datatype = params.ofv_datatype;
-    let photo_license = params.photo_license;
-    let place_id = params.place_id;
-    let project_id = params.project_id;
-    let rank = params.rank;
-    let site_id = params.site_id;
-    let sound_license = params.sound_license;
-    let taxon_id = params.taxon_id;
-    let without_taxon_id = params.without_taxon_id;
-    let taxon_name = params.taxon_name;
-    let user_id = params.user_id;
-    let user_login = params.user_login;
-    let ident_user_id = params.ident_user_id;
-    let day = params.day;
-    let month = params.month;
-    let year = params.year;
-    let term_id = params.term_id;
-    let term_value_id = params.term_value_id;
-    let without_term_id = params.without_term_id;
-    let without_term_value_id = params.without_term_value_id;
-    let acc_above = params.acc_above;
-    let acc_below = params.acc_below;
-    let acc_below_or_unknown = params.acc_below_or_unknown;
-    let d1 = params.d1;
-    let d2 = params.d2;
-    let created_d1 = params.created_d1;
-    let created_d2 = params.created_d2;
-    let created_on = params.created_on;
-    let observed_on = params.observed_on;
-    let unobserved_by_user_id = params.unobserved_by_user_id;
-    let apply_project_rules_for = params.apply_project_rules_for;
-    let cs = params.cs;
-    let csa = params.csa;
-    let csi = params.csi;
-    let geoprivacy = params.geoprivacy;
-    let taxon_geoprivacy = params.taxon_geoprivacy;
-    let hrank = params.hrank;
-    let lrank = params.lrank;
-    let iconic_taxa = params.iconic_taxa;
-    let id_above = params.id_above;
-    let id_below = params.id_below;
-    let identifications = params.identifications;
-    let lat = params.lat;
-    let lng = params.lng;
-    let radius = params.radius;
-    let nelat = params.nelat;
-    let nelng = params.nelng;
-    let swlat = params.swlat;
-    let swlng = params.swlng;
-    let list_id = params.list_id;
-    let not_in_project = params.not_in_project;
-    let not_matching_project_rules_for = params.not_matching_project_rules_for;
-    let q = params.q;
-    let search_on = params.search_on;
-    let quality_grade = params.quality_grade;
-    let updated_since = params.updated_since;
-    let viewer_id = params.viewer_id;
-    let reviewed = params.reviewed;
-
-    let local_var_client = &local_var_configuration.client;
-
-    let local_var_uri_str = format!(
+) -> Result<models::UtfGridResponse, Error<HeatmapZoomXyGridJsonGetError>> {
+    let uri_str = format!(
         "{}/heatmap/{zoom}/{x}/{y}.grid.json",
-        local_var_configuration.base_path,
-        zoom = zoom,
-        x = x,
-        y = y
+        configuration.base_path,
+        zoom = params.zoom,
+        x = params.x,
+        y = params.y
     );
-    let mut local_var_req_builder =
-        local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
-    if let Some(ref local_var_str) = color {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("color", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.color {
+        req_builder = req_builder.query(&[("color", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = acc {
-        local_var_req_builder = local_var_req_builder.query(&[("acc", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.acc {
+        req_builder = req_builder.query(&[("acc", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = captive {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("captive", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.captive {
+        req_builder = req_builder.query(&[("captive", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = endemic {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("endemic", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.endemic {
+        req_builder = req_builder.query(&[("endemic", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = geo {
-        local_var_req_builder = local_var_req_builder.query(&[("geo", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.geo {
+        req_builder = req_builder.query(&[("geo", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = id_please {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("id_please", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.id_please {
+        req_builder = req_builder.query(&[("id_please", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = identified {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("identified", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.identified {
+        req_builder = req_builder.query(&[("identified", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = introduced {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("introduced", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.introduced {
+        req_builder = req_builder.query(&[("introduced", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = mappable {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("mappable", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.mappable {
+        req_builder = req_builder.query(&[("mappable", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = native {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("native", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.native {
+        req_builder = req_builder.query(&[("native", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = out_of_range {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("out_of_range", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.out_of_range {
+        req_builder = req_builder.query(&[("out_of_range", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = pcid {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("pcid", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.pcid {
+        req_builder = req_builder.query(&[("pcid", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = photos {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("photos", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.photos {
+        req_builder = req_builder.query(&[("photos", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = popular {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("popular", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.popular {
+        req_builder = req_builder.query(&[("popular", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = sounds {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("sounds", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.sounds {
+        req_builder = req_builder.query(&[("sounds", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = taxon_is_active {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("taxon_is_active", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.taxon_is_active {
+        req_builder = req_builder.query(&[("taxon_is_active", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = threatened {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("threatened", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.threatened {
+        req_builder = req_builder.query(&[("threatened", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = verifiable {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("verifiable", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.verifiable {
+        req_builder = req_builder.query(&[("verifiable", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = licensed {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("licensed", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.licensed {
+        req_builder = req_builder.query(&[("licensed", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = photo_licensed {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("photo_licensed", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.photo_licensed {
+        req_builder = req_builder.query(&[("photo_licensed", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.expected_nearby {
+        req_builder = req_builder.query(&[("expected_nearby", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -2579,17 +2608,17 @@ pub async fn heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = not_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.not_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("not_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "not_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -2598,17 +2627,17 @@ pub async fn heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = license {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.license {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("license".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "license",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -2617,17 +2646,17 @@ pub async fn heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = ofv_datatype {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.ofv_datatype {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("ofv_datatype".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "ofv_datatype",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -2636,17 +2665,17 @@ pub async fn heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = photo_license {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.photo_license {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("photo_license".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "photo_license",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -2655,17 +2684,17 @@ pub async fn heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = place_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.place_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("place_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "place_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -2674,17 +2703,17 @@ pub async fn heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = project_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.project_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("project_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "project_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -2693,17 +2722,17 @@ pub async fn heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = rank {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.rank {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("rank".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "rank",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -2712,17 +2741,17 @@ pub async fn heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = site_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.site_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("site_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "site_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -2731,17 +2760,17 @@ pub async fn heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = sound_license {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.sound_license {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("sound_license".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "sound_license",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -2750,17 +2779,17 @@ pub async fn heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = taxon_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.taxon_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("taxon_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "taxon_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -2769,17 +2798,17 @@ pub async fn heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = without_taxon_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.without_taxon_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("without_taxon_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "without_taxon_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -2788,17 +2817,17 @@ pub async fn heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = taxon_name {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.taxon_name {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("taxon_name".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "taxon_name",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -2807,17 +2836,17 @@ pub async fn heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = user_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.user_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("user_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "user_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -2826,17 +2855,17 @@ pub async fn heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = user_login {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.user_login {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("user_login".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "user_login",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -2845,21 +2874,39 @@ pub async fn heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = ident_user_id {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("ident_user_id", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.ident_user_id {
+        req_builder = req_builder.query(&[("ident_user_id", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = day {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.hour {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
+                    .into_iter()
+                    .map(|p| ("hour".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => req_builder.query(&[(
+                "hour",
+                &param_value
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
+        };
+    }
+    if let Some(ref param_value) = params.day {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("day".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "day",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -2868,17 +2915,17 @@ pub async fn heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = month {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.month {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("month".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "month",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -2887,17 +2934,17 @@ pub async fn heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = year {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.year {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("year".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "year",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -2906,17 +2953,74 @@ pub async fn heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = term_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.created_day {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
+                    .into_iter()
+                    .map(|p| ("created_day".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => req_builder.query(&[(
+                "created_day",
+                &param_value
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
+        };
+    }
+    if let Some(ref param_value) = params.created_month {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
+                    .into_iter()
+                    .map(|p| ("created_month".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => req_builder.query(&[(
+                "created_month",
+                &param_value
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
+        };
+    }
+    if let Some(ref param_value) = params.created_year {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
+                    .into_iter()
+                    .map(|p| ("created_year".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => req_builder.query(&[(
+                "created_year",
+                &param_value
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
+        };
+    }
+    if let Some(ref param_value) = params.term_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("term_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "term_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -2925,17 +3029,17 @@ pub async fn heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = term_value_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.term_value_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("term_value_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "term_value_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -2944,21 +3048,20 @@ pub async fn heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = without_term_id {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("without_term_id", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.without_term_id {
+        req_builder = req_builder.query(&[("without_term_id", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = without_term_value_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.without_term_value_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("without_term_value_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "without_term_value_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -2967,65 +3070,94 @@ pub async fn heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = acc_above {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("acc_above", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.term_id_or_unknown {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
+                    .into_iter()
+                    .map(|p| ("term_id_or_unknown".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => req_builder.query(&[(
+                "term_id_or_unknown",
+                &param_value
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
+        };
     }
-    if let Some(ref local_var_str) = acc_below {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("acc_below", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.annotation_user_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
+                    .into_iter()
+                    .map(|p| ("annotation_user_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => req_builder.query(&[(
+                "annotation_user_id",
+                &param_value
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
+        };
     }
-    if let Some(ref local_var_str) = acc_below_or_unknown {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("acc_below_or_unknown", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.acc_above {
+        req_builder = req_builder.query(&[("acc_above", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = d1 {
-        local_var_req_builder = local_var_req_builder.query(&[("d1", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.acc_below {
+        req_builder = req_builder.query(&[("acc_below", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = d2 {
-        local_var_req_builder = local_var_req_builder.query(&[("d2", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.acc_below_or_unknown {
+        req_builder = req_builder.query(&[("acc_below_or_unknown", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = created_d1 {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("created_d1", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.d1 {
+        req_builder = req_builder.query(&[("d1", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = created_d2 {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("created_d2", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.d2 {
+        req_builder = req_builder.query(&[("d2", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = created_on {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("created_on", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.created_d1 {
+        req_builder = req_builder.query(&[("created_d1", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = observed_on {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("observed_on", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.created_d2 {
+        req_builder = req_builder.query(&[("created_d2", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = unobserved_by_user_id {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("unobserved_by_user_id", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.created_on {
+        req_builder = req_builder.query(&[("created_on", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = apply_project_rules_for {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("apply_project_rules_for", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.observed_on {
+        req_builder = req_builder.query(&[("observed_on", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = cs {
-        local_var_req_builder = local_var_req_builder.query(&[("cs", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.unobserved_by_user_id {
+        req_builder = req_builder.query(&[("unobserved_by_user_id", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = csa {
-        local_var_req_builder = local_var_req_builder.query(&[("csa", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.apply_project_rules_for {
+        req_builder = req_builder.query(&[("apply_project_rules_for", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = csi {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.cs {
+        req_builder = req_builder.query(&[("cs", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.csa {
+        req_builder = req_builder.query(&[("csa", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.csi {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("csi".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "csi",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -3034,17 +3166,17 @@ pub async fn heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = geoprivacy {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.geoprivacy {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("geoprivacy".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "geoprivacy",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -3053,17 +3185,17 @@ pub async fn heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = taxon_geoprivacy {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.taxon_geoprivacy {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("taxon_geoprivacy".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "taxon_geoprivacy",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -3072,25 +3204,42 @@ pub async fn heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = hrank {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("hrank", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.obscuration {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
+                    .into_iter()
+                    .map(|p| ("obscuration".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => req_builder.query(&[(
+                "obscuration",
+                &param_value
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
+        };
     }
-    if let Some(ref local_var_str) = lrank {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("lrank", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.hrank {
+        req_builder = req_builder.query(&[("hrank", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = iconic_taxa {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.lrank {
+        req_builder = req_builder.query(&[("lrank", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.iconic_taxa {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("iconic_taxa".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "iconic_taxa",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -3099,101 +3248,118 @@ pub async fn heatmap_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = id_above {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("id_above", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.id_above {
+        req_builder = req_builder.query(&[("id_above", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = id_below {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("id_below", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.id_below {
+        req_builder = req_builder.query(&[("id_below", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = identifications {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("identifications", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.identifications {
+        req_builder = req_builder.query(&[("identifications", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = lat {
-        local_var_req_builder = local_var_req_builder.query(&[("lat", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.lat {
+        req_builder = req_builder.query(&[("lat", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = lng {
-        local_var_req_builder = local_var_req_builder.query(&[("lng", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.lng {
+        req_builder = req_builder.query(&[("lng", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = radius {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("radius", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.radius {
+        req_builder = req_builder.query(&[("radius", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = nelat {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("nelat", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.nelat {
+        req_builder = req_builder.query(&[("nelat", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = nelng {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("nelng", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.nelng {
+        req_builder = req_builder.query(&[("nelng", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = swlat {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("swlat", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.swlat {
+        req_builder = req_builder.query(&[("swlat", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = swlng {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("swlng", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.swlng {
+        req_builder = req_builder.query(&[("swlng", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = list_id {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("list_id", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.list_id {
+        req_builder = req_builder.query(&[("list_id", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = not_in_project {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("not_in_project", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.not_in_project {
+        req_builder = req_builder.query(&[("not_in_project", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = not_matching_project_rules_for {
-        local_var_req_builder = local_var_req_builder
-            .query(&[("not_matching_project_rules_for", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.not_matching_project_rules_for {
+        req_builder =
+            req_builder.query(&[("not_matching_project_rules_for", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = q {
-        local_var_req_builder = local_var_req_builder.query(&[("q", &local_var_str.to_string())]);
-    }
-    if let Some(ref local_var_str) = search_on {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("search_on", &local_var_str.to_string())]);
-    }
-    if let Some(ref local_var_str) = quality_grade {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("quality_grade", &local_var_str.to_string())]);
-    }
-    if let Some(ref local_var_str) = updated_since {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("updated_since", &local_var_str.to_string())]);
-    }
-    if let Some(ref local_var_str) = viewer_id {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("viewer_id", &local_var_str.to_string())]);
-    }
-    if let Some(ref local_var_str) = reviewed {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("reviewed", &local_var_str.to_string())]);
-    }
-    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder =
-            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
-    }
-
-    let local_var_req = local_var_req_builder.build()?;
-    let local_var_resp = local_var_client.execute(local_var_req).await?;
-
-    let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
-
-    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
-    } else {
-        let local_var_entity: Option<HeatmapZoomXyGridJsonGetError> =
-            serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
+    if let Some(ref param_value) = params.observation_accuracy_experiment_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
+                    .into_iter()
+                    .map(|p| {
+                        (
+                            "observation_accuracy_experiment_id".to_owned(),
+                            p.to_string(),
+                        )
+                    })
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => req_builder.query(&[(
+                "observation_accuracy_experiment_id",
+                &param_value
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
-        Err(Error::ResponseError(local_var_error))
+    }
+    if let Some(ref param_value) = params.q {
+        req_builder = req_builder.query(&[("q", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.search_on {
+        req_builder = req_builder.query(&[("search_on", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.quality_grade {
+        req_builder = req_builder.query(&[("quality_grade", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.updated_since {
+        req_builder = req_builder.query(&[("updated_since", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.viewer_id {
+        req_builder = req_builder.query(&[("viewer_id", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.reviewed {
+        req_builder = req_builder.query(&[("reviewed", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UtfGridResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UtfGridResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<HeatmapZoomXyGridJsonGetError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent {
+            status,
+            content,
+            entity,
+        }))
     }
 }
 
@@ -3201,196 +3367,90 @@ pub async fn heatmap_zoom_xy_grid_json_get(
 pub async fn points_zoom_xy_grid_json_get(
     configuration: &configuration::Configuration,
     params: PointsZoomXyGridJsonGetParams,
-) -> Result<crate::models::UtfGridResponse, Error<PointsZoomXyGridJsonGetError>> {
-    let local_var_configuration = configuration;
-
-    // unbox the parameters
-    let zoom = params.zoom;
-    let x = params.x;
-    let y = params.y;
-    let color = params.color;
-    let acc = params.acc;
-    let captive = params.captive;
-    let endemic = params.endemic;
-    let geo = params.geo;
-    let id_please = params.id_please;
-    let identified = params.identified;
-    let introduced = params.introduced;
-    let mappable = params.mappable;
-    let native = params.native;
-    let out_of_range = params.out_of_range;
-    let pcid = params.pcid;
-    let photos = params.photos;
-    let popular = params.popular;
-    let sounds = params.sounds;
-    let taxon_is_active = params.taxon_is_active;
-    let threatened = params.threatened;
-    let verifiable = params.verifiable;
-    let licensed = params.licensed;
-    let photo_licensed = params.photo_licensed;
-    let id = params.id;
-    let not_id = params.not_id;
-    let license = params.license;
-    let ofv_datatype = params.ofv_datatype;
-    let photo_license = params.photo_license;
-    let place_id = params.place_id;
-    let project_id = params.project_id;
-    let rank = params.rank;
-    let site_id = params.site_id;
-    let sound_license = params.sound_license;
-    let taxon_id = params.taxon_id;
-    let without_taxon_id = params.without_taxon_id;
-    let taxon_name = params.taxon_name;
-    let user_id = params.user_id;
-    let user_login = params.user_login;
-    let ident_user_id = params.ident_user_id;
-    let day = params.day;
-    let month = params.month;
-    let year = params.year;
-    let term_id = params.term_id;
-    let term_value_id = params.term_value_id;
-    let without_term_id = params.without_term_id;
-    let without_term_value_id = params.without_term_value_id;
-    let acc_above = params.acc_above;
-    let acc_below = params.acc_below;
-    let acc_below_or_unknown = params.acc_below_or_unknown;
-    let d1 = params.d1;
-    let d2 = params.d2;
-    let created_d1 = params.created_d1;
-    let created_d2 = params.created_d2;
-    let created_on = params.created_on;
-    let observed_on = params.observed_on;
-    let unobserved_by_user_id = params.unobserved_by_user_id;
-    let apply_project_rules_for = params.apply_project_rules_for;
-    let cs = params.cs;
-    let csa = params.csa;
-    let csi = params.csi;
-    let geoprivacy = params.geoprivacy;
-    let taxon_geoprivacy = params.taxon_geoprivacy;
-    let hrank = params.hrank;
-    let lrank = params.lrank;
-    let iconic_taxa = params.iconic_taxa;
-    let id_above = params.id_above;
-    let id_below = params.id_below;
-    let identifications = params.identifications;
-    let lat = params.lat;
-    let lng = params.lng;
-    let radius = params.radius;
-    let nelat = params.nelat;
-    let nelng = params.nelng;
-    let swlat = params.swlat;
-    let swlng = params.swlng;
-    let list_id = params.list_id;
-    let not_in_project = params.not_in_project;
-    let not_matching_project_rules_for = params.not_matching_project_rules_for;
-    let q = params.q;
-    let search_on = params.search_on;
-    let quality_grade = params.quality_grade;
-    let updated_since = params.updated_since;
-    let viewer_id = params.viewer_id;
-    let reviewed = params.reviewed;
-
-    let local_var_client = &local_var_configuration.client;
-
-    let local_var_uri_str = format!(
+) -> Result<models::UtfGridResponse, Error<PointsZoomXyGridJsonGetError>> {
+    let uri_str = format!(
         "{}/points/{zoom}/{x}/{y}.grid.json",
-        local_var_configuration.base_path,
-        zoom = zoom,
-        x = x,
-        y = y
+        configuration.base_path,
+        zoom = params.zoom,
+        x = params.x,
+        y = params.y
     );
-    let mut local_var_req_builder =
-        local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
-    if let Some(ref local_var_str) = color {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("color", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.color {
+        req_builder = req_builder.query(&[("color", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = acc {
-        local_var_req_builder = local_var_req_builder.query(&[("acc", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.acc {
+        req_builder = req_builder.query(&[("acc", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = captive {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("captive", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.captive {
+        req_builder = req_builder.query(&[("captive", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = endemic {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("endemic", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.endemic {
+        req_builder = req_builder.query(&[("endemic", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = geo {
-        local_var_req_builder = local_var_req_builder.query(&[("geo", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.geo {
+        req_builder = req_builder.query(&[("geo", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = id_please {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("id_please", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.id_please {
+        req_builder = req_builder.query(&[("id_please", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = identified {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("identified", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.identified {
+        req_builder = req_builder.query(&[("identified", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = introduced {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("introduced", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.introduced {
+        req_builder = req_builder.query(&[("introduced", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = mappable {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("mappable", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.mappable {
+        req_builder = req_builder.query(&[("mappable", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = native {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("native", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.native {
+        req_builder = req_builder.query(&[("native", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = out_of_range {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("out_of_range", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.out_of_range {
+        req_builder = req_builder.query(&[("out_of_range", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = pcid {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("pcid", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.pcid {
+        req_builder = req_builder.query(&[("pcid", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = photos {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("photos", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.photos {
+        req_builder = req_builder.query(&[("photos", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = popular {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("popular", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.popular {
+        req_builder = req_builder.query(&[("popular", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = sounds {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("sounds", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.sounds {
+        req_builder = req_builder.query(&[("sounds", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = taxon_is_active {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("taxon_is_active", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.taxon_is_active {
+        req_builder = req_builder.query(&[("taxon_is_active", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = threatened {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("threatened", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.threatened {
+        req_builder = req_builder.query(&[("threatened", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = verifiable {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("verifiable", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.verifiable {
+        req_builder = req_builder.query(&[("verifiable", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = licensed {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("licensed", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.licensed {
+        req_builder = req_builder.query(&[("licensed", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = photo_licensed {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("photo_licensed", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.photo_licensed {
+        req_builder = req_builder.query(&[("photo_licensed", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.expected_nearby {
+        req_builder = req_builder.query(&[("expected_nearby", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -3399,17 +3459,17 @@ pub async fn points_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = not_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.not_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("not_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "not_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -3418,17 +3478,17 @@ pub async fn points_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = license {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.license {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("license".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "license",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -3437,17 +3497,17 @@ pub async fn points_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = ofv_datatype {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.ofv_datatype {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("ofv_datatype".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "ofv_datatype",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -3456,17 +3516,17 @@ pub async fn points_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = photo_license {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.photo_license {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("photo_license".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "photo_license",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -3475,17 +3535,17 @@ pub async fn points_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = place_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.place_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("place_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "place_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -3494,17 +3554,17 @@ pub async fn points_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = project_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.project_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("project_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "project_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -3513,17 +3573,17 @@ pub async fn points_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = rank {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.rank {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("rank".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "rank",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -3532,17 +3592,17 @@ pub async fn points_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = site_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.site_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("site_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "site_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -3551,17 +3611,17 @@ pub async fn points_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = sound_license {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.sound_license {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("sound_license".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "sound_license",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -3570,17 +3630,17 @@ pub async fn points_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = taxon_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.taxon_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("taxon_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "taxon_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -3589,17 +3649,17 @@ pub async fn points_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = without_taxon_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.without_taxon_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("without_taxon_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "without_taxon_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -3608,17 +3668,17 @@ pub async fn points_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = taxon_name {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.taxon_name {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("taxon_name".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "taxon_name",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -3627,17 +3687,17 @@ pub async fn points_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = user_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.user_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("user_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "user_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -3646,17 +3706,17 @@ pub async fn points_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = user_login {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.user_login {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("user_login".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "user_login",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -3665,21 +3725,39 @@ pub async fn points_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = ident_user_id {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("ident_user_id", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.ident_user_id {
+        req_builder = req_builder.query(&[("ident_user_id", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = day {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.hour {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
+                    .into_iter()
+                    .map(|p| ("hour".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => req_builder.query(&[(
+                "hour",
+                &param_value
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
+        };
+    }
+    if let Some(ref param_value) = params.day {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("day".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "day",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -3688,17 +3766,17 @@ pub async fn points_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = month {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.month {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("month".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "month",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -3707,17 +3785,17 @@ pub async fn points_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = year {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.year {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("year".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "year",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -3726,17 +3804,74 @@ pub async fn points_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = term_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.created_day {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
+                    .into_iter()
+                    .map(|p| ("created_day".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => req_builder.query(&[(
+                "created_day",
+                &param_value
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
+        };
+    }
+    if let Some(ref param_value) = params.created_month {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
+                    .into_iter()
+                    .map(|p| ("created_month".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => req_builder.query(&[(
+                "created_month",
+                &param_value
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
+        };
+    }
+    if let Some(ref param_value) = params.created_year {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
+                    .into_iter()
+                    .map(|p| ("created_year".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => req_builder.query(&[(
+                "created_year",
+                &param_value
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
+        };
+    }
+    if let Some(ref param_value) = params.term_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("term_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "term_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -3745,17 +3880,17 @@ pub async fn points_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = term_value_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.term_value_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("term_value_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "term_value_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -3764,21 +3899,20 @@ pub async fn points_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = without_term_id {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("without_term_id", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.without_term_id {
+        req_builder = req_builder.query(&[("without_term_id", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = without_term_value_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.without_term_value_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("without_term_value_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "without_term_value_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -3787,65 +3921,94 @@ pub async fn points_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = acc_above {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("acc_above", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.term_id_or_unknown {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
+                    .into_iter()
+                    .map(|p| ("term_id_or_unknown".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => req_builder.query(&[(
+                "term_id_or_unknown",
+                &param_value
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
+        };
     }
-    if let Some(ref local_var_str) = acc_below {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("acc_below", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.annotation_user_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
+                    .into_iter()
+                    .map(|p| ("annotation_user_id".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => req_builder.query(&[(
+                "annotation_user_id",
+                &param_value
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
+        };
     }
-    if let Some(ref local_var_str) = acc_below_or_unknown {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("acc_below_or_unknown", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.acc_above {
+        req_builder = req_builder.query(&[("acc_above", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = d1 {
-        local_var_req_builder = local_var_req_builder.query(&[("d1", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.acc_below {
+        req_builder = req_builder.query(&[("acc_below", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = d2 {
-        local_var_req_builder = local_var_req_builder.query(&[("d2", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.acc_below_or_unknown {
+        req_builder = req_builder.query(&[("acc_below_or_unknown", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = created_d1 {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("created_d1", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.d1 {
+        req_builder = req_builder.query(&[("d1", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = created_d2 {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("created_d2", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.d2 {
+        req_builder = req_builder.query(&[("d2", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = created_on {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("created_on", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.created_d1 {
+        req_builder = req_builder.query(&[("created_d1", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = observed_on {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("observed_on", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.created_d2 {
+        req_builder = req_builder.query(&[("created_d2", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = unobserved_by_user_id {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("unobserved_by_user_id", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.created_on {
+        req_builder = req_builder.query(&[("created_on", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = apply_project_rules_for {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("apply_project_rules_for", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.observed_on {
+        req_builder = req_builder.query(&[("observed_on", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = cs {
-        local_var_req_builder = local_var_req_builder.query(&[("cs", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.unobserved_by_user_id {
+        req_builder = req_builder.query(&[("unobserved_by_user_id", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = csa {
-        local_var_req_builder = local_var_req_builder.query(&[("csa", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.apply_project_rules_for {
+        req_builder = req_builder.query(&[("apply_project_rules_for", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = csi {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.cs {
+        req_builder = req_builder.query(&[("cs", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.csa {
+        req_builder = req_builder.query(&[("csa", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.csi {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("csi".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "csi",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -3854,17 +4017,17 @@ pub async fn points_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = geoprivacy {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.geoprivacy {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("geoprivacy".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "geoprivacy",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -3873,17 +4036,17 @@ pub async fn points_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = taxon_geoprivacy {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.taxon_geoprivacy {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("taxon_geoprivacy".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "taxon_geoprivacy",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -3892,25 +4055,42 @@ pub async fn points_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = hrank {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("hrank", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.obscuration {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
+                    .into_iter()
+                    .map(|p| ("obscuration".to_owned(), p.to_string()))
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => req_builder.query(&[(
+                "obscuration",
+                &param_value
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
+        };
     }
-    if let Some(ref local_var_str) = lrank {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("lrank", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.hrank {
+        req_builder = req_builder.query(&[("hrank", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = iconic_taxa {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.lrank {
+        req_builder = req_builder.query(&[("lrank", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.iconic_taxa {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("iconic_taxa".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "iconic_taxa",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -3919,100 +4099,117 @@ pub async fn points_zoom_xy_grid_json_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = id_above {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("id_above", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.id_above {
+        req_builder = req_builder.query(&[("id_above", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = id_below {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("id_below", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.id_below {
+        req_builder = req_builder.query(&[("id_below", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = identifications {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("identifications", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.identifications {
+        req_builder = req_builder.query(&[("identifications", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = lat {
-        local_var_req_builder = local_var_req_builder.query(&[("lat", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.lat {
+        req_builder = req_builder.query(&[("lat", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = lng {
-        local_var_req_builder = local_var_req_builder.query(&[("lng", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.lng {
+        req_builder = req_builder.query(&[("lng", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = radius {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("radius", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.radius {
+        req_builder = req_builder.query(&[("radius", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = nelat {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("nelat", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.nelat {
+        req_builder = req_builder.query(&[("nelat", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = nelng {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("nelng", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.nelng {
+        req_builder = req_builder.query(&[("nelng", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = swlat {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("swlat", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.swlat {
+        req_builder = req_builder.query(&[("swlat", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = swlng {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("swlng", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.swlng {
+        req_builder = req_builder.query(&[("swlng", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = list_id {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("list_id", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.list_id {
+        req_builder = req_builder.query(&[("list_id", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = not_in_project {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("not_in_project", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.not_in_project {
+        req_builder = req_builder.query(&[("not_in_project", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = not_matching_project_rules_for {
-        local_var_req_builder = local_var_req_builder
-            .query(&[("not_matching_project_rules_for", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.not_matching_project_rules_for {
+        req_builder =
+            req_builder.query(&[("not_matching_project_rules_for", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = q {
-        local_var_req_builder = local_var_req_builder.query(&[("q", &local_var_str.to_string())]);
-    }
-    if let Some(ref local_var_str) = search_on {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("search_on", &local_var_str.to_string())]);
-    }
-    if let Some(ref local_var_str) = quality_grade {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("quality_grade", &local_var_str.to_string())]);
-    }
-    if let Some(ref local_var_str) = updated_since {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("updated_since", &local_var_str.to_string())]);
-    }
-    if let Some(ref local_var_str) = viewer_id {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("viewer_id", &local_var_str.to_string())]);
-    }
-    if let Some(ref local_var_str) = reviewed {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("reviewed", &local_var_str.to_string())]);
-    }
-    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder =
-            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
-    }
-
-    let local_var_req = local_var_req_builder.build()?;
-    let local_var_resp = local_var_client.execute(local_var_req).await?;
-
-    let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
-
-    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
-    } else {
-        let local_var_entity: Option<PointsZoomXyGridJsonGetError> =
-            serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
+    if let Some(ref param_value) = params.observation_accuracy_experiment_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
+                    .into_iter()
+                    .map(|p| {
+                        (
+                            "observation_accuracy_experiment_id".to_owned(),
+                            p.to_string(),
+                        )
+                    })
+                    .collect::<Vec<(std::string::String, std::string::String)>>(),
+            ),
+            _ => req_builder.query(&[(
+                "observation_accuracy_experiment_id",
+                &param_value
+                    .into_iter()
+                    .map(|p| p.to_string())
+                    .collect::<Vec<String>>()
+                    .join(",")
+                    .to_string(),
+            )]),
         };
-        Err(Error::ResponseError(local_var_error))
+    }
+    if let Some(ref param_value) = params.q {
+        req_builder = req_builder.query(&[("q", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.search_on {
+        req_builder = req_builder.query(&[("search_on", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.quality_grade {
+        req_builder = req_builder.query(&[("quality_grade", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.updated_since {
+        req_builder = req_builder.query(&[("updated_since", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.viewer_id {
+        req_builder = req_builder.query(&[("viewer_id", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.reviewed {
+        req_builder = req_builder.query(&[("reviewed", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
+    }
+
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
+
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
+
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::UtfGridResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::UtfGridResponse`")))),
+        }
+    } else {
+        let content = resp.text().await?;
+        let entity: Option<PointsZoomXyGridJsonGetError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent {
+            status,
+            content,
+            entity,
+        }))
     }
 }

@@ -1,22 +1,22 @@
 /*
  * iNaturalist API
  *
- * # https://api.inaturalist.org/v1/  [iNaturalist](https://www.inaturalist.org/) is a global community of naturalists, scientists, and members of the public sharing over a million wildlife sightings to teach one another about the natural world while creating high quality citizen science data for science and conservation. The iNaturalist technology infrastructure and open source software is administered by the [California Academy of Sciences](https://www.calacademy.org/) as part of their mission to explore, explain, and sustain life on Earth.  These API methods return data in JSON/JSONP and PNG response formats. They are meant to supplement the existing [iNaturalist API](https://www.inaturalist.org/pages/api+reference), implemented in Ruby on Rails, which has more functionality and supports more write operations, but tends to be slower and have less consistent response formats. Visit our [developers page](https://www.inaturalist.org/pages/developers) for more information. Write operations that expect and return JSON describe a single `body` parameter that represents the request body, which should be specified as JSON. See the \"Model\" of each body parameter for attributes that we accept in these JSON objects.  Multiple values for a single URL parameter should be separated by commas, e.g. `taxon_id=1,2,3`.  Map tiles are generated using the [node-mapnik](https://github.com/mapnik/node-mapnik) library, following the XYZ map tiling scheme. The \"Observation Tile\" methods accept nearly all the parameters of the observation search APIs, and will generate map tiles reflecting the same observations returned by searches. These \"Observation Tile\" methods have corresponding [UTFGrid](https://github.com/mapbox/utfgrid-spec) JSON responses which return information needed to make interactive maps.  Authentication in the Node API is handled via JSON Web Tokens (JWT). To obtain one, make an [OAuth-authenticated request](http://www.inaturalist.org/pages/api+reference#auth) to https://www.inaturalist.org/users/api_token. Each JWT will expire after 24 hours. Authentication required for all PUT and POST requests. Some GET requests will also include private information like hidden coordinates if the authenticated user has permission to view them.  iNaturalist Website: https://www.inaturalist.org/  Open Source Software: https://github.com/inaturalist/  ## Terms of Use  Use of this API is subject to the iNaturalist [Terms of Service](https://www.inaturalist.org/terms) and [Privacy Policy](https://www.inaturalist.org/privacy). We will block any use of our API that violates our Terms or Privacy Policy without notice. The API is intended to support application development, not data scraping. For pre- generated data exports, see https://www.inaturalist.org/pages/developers.  Please note that we throttle API usage to a max of 100 requests per minute, though we ask that you try to keep it to 60 requests per minute or lower, and to keep under 10,000 requests per day. If we notice usage that has serious impact on our performance we may institute blocks without notification.  Terms of Service: https://www.inaturalist.org/terms  Privacy Policy: https://www.inaturalist.org/privacy
+ * # https://api.inaturalist.org/v1/  [iNaturalist](https://www.inaturalist.org/) is a global community of naturalists, scientists, and members of the public sharing over a million wildlife sightings to teach one another about the natural world while creating high quality citizen science data for science and conservation.  These API methods return data in JSON/JSONP and PNG response formats. They are meant to supplement the existing [iNaturalist API](https://www.inaturalist.org/pages/api+reference), implemented in Ruby on Rails, which has more functionality and supports more write operations, but tends to be slower and have less consistent response formats. Visit our [developers page](https://www.inaturalist.org/pages/developers) for more information. Write operations that expect and return JSON describe a single `body` parameter that represents the request body, which should be specified as JSON. See the \"Model\" of each body parameter for attributes that we accept in these JSON objects.  Multiple values for a single URL parameter should be separated by commas, e.g. `taxon_id=1,2,3`.  Map tiles are generated using the [node-mapnik](https://github.com/mapnik/node-mapnik) library, following the XYZ map tiling scheme. The \"Observation Tile\" methods accept nearly all the parameters of the observation search APIs, and will generate map tiles reflecting the same observations returned by searches. These \"Observation Tile\" methods have corresponding [UTFGrid](https://github.com/mapbox/utfgrid-spec) JSON responses which return information needed to make interactive maps.  Authentication in the Node API is handled via JSON Web Tokens (JWT). To obtain one, make an [OAuth-authenticated request](http://www.inaturalist.org/pages/api+reference#auth) to https://www.inaturalist.org/users/api_token. Each JWT will expire after 24 hours. Authentication required for all PUT and POST requests. Some GET requests will also include private information like hidden coordinates if the authenticated user has permission to view them.  Photos served from https://static.inaturalist.org and https://inaturalist-open-data.s3.amazonaws.com have multiple size variants and not all size variants are returned in responses. To access other sizes, the photo URL can be modified to replace only the size qualifier (each variant shares the exact same extension). The domain a photo is hosted under reflects the license under which the photo is being shared, and the domain may change over time if the license changes. Photos in the `inaturalist-open-data` domain are shared under open licenses. These can be accessed in bulk in the [iNaturalist AWS Open Dataset]( https://registry.opendata.aws/inaturalist-open-data/). Photos in the `static.inaturalist.org` domain do not have open licenses.  The available photo sizes are: * original (max 2048px in either dimension) * large (max 1024px in either dimension) * medium (max 500px in either dimension) * small (max 240px in either dimension) * thumb (max 100px in either dimension) * square (75px square)  iNaturalist Website: https://www.inaturalist.org/  Open Source Software: https://github.com/inaturalist/  ## Terms of Use  Use of this API is subject to the iNaturalist [Terms of Service](https://www.inaturalist.org/terms) and [Privacy Policy](https://www.inaturalist.org/privacy). We will block any use of our API that violates our Terms or Privacy Policy without notice. The API is intended to support application development, not data scraping. For pre- generated data exports, see https://www.inaturalist.org/pages/developers.  Please note that we throttle API usage to a max of 100 requests per minute, though we ask that you try to keep it to 60 requests per minute or lower, and to keep under 10,000 requests per day. If we notice usage that has serious impact on our performance we may institute blocks without notification.  Terms of Service: https://www.inaturalist.org/terms  Privacy Policy: https://www.inaturalist.org/privacy
  *
  * The version of the OpenAPI document: 1.3.0
  *
  * Generated by: https://openapi-generator.tech
  */
 
+use super::{configuration, ContentType, Error};
+use crate::{apis::ResponseContent, models};
 use reqwest;
-
-use super::{configuration, Error};
-use crate::apis::ResponseContent;
+use serde::{de::Error as _, Deserialize, Serialize};
 
 /// struct for passing parameters to the method [`taxa_autocomplete_get`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct TaxaAutocompleteGetParams {
-    /// Name must begin with this value
+    /// Search by name (must start with this value) or by ID (exact match).
     pub q: String,
     /// Taxon is `active`
     pub is_active: Option<bool>,
@@ -25,7 +25,7 @@ pub struct TaxaAutocompleteGetParams {
     /// Taxon must have this rank
     pub rank: Option<Vec<String>>,
     /// Taxon must have this rank level. Some example values are 70 (kingdom), 60 (phylum), 50 (class), 40 (order), 30 (family), 20 (genus), 10 (species), 5 (subspecies)
-    pub rank_level: Option<f32>,
+    pub rank_level: Option<f64>,
     /// Number of results to return in a `page`. The maximum value is 30 for this endpoint
     pub per_page: Option<String>,
     /// Locale preference for taxon common names
@@ -37,9 +37,9 @@ pub struct TaxaAutocompleteGetParams {
 }
 
 /// struct for passing parameters to the method [`taxa_get`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct TaxaGetParams {
-    /// Name must begin with this value
+    /// Search by name (must start with this value) or by ID (exact match).
     pub q: Option<String>,
     /// Taxon is `active`
     pub is_active: Option<bool>,
@@ -50,7 +50,7 @@ pub struct TaxaGetParams {
     /// Taxon must have this rank
     pub rank: Option<Vec<String>>,
     /// Taxon must have this rank level. Some example values are 70 (kingdom), 60 (phylum), 50 (class), 40 (order), 30 (family), 20 (genus), 10 (species), 5 (subspecies)
-    pub rank_level: Option<f32>,
+    pub rank_level: Option<f64>,
     /// Must have an ID above this value
     pub id_above: Option<String>,
     /// Must have an ID below this value
@@ -72,17 +72,19 @@ pub struct TaxaGetParams {
 }
 
 /// struct for passing parameters to the method [`taxa_id_get`]
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug)]
 pub struct TaxaIdGetParams {
     /// Must have this ID
     pub id: Vec<i32>,
+    /// Taxon must have this rank level. Some example values are 70 (kingdom), 60 (phylum), 50 (class), 40 (order), 30 (family), 20 (genus), 10 (species), 5 (subspecies)
+    pub rank_level: Option<f64>,
 }
 
 /// struct for typed errors of method [`taxa_autocomplete_get`]
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum TaxaAutocompleteGetError {
-    DefaultResponse(crate::models::Error),
+    DefaultResponse(models::Error),
     UnknownValue(serde_json::Value),
 }
 
@@ -90,7 +92,7 @@ pub enum TaxaAutocompleteGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum TaxaGetError {
-    DefaultResponse(crate::models::Error),
+    DefaultResponse(models::Error),
     UnknownValue(serde_json::Value),
 }
 
@@ -98,7 +100,7 @@ pub enum TaxaGetError {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum TaxaIdGetError {
-    DefaultResponse(crate::models::Error),
+    DefaultResponse(models::Error),
     UnknownValue(serde_json::Value),
 }
 
@@ -106,42 +108,25 @@ pub enum TaxaIdGetError {
 pub async fn taxa_autocomplete_get(
     configuration: &configuration::Configuration,
     params: TaxaAutocompleteGetParams,
-) -> Result<crate::models::TaxaAutocompleteResponse, Error<TaxaAutocompleteGetError>> {
-    let local_var_configuration = configuration;
+) -> Result<models::TaxaAutocompleteResponse, Error<TaxaAutocompleteGetError>> {
+    let uri_str = format!("{}/taxa/autocomplete", configuration.base_path);
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
-    // unbox the parameters
-    let q = params.q;
-    let is_active = params.is_active;
-    let taxon_id = params.taxon_id;
-    let rank = params.rank;
-    let rank_level = params.rank_level;
-    let per_page = params.per_page;
-    let locale = params.locale;
-    let preferred_place_id = params.preferred_place_id;
-    let all_names = params.all_names;
-
-    let local_var_client = &local_var_configuration.client;
-
-    let local_var_uri_str = format!("{}/taxa/autocomplete", local_var_configuration.base_path);
-    let mut local_var_req_builder =
-        local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
-
-    local_var_req_builder = local_var_req_builder.query(&[("q", &q.to_string())]);
-    if let Some(ref local_var_str) = is_active {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("is_active", &local_var_str.to_string())]);
+    req_builder = req_builder.query(&[("q", &params.q.to_string())]);
+    if let Some(ref param_value) = params.is_active {
+        req_builder = req_builder.query(&[("is_active", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = taxon_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.taxon_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("taxon_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "taxon_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -150,17 +135,17 @@ pub async fn taxa_autocomplete_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = rank {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.rank {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("rank".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "rank",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -169,48 +154,51 @@ pub async fn taxa_autocomplete_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = rank_level {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("rank_level", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.rank_level {
+        req_builder = req_builder.query(&[("rank_level", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = per_page {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("per_page", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.per_page {
+        req_builder = req_builder.query(&[("per_page", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = locale {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("locale", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.locale {
+        req_builder = req_builder.query(&[("locale", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = preferred_place_id {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("preferred_place_id", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.preferred_place_id {
+        req_builder = req_builder.query(&[("preferred_place_id", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = all_names {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("all_names", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.all_names {
+        req_builder = req_builder.query(&[("all_names", &param_value.to_string())]);
     }
-    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder =
-            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
 
-    let local_var_req = local_var_req_builder.build()?;
-    let local_var_resp = local_var_client.execute(local_var_req).await?;
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
 
-    let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
-    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::TaxaAutocompleteResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::TaxaAutocompleteResponse`")))),
+        }
     } else {
-        let local_var_entity: Option<TaxaAutocompleteGetError> =
-            serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-        };
-        Err(Error::ResponseError(local_var_error))
+        let content = resp.text().await?;
+        let entity: Option<TaxaAutocompleteGetError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent {
+            status,
+            content,
+            entity,
+        }))
     }
 }
 
@@ -218,50 +206,27 @@ pub async fn taxa_autocomplete_get(
 pub async fn taxa_get(
     configuration: &configuration::Configuration,
     params: TaxaGetParams,
-) -> Result<crate::models::TaxaShowResponse, Error<TaxaGetError>> {
-    let local_var_configuration = configuration;
+) -> Result<models::TaxaShowResponse, Error<TaxaGetError>> {
+    let uri_str = format!("{}/taxa", configuration.base_path);
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
-    // unbox the parameters
-    let q = params.q;
-    let is_active = params.is_active;
-    let taxon_id = params.taxon_id;
-    let parent_id = params.parent_id;
-    let rank = params.rank;
-    let rank_level = params.rank_level;
-    let id_above = params.id_above;
-    let id_below = params.id_below;
-    let per_page = params.per_page;
-    let locale = params.locale;
-    let preferred_place_id = params.preferred_place_id;
-    let only_id = params.only_id;
-    let all_names = params.all_names;
-    let order = params.order;
-    let order_by = params.order_by;
-
-    let local_var_client = &local_var_configuration.client;
-
-    let local_var_uri_str = format!("{}/taxa", local_var_configuration.base_path);
-    let mut local_var_req_builder =
-        local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
-
-    if let Some(ref local_var_str) = q {
-        local_var_req_builder = local_var_req_builder.query(&[("q", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.q {
+        req_builder = req_builder.query(&[("q", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = is_active {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("is_active", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.is_active {
+        req_builder = req_builder.query(&[("is_active", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = taxon_id {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.taxon_id {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("taxon_id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "taxon_id",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -270,21 +235,20 @@ pub async fn taxa_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = parent_id {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("parent_id", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.parent_id {
+        req_builder = req_builder.query(&[("parent_id", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = rank {
-        local_var_req_builder = match "csv" {
-            "multi" => local_var_req_builder.query(
-                &local_var_str
+    if let Some(ref param_value) = params.rank {
+        req_builder = match "csv" {
+            "multi" => req_builder.query(
+                &param_value
                     .into_iter()
                     .map(|p| ("rank".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
-            _ => local_var_req_builder.query(&[(
+            _ => req_builder.query(&[(
                 "rank",
-                &local_var_str
+                &param_value
                     .into_iter()
                     .map(|p| p.to_string())
                     .collect::<Vec<String>>()
@@ -293,67 +257,66 @@ pub async fn taxa_get(
             )]),
         };
     }
-    if let Some(ref local_var_str) = rank_level {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("rank_level", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.rank_level {
+        req_builder = req_builder.query(&[("rank_level", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = id_above {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("id_above", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.id_above {
+        req_builder = req_builder.query(&[("id_above", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = id_below {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("id_below", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.id_below {
+        req_builder = req_builder.query(&[("id_below", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = per_page {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("per_page", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.per_page {
+        req_builder = req_builder.query(&[("per_page", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = locale {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("locale", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.locale {
+        req_builder = req_builder.query(&[("locale", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = preferred_place_id {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("preferred_place_id", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.preferred_place_id {
+        req_builder = req_builder.query(&[("preferred_place_id", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = only_id {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("only_id", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.only_id {
+        req_builder = req_builder.query(&[("only_id", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = all_names {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("all_names", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.all_names {
+        req_builder = req_builder.query(&[("all_names", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = order {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("order", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.order {
+        req_builder = req_builder.query(&[("order", &param_value.to_string())]);
     }
-    if let Some(ref local_var_str) = order_by {
-        local_var_req_builder =
-            local_var_req_builder.query(&[("order_by", &local_var_str.to_string())]);
+    if let Some(ref param_value) = params.order_by {
+        req_builder = req_builder.query(&[("order_by", &param_value.to_string())]);
     }
-    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder =
-            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
 
-    let local_var_req = local_var_req_builder.build()?;
-    let local_var_resp = local_var_client.execute(local_var_req).await?;
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
 
-    let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
-    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::TaxaShowResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::TaxaShowResponse`")))),
+        }
     } else {
-        let local_var_entity: Option<TaxaGetError> = serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-        };
-        Err(Error::ResponseError(local_var_error))
+        let content = resp.text().await?;
+        let entity: Option<TaxaGetError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent {
+            status,
+            content,
+            entity,
+        }))
     }
 }
 
@@ -361,47 +324,51 @@ pub async fn taxa_get(
 pub async fn taxa_id_get(
     configuration: &configuration::Configuration,
     params: TaxaIdGetParams,
-) -> Result<crate::models::TaxaShowResponse, Error<TaxaIdGetError>> {
-    let local_var_configuration = configuration;
-
-    // unbox the parameters
-    let id = params.id;
-
-    let local_var_client = &local_var_configuration.client;
-
-    let local_var_uri_str = format!(
+) -> Result<models::TaxaShowResponse, Error<TaxaIdGetError>> {
+    let uri_str = format!(
         "{}/taxa/{id}",
-        local_var_configuration.base_path,
-        id = id
+        configuration.base_path,
+        id = params
+            .id
             .into_iter()
-            .map(|n| n.to_string())
-            .collect::<Vec<String>>()
+            .map(|p| p.to_string())
+            .collect::<Vec<_>>()
             .join(",")
     );
-    let mut local_var_req_builder =
-        local_var_client.request(reqwest::Method::GET, local_var_uri_str.as_str());
+    let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
-    if let Some(ref local_var_user_agent) = local_var_configuration.user_agent {
-        local_var_req_builder =
-            local_var_req_builder.header(reqwest::header::USER_AGENT, local_var_user_agent.clone());
+    if let Some(ref param_value) = params.rank_level {
+        req_builder = req_builder.query(&[("rank_level", &param_value.to_string())]);
+    }
+    if let Some(ref user_agent) = configuration.user_agent {
+        req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
 
-    let local_var_req = local_var_req_builder.build()?;
-    let local_var_resp = local_var_client.execute(local_var_req).await?;
+    let req = req_builder.build()?;
+    let resp = configuration.client.execute(req).await?;
 
-    let local_var_status = local_var_resp.status();
-    let local_var_content = local_var_resp.text().await?;
+    let status = resp.status();
+    let content_type = resp
+        .headers()
+        .get("content-type")
+        .and_then(|v| v.to_str().ok())
+        .unwrap_or("application/octet-stream");
+    let content_type = super::ContentType::from(content_type);
 
-    if !local_var_status.is_client_error() && !local_var_status.is_server_error() {
-        serde_json::from_str(&local_var_content).map_err(Error::from)
+    if !status.is_client_error() && !status.is_server_error() {
+        let content = resp.text().await?;
+        match content_type {
+            ContentType::Json => serde_json::from_str(&content).map_err(Error::from),
+            ContentType::Text => return Err(Error::from(serde_json::Error::custom("Received `text/plain` content type response that cannot be converted to `models::TaxaShowResponse`"))),
+            ContentType::Unsupported(unknown_type) => return Err(Error::from(serde_json::Error::custom(format!("Received `{unknown_type}` content type response that cannot be converted to `models::TaxaShowResponse`")))),
+        }
     } else {
-        let local_var_entity: Option<TaxaIdGetError> =
-            serde_json::from_str(&local_var_content).ok();
-        let local_var_error = ResponseContent {
-            status: local_var_status,
-            content: local_var_content,
-            entity: local_var_entity,
-        };
-        Err(Error::ResponseError(local_var_error))
+        let content = resp.text().await?;
+        let entity: Option<TaxaIdGetError> = serde_json::from_str(&content).ok();
+        Err(Error::ResponseError(ResponseContent {
+            status,
+            content,
+            entity,
+        }))
     }
 }

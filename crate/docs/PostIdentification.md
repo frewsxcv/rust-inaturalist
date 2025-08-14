@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**identification** | Option<[**crate::models::PostIdentificationIdentification**](PostIdentification_identification.md)> |  | [optional]
+**identification** | Option<[**models::PostIdentificationIdentification**](PostIdentification_identification.md)> |  | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

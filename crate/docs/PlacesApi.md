@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 ## places_autocomplete_get
 
-> crate::models::PlacesResponse places_autocomplete_get(q, order_by)
+> models::PlacesResponse places_autocomplete_get(q, order_by)
 Place Autocomplete
 
 Given an string, returns places with names starting with the search term. 
@@ -22,12 +22,12 @@ Given an string, returns places with names starting with the search term.
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**q** | **String** | Name must begin with this value | [required] |
+**q** | **String** | Search by name (must start with this value) or by ID (exact match). | [required] |
 **order_by** | Option<**String**> | Sort field |  |
 
 ### Return type
 
-[**crate::models::PlacesResponse**](PlacesResponse.md)
+[**models::PlacesResponse**](PlacesResponse.md)
 
 ### Authorization
 
@@ -43,7 +43,7 @@ No authorization required
 
 ## places_id_get
 
-> crate::models::PlacesResponse places_id_get(id, admin_level)
+> models::PlacesResponse places_id_get(id, admin_level)
 Place Details
 
 Given an ID, or an array of IDs in comma-delimited format, returns corresponding places. A maximum of 500 results will be returned 
@@ -58,7 +58,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::PlacesResponse**](PlacesResponse.md)
+[**models::PlacesResponse**](PlacesResponse.md)
 
 ### Authorization
 
@@ -74,7 +74,7 @@ No authorization required
 
 ## places_nearby_get
 
-> crate::models::NearbyPlacesResponse places_nearby_get(nelat, nelng, swlat, swlng, name, per_page)
+> models::NearbyPlacesResponse places_nearby_get(nelat, nelng, swlat, swlng, name, per_page)
 Nearby Places
 
 Given an bounding box, and an optional name query, return `standard` iNaturalist curator approved and `community` non-curated places nearby 
@@ -93,7 +93,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::NearbyPlacesResponse**](NearbyPlacesResponse.md)
+[**models::NearbyPlacesResponse**](NearbyPlacesResponse.md)
 
 ### Authorization
 

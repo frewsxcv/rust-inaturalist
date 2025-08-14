@@ -1,14 +1,17 @@
 /*
  * iNaturalist API
  *
- * # https://api.inaturalist.org/v1/  [iNaturalist](https://www.inaturalist.org/) is a global community of naturalists, scientists, and members of the public sharing over a million wildlife sightings to teach one another about the natural world while creating high quality citizen science data for science and conservation. The iNaturalist technology infrastructure and open source software is administered by the [California Academy of Sciences](https://www.calacademy.org/) as part of their mission to explore, explain, and sustain life on Earth.  These API methods return data in JSON/JSONP and PNG response formats. They are meant to supplement the existing [iNaturalist API](https://www.inaturalist.org/pages/api+reference), implemented in Ruby on Rails, which has more functionality and supports more write operations, but tends to be slower and have less consistent response formats. Visit our [developers page](https://www.inaturalist.org/pages/developers) for more information. Write operations that expect and return JSON describe a single `body` parameter that represents the request body, which should be specified as JSON. See the \"Model\" of each body parameter for attributes that we accept in these JSON objects.  Multiple values for a single URL parameter should be separated by commas, e.g. `taxon_id=1,2,3`.  Map tiles are generated using the [node-mapnik](https://github.com/mapnik/node-mapnik) library, following the XYZ map tiling scheme. The \"Observation Tile\" methods accept nearly all the parameters of the observation search APIs, and will generate map tiles reflecting the same observations returned by searches. These \"Observation Tile\" methods have corresponding [UTFGrid](https://github.com/mapbox/utfgrid-spec) JSON responses which return information needed to make interactive maps.  Authentication in the Node API is handled via JSON Web Tokens (JWT). To obtain one, make an [OAuth-authenticated request](http://www.inaturalist.org/pages/api+reference#auth) to https://www.inaturalist.org/users/api_token. Each JWT will expire after 24 hours. Authentication required for all PUT and POST requests. Some GET requests will also include private information like hidden coordinates if the authenticated user has permission to view them.  iNaturalist Website: https://www.inaturalist.org/  Open Source Software: https://github.com/inaturalist/  ## Terms of Use  Use of this API is subject to the iNaturalist [Terms of Service](https://www.inaturalist.org/terms) and [Privacy Policy](https://www.inaturalist.org/privacy). We will block any use of our API that violates our Terms or Privacy Policy without notice. The API is intended to support application development, not data scraping. For pre- generated data exports, see https://www.inaturalist.org/pages/developers.  Please note that we throttle API usage to a max of 100 requests per minute, though we ask that you try to keep it to 60 requests per minute or lower, and to keep under 10,000 requests per day. If we notice usage that has serious impact on our performance we may institute blocks without notification.  Terms of Service: https://www.inaturalist.org/terms  Privacy Policy: https://www.inaturalist.org/privacy
+ * # https://api.inaturalist.org/v1/  [iNaturalist](https://www.inaturalist.org/) is a global community of naturalists, scientists, and members of the public sharing over a million wildlife sightings to teach one another about the natural world while creating high quality citizen science data for science and conservation.  These API methods return data in JSON/JSONP and PNG response formats. They are meant to supplement the existing [iNaturalist API](https://www.inaturalist.org/pages/api+reference), implemented in Ruby on Rails, which has more functionality and supports more write operations, but tends to be slower and have less consistent response formats. Visit our [developers page](https://www.inaturalist.org/pages/developers) for more information. Write operations that expect and return JSON describe a single `body` parameter that represents the request body, which should be specified as JSON. See the \"Model\" of each body parameter for attributes that we accept in these JSON objects.  Multiple values for a single URL parameter should be separated by commas, e.g. `taxon_id=1,2,3`.  Map tiles are generated using the [node-mapnik](https://github.com/mapnik/node-mapnik) library, following the XYZ map tiling scheme. The \"Observation Tile\" methods accept nearly all the parameters of the observation search APIs, and will generate map tiles reflecting the same observations returned by searches. These \"Observation Tile\" methods have corresponding [UTFGrid](https://github.com/mapbox/utfgrid-spec) JSON responses which return information needed to make interactive maps.  Authentication in the Node API is handled via JSON Web Tokens (JWT). To obtain one, make an [OAuth-authenticated request](http://www.inaturalist.org/pages/api+reference#auth) to https://www.inaturalist.org/users/api_token. Each JWT will expire after 24 hours. Authentication required for all PUT and POST requests. Some GET requests will also include private information like hidden coordinates if the authenticated user has permission to view them.  Photos served from https://static.inaturalist.org and https://inaturalist-open-data.s3.amazonaws.com have multiple size variants and not all size variants are returned in responses. To access other sizes, the photo URL can be modified to replace only the size qualifier (each variant shares the exact same extension). The domain a photo is hosted under reflects the license under which the photo is being shared, and the domain may change over time if the license changes. Photos in the `inaturalist-open-data` domain are shared under open licenses. These can be accessed in bulk in the [iNaturalist AWS Open Dataset]( https://registry.opendata.aws/inaturalist-open-data/). Photos in the `static.inaturalist.org` domain do not have open licenses.  The available photo sizes are: * original (max 2048px in either dimension) * large (max 1024px in either dimension) * medium (max 500px in either dimension) * small (max 240px in either dimension) * thumb (max 100px in either dimension) * square (75px square)  iNaturalist Website: https://www.inaturalist.org/  Open Source Software: https://github.com/inaturalist/  ## Terms of Use  Use of this API is subject to the iNaturalist [Terms of Service](https://www.inaturalist.org/terms) and [Privacy Policy](https://www.inaturalist.org/privacy). We will block any use of our API that violates our Terms or Privacy Policy without notice. The API is intended to support application development, not data scraping. For pre- generated data exports, see https://www.inaturalist.org/pages/developers.  Please note that we throttle API usage to a max of 100 requests per minute, though we ask that you try to keep it to 60 requests per minute or lower, and to keep under 10,000 requests per day. If we notice usage that has serious impact on our performance we may institute blocks without notification.  Terms of Service: https://www.inaturalist.org/terms  Privacy Policy: https://www.inaturalist.org/privacy
  *
  * The version of the OpenAPI document: 1.3.0
  *
  * Generated by: https://openapi-generator.tech
  */
 
-#[derive(Clone, Debug, PartialEq, Default, Serialize, Deserialize)]
+use crate::models;
+use serde::{Deserialize, Serialize};
+
+#[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Observation {
     #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
     pub id: Option<i32>,
@@ -17,13 +20,13 @@ pub struct Observation {
     #[serde(rename = "captive", skip_serializing_if = "Option::is_none")]
     pub captive: Option<bool>,
     #[serde(rename = "comments", skip_serializing_if = "Option::is_none")]
-    pub comments: Option<Vec<crate::models::Comment>>,
+    pub comments: Option<Vec<models::Comment>>,
     #[serde(rename = "comments_count", skip_serializing_if = "Option::is_none")]
     pub comments_count: Option<i32>,
     #[serde(rename = "created_at", skip_serializing_if = "Option::is_none")]
     pub created_at: Option<String>,
     #[serde(rename = "created_at_details", skip_serializing_if = "Option::is_none")]
-    pub created_at_details: Option<Box<crate::models::DateDetails>>,
+    pub created_at_details: Option<Box<models::DateDetails>>,
     #[serde(rename = "created_time_zone", skip_serializing_if = "Option::is_none")]
     pub created_time_zone: Option<String>,
     #[serde(rename = "description", skip_serializing_if = "Option::is_none")]
@@ -31,7 +34,7 @@ pub struct Observation {
     #[serde(rename = "faves_count", skip_serializing_if = "Option::is_none")]
     pub faves_count: Option<i32>,
     #[serde(rename = "geojson", skip_serializing_if = "Option::is_none")]
-    pub geojson: Option<Box<crate::models::PointGeoJson>>,
+    pub geojson: Option<Box<models::PointGeoJson>>,
     #[serde(rename = "geoprivacy", skip_serializing_if = "Option::is_none")]
     pub geoprivacy: Option<String>,
     #[serde(rename = "taxon_geoprivacy", skip_serializing_if = "Option::is_none")]
@@ -66,7 +69,7 @@ pub struct Observation {
     #[serde(rename = "mappable", skip_serializing_if = "Option::is_none")]
     pub mappable: Option<bool>,
     #[serde(rename = "non_owner_ids", skip_serializing_if = "Option::is_none")]
-    pub non_owner_ids: Option<Vec<crate::models::NonOwnerIdentification>>,
+    pub non_owner_ids: Option<Vec<models::NonOwnerIdentification>>,
     #[serde(
         rename = "num_identification_agreements",
         skip_serializing_if = "Option::is_none"
@@ -85,17 +88,17 @@ pub struct Observation {
         rename = "observed_on_details",
         skip_serializing_if = "Option::is_none"
     )]
-    pub observed_on_details: Option<Box<crate::models::DateDetails>>,
+    pub observed_on_details: Option<Box<models::DateDetails>>,
     #[serde(rename = "observed_on_string", skip_serializing_if = "Option::is_none")]
     pub observed_on_string: Option<String>,
     #[serde(rename = "observed_time_zone", skip_serializing_if = "Option::is_none")]
     pub observed_time_zone: Option<String>,
     #[serde(rename = "ofvs", skip_serializing_if = "Option::is_none")]
-    pub ofvs: Option<Vec<crate::models::FieldValue>>,
+    pub ofvs: Option<Vec<models::FieldValue>>,
     #[serde(rename = "out_of_range", skip_serializing_if = "Option::is_none")]
     pub out_of_range: Option<bool>,
     #[serde(rename = "photos", skip_serializing_if = "Option::is_none")]
-    pub photos: Option<Vec<crate::models::Photo>>,
+    pub photos: Option<Vec<models::Photo>>,
     #[serde(rename = "place_guess", skip_serializing_if = "Option::is_none")]
     pub place_guess: Option<String>,
     #[serde(rename = "place_ids", skip_serializing_if = "Option::is_none")]
@@ -119,13 +122,13 @@ pub struct Observation {
     #[serde(rename = "site_id", skip_serializing_if = "Option::is_none")]
     pub site_id: Option<i32>,
     #[serde(rename = "sounds", skip_serializing_if = "Option::is_none")]
-    pub sounds: Option<Vec<crate::models::Sound>>,
+    pub sounds: Option<Vec<models::Sound>>,
     #[serde(rename = "species_guess", skip_serializing_if = "Option::is_none")]
     pub species_guess: Option<String>,
     #[serde(rename = "tags", skip_serializing_if = "Option::is_none")]
     pub tags: Option<Vec<String>>,
     #[serde(rename = "taxon", skip_serializing_if = "Option::is_none")]
-    pub taxon: Option<Box<crate::models::ObservationTaxon>>,
+    pub taxon: Option<Box<models::ObservationTaxon>>,
     #[serde(rename = "time_observed_at", skip_serializing_if = "Option::is_none")]
     pub time_observed_at: Option<String>,
     #[serde(rename = "time_zone_offset", skip_serializing_if = "Option::is_none")]
@@ -135,7 +138,7 @@ pub struct Observation {
     #[serde(rename = "uri", skip_serializing_if = "Option::is_none")]
     pub uri: Option<String>,
     #[serde(rename = "user", skip_serializing_if = "Option::is_none")]
-    pub user: Option<Box<crate::models::User>>,
+    pub user: Option<Box<models::User>>,
     #[serde(rename = "verifiable", skip_serializing_if = "Option::is_none")]
     pub verifiable: Option<bool>,
 }

@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 ## colored_heatmap_zoom_xy_grid_json_get
 
-> crate::models::UtfGridResponse colored_heatmap_zoom_xy_grid_json_get(zoom, x, y, color, acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, day, month, year, term_id, term_value_id, without_term_id, without_term_value_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, q, search_on, quality_grade, updated_since, viewer_id, reviewed)
+> models::UtfGridResponse colored_heatmap_zoom_xy_grid_json_get(zoom, x, y, color, acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, expected_nearby, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, hour, day, month, year, created_day, created_month, created_year, term_id, term_value_id, without_term_id, without_term_value_id, term_id_or_unknown, annotation_user_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, obscuration, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, observation_accuracy_experiment_id, q, search_on, quality_grade, updated_since, viewer_id, reviewed)
 Colored Heatmap Tiles UTFGrid
 
 Given zero to many of following parameters, returns a JSON file following the UTFGrid spec, representing observations matching the search criteria 
@@ -46,6 +46,7 @@ Name | Type | Description  | Required | Notes
 **verifiable** | Option<**bool**> | Observations with a `quality_grade` of either `needs_id` or `research`. Equivalent to `quality_grade=needs_id,research`  |  |
 **licensed** | Option<**bool**> | License attribute of an observation must not be null |  |
 **photo_licensed** | Option<**bool**> | License attribute of at least one photo of an observation must not be null |  |
+**expected_nearby** | Option<**bool**> | Observation taxon is expected nearby |  |
 **id** | Option<[**Vec<String>**](String.md)> | Must have this ID |  |
 **not_id** | Option<[**Vec<String>**](String.md)> | Must not have this ID |  |
 **license** | Option<[**Vec<String>**](String.md)> | Observation must have this license |  |
@@ -62,13 +63,19 @@ Name | Type | Description  | Required | Notes
 **user_id** | Option<[**Vec<String>**](String.md)> | User must have this ID or login |  |
 **user_login** | Option<[**Vec<String>**](String.md)> | User must have this login |  |
 **ident_user_id** | Option<**i32**> | Observations identified by a particular user |  |
+**hour** | Option<[**Vec<String>**](String.md)> | Must be observed within this hour of the day |  |
 **day** | Option<[**Vec<String>**](String.md)> | Must be observed within this day of the month |  |
 **month** | Option<[**Vec<String>**](String.md)> | Must be observed within this month |  |
 **year** | Option<[**Vec<String>**](String.md)> | Must be observed within this year |  |
+**created_day** | Option<[**Vec<String>**](String.md)> | Must be created within this day of the month |  |
+**created_month** | Option<[**Vec<String>**](String.md)> | Must be created within this month |  |
+**created_year** | Option<[**Vec<String>**](String.md)> | Must be created within this year |  |
 **term_id** | Option<[**Vec<i32>**](i32.md)> | Must have an annotation using this controlled term ID |  |
 **term_value_id** | Option<[**Vec<i32>**](i32.md)> | Must have an annotation using this controlled value ID. Must be combined with the `term_id` parameter  |  |
 **without_term_id** | Option<**i32**> | Exclude observations with annotations using this controlled value ID.  |  |
 **without_term_value_id** | Option<[**Vec<i32>**](i32.md)> | Exclude observations with annotations using this controlled value ID. Must be combined with the `term_id` parameter  |  |
+**term_id_or_unknown** | Option<[**Vec<i32>**](i32.md)> | Must be combined with the `term_value_id` or the `without_term_value_id` parameter. Must have an annotation using this controlled term ID and associated term value IDs or be missing this annotation.  |  |
+**annotation_user_id** | Option<[**Vec<String>**](String.md)> | Must have an annotation created by this user  |  |
 **acc_above** | Option<**String**> | Must have a positional accuracy above this value (meters) |  |
 **acc_below** | Option<**String**> | Must have a positional accuracy below this value (meters) |  |
 **acc_below_or_unknown** | Option<**String**> | Positional accuracy must be below this value (in meters) or be unknown |  |
@@ -85,6 +92,7 @@ Name | Type | Description  | Required | Notes
 **csi** | Option<[**Vec<String>**](String.md)> | Taxon must have this IUCN conservation status. If the `place_id` parameter is also specified, this will only consider statuses specific to that place  |  |
 **geoprivacy** | Option<[**Vec<String>**](String.md)> | Must have this geoprivacy setting |  |
 **taxon_geoprivacy** | Option<[**Vec<String>**](String.md)> | Filter observations by the most conservative geoprivacy applied by a conservation status associated with one of the taxa proposed in the current identifications.  |  |
+**obscuration** | Option<[**Vec<String>**](String.md)> | Must have `geoprivacy` or `taxon_geoprivacy` fields matching these values  |  |
 **hrank** | Option<**String**> | Taxon must have this rank or lower |  |
 **lrank** | Option<**String**> | Taxon must have this rank or higher |  |
 **iconic_taxa** | Option<[**Vec<String>**](String.md)> | Taxon must by within this iconic taxon |  |
@@ -101,6 +109,7 @@ Name | Type | Description  | Required | Notes
 **list_id** | Option<**i32**> | Taxon must be in the list with this ID |  |
 **not_in_project** | Option<**String**> | Must not be in the project with this ID or slug |  |
 **not_matching_project_rules_for** | Option<**String**> | Must not match the rules of the project with this ID or slug |  |
+**observation_accuracy_experiment_id** | Option<[**Vec<i32>**](i32.md)> | Must included in this observation accuracy experiment |  |
 **q** | Option<**String**> | Search observation properties. Can be combined with `search_on` |  |
 **search_on** | Option<**String**> | Properties to search on, when combined with `q`. Searches across all properties by default  |  |
 **quality_grade** | Option<**String**> | Must have this quality grade |  |
@@ -110,7 +119,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::UtfGridResponse**](UTFGridResponse.md)
+[**models::UtfGridResponse**](UTFGridResponse.md)
 
 ### Authorization
 
@@ -126,7 +135,7 @@ No authorization required
 
 ## grid_zoom_xy_grid_json_get
 
-> crate::models::UtfGridResponse grid_zoom_xy_grid_json_get(zoom, x, y, color, acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, day, month, year, term_id, term_value_id, without_term_id, without_term_value_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, q, search_on, quality_grade, updated_since, viewer_id, reviewed)
+> models::UtfGridResponse grid_zoom_xy_grid_json_get(zoom, x, y, color, acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, expected_nearby, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, hour, day, month, year, created_day, created_month, created_year, term_id, term_value_id, without_term_id, without_term_value_id, term_id_or_unknown, annotation_user_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, obscuration, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, observation_accuracy_experiment_id, q, search_on, quality_grade, updated_since, viewer_id, reviewed)
 Grid Tiles UTFGrid
 
 Given zero to many of following parameters, returns a JSON file following the UTFGrid spec, representing observations matching the search criteria 
@@ -159,6 +168,7 @@ Name | Type | Description  | Required | Notes
 **verifiable** | Option<**bool**> | Observations with a `quality_grade` of either `needs_id` or `research`. Equivalent to `quality_grade=needs_id,research`  |  |
 **licensed** | Option<**bool**> | License attribute of an observation must not be null |  |
 **photo_licensed** | Option<**bool**> | License attribute of at least one photo of an observation must not be null |  |
+**expected_nearby** | Option<**bool**> | Observation taxon is expected nearby |  |
 **id** | Option<[**Vec<String>**](String.md)> | Must have this ID |  |
 **not_id** | Option<[**Vec<String>**](String.md)> | Must not have this ID |  |
 **license** | Option<[**Vec<String>**](String.md)> | Observation must have this license |  |
@@ -175,13 +185,19 @@ Name | Type | Description  | Required | Notes
 **user_id** | Option<[**Vec<String>**](String.md)> | User must have this ID or login |  |
 **user_login** | Option<[**Vec<String>**](String.md)> | User must have this login |  |
 **ident_user_id** | Option<**i32**> | Observations identified by a particular user |  |
+**hour** | Option<[**Vec<String>**](String.md)> | Must be observed within this hour of the day |  |
 **day** | Option<[**Vec<String>**](String.md)> | Must be observed within this day of the month |  |
 **month** | Option<[**Vec<String>**](String.md)> | Must be observed within this month |  |
 **year** | Option<[**Vec<String>**](String.md)> | Must be observed within this year |  |
+**created_day** | Option<[**Vec<String>**](String.md)> | Must be created within this day of the month |  |
+**created_month** | Option<[**Vec<String>**](String.md)> | Must be created within this month |  |
+**created_year** | Option<[**Vec<String>**](String.md)> | Must be created within this year |  |
 **term_id** | Option<[**Vec<i32>**](i32.md)> | Must have an annotation using this controlled term ID |  |
 **term_value_id** | Option<[**Vec<i32>**](i32.md)> | Must have an annotation using this controlled value ID. Must be combined with the `term_id` parameter  |  |
 **without_term_id** | Option<**i32**> | Exclude observations with annotations using this controlled value ID.  |  |
 **without_term_value_id** | Option<[**Vec<i32>**](i32.md)> | Exclude observations with annotations using this controlled value ID. Must be combined with the `term_id` parameter  |  |
+**term_id_or_unknown** | Option<[**Vec<i32>**](i32.md)> | Must be combined with the `term_value_id` or the `without_term_value_id` parameter. Must have an annotation using this controlled term ID and associated term value IDs or be missing this annotation.  |  |
+**annotation_user_id** | Option<[**Vec<String>**](String.md)> | Must have an annotation created by this user  |  |
 **acc_above** | Option<**String**> | Must have a positional accuracy above this value (meters) |  |
 **acc_below** | Option<**String**> | Must have a positional accuracy below this value (meters) |  |
 **acc_below_or_unknown** | Option<**String**> | Positional accuracy must be below this value (in meters) or be unknown |  |
@@ -198,6 +214,7 @@ Name | Type | Description  | Required | Notes
 **csi** | Option<[**Vec<String>**](String.md)> | Taxon must have this IUCN conservation status. If the `place_id` parameter is also specified, this will only consider statuses specific to that place  |  |
 **geoprivacy** | Option<[**Vec<String>**](String.md)> | Must have this geoprivacy setting |  |
 **taxon_geoprivacy** | Option<[**Vec<String>**](String.md)> | Filter observations by the most conservative geoprivacy applied by a conservation status associated with one of the taxa proposed in the current identifications.  |  |
+**obscuration** | Option<[**Vec<String>**](String.md)> | Must have `geoprivacy` or `taxon_geoprivacy` fields matching these values  |  |
 **hrank** | Option<**String**> | Taxon must have this rank or lower |  |
 **lrank** | Option<**String**> | Taxon must have this rank or higher |  |
 **iconic_taxa** | Option<[**Vec<String>**](String.md)> | Taxon must by within this iconic taxon |  |
@@ -214,6 +231,7 @@ Name | Type | Description  | Required | Notes
 **list_id** | Option<**i32**> | Taxon must be in the list with this ID |  |
 **not_in_project** | Option<**String**> | Must not be in the project with this ID or slug |  |
 **not_matching_project_rules_for** | Option<**String**> | Must not match the rules of the project with this ID or slug |  |
+**observation_accuracy_experiment_id** | Option<[**Vec<i32>**](i32.md)> | Must included in this observation accuracy experiment |  |
 **q** | Option<**String**> | Search observation properties. Can be combined with `search_on` |  |
 **search_on** | Option<**String**> | Properties to search on, when combined with `q`. Searches across all properties by default  |  |
 **quality_grade** | Option<**String**> | Must have this quality grade |  |
@@ -223,7 +241,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::UtfGridResponse**](UTFGridResponse.md)
+[**models::UtfGridResponse**](UTFGridResponse.md)
 
 ### Authorization
 
@@ -239,7 +257,7 @@ No authorization required
 
 ## heatmap_zoom_xy_grid_json_get
 
-> crate::models::UtfGridResponse heatmap_zoom_xy_grid_json_get(zoom, x, y, color, acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, day, month, year, term_id, term_value_id, without_term_id, without_term_value_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, q, search_on, quality_grade, updated_since, viewer_id, reviewed)
+> models::UtfGridResponse heatmap_zoom_xy_grid_json_get(zoom, x, y, color, acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, expected_nearby, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, hour, day, month, year, created_day, created_month, created_year, term_id, term_value_id, without_term_id, without_term_value_id, term_id_or_unknown, annotation_user_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, obscuration, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, observation_accuracy_experiment_id, q, search_on, quality_grade, updated_since, viewer_id, reviewed)
 Heatmap Tiles UTFGrid
 
 Given zero to many of following parameters, returns a JSON file following the UTFGrid spec, representing observations matching the search criteria 
@@ -272,6 +290,7 @@ Name | Type | Description  | Required | Notes
 **verifiable** | Option<**bool**> | Observations with a `quality_grade` of either `needs_id` or `research`. Equivalent to `quality_grade=needs_id,research`  |  |
 **licensed** | Option<**bool**> | License attribute of an observation must not be null |  |
 **photo_licensed** | Option<**bool**> | License attribute of at least one photo of an observation must not be null |  |
+**expected_nearby** | Option<**bool**> | Observation taxon is expected nearby |  |
 **id** | Option<[**Vec<String>**](String.md)> | Must have this ID |  |
 **not_id** | Option<[**Vec<String>**](String.md)> | Must not have this ID |  |
 **license** | Option<[**Vec<String>**](String.md)> | Observation must have this license |  |
@@ -288,13 +307,19 @@ Name | Type | Description  | Required | Notes
 **user_id** | Option<[**Vec<String>**](String.md)> | User must have this ID or login |  |
 **user_login** | Option<[**Vec<String>**](String.md)> | User must have this login |  |
 **ident_user_id** | Option<**i32**> | Observations identified by a particular user |  |
+**hour** | Option<[**Vec<String>**](String.md)> | Must be observed within this hour of the day |  |
 **day** | Option<[**Vec<String>**](String.md)> | Must be observed within this day of the month |  |
 **month** | Option<[**Vec<String>**](String.md)> | Must be observed within this month |  |
 **year** | Option<[**Vec<String>**](String.md)> | Must be observed within this year |  |
+**created_day** | Option<[**Vec<String>**](String.md)> | Must be created within this day of the month |  |
+**created_month** | Option<[**Vec<String>**](String.md)> | Must be created within this month |  |
+**created_year** | Option<[**Vec<String>**](String.md)> | Must be created within this year |  |
 **term_id** | Option<[**Vec<i32>**](i32.md)> | Must have an annotation using this controlled term ID |  |
 **term_value_id** | Option<[**Vec<i32>**](i32.md)> | Must have an annotation using this controlled value ID. Must be combined with the `term_id` parameter  |  |
 **without_term_id** | Option<**i32**> | Exclude observations with annotations using this controlled value ID.  |  |
 **without_term_value_id** | Option<[**Vec<i32>**](i32.md)> | Exclude observations with annotations using this controlled value ID. Must be combined with the `term_id` parameter  |  |
+**term_id_or_unknown** | Option<[**Vec<i32>**](i32.md)> | Must be combined with the `term_value_id` or the `without_term_value_id` parameter. Must have an annotation using this controlled term ID and associated term value IDs or be missing this annotation.  |  |
+**annotation_user_id** | Option<[**Vec<String>**](String.md)> | Must have an annotation created by this user  |  |
 **acc_above** | Option<**String**> | Must have a positional accuracy above this value (meters) |  |
 **acc_below** | Option<**String**> | Must have a positional accuracy below this value (meters) |  |
 **acc_below_or_unknown** | Option<**String**> | Positional accuracy must be below this value (in meters) or be unknown |  |
@@ -311,6 +336,7 @@ Name | Type | Description  | Required | Notes
 **csi** | Option<[**Vec<String>**](String.md)> | Taxon must have this IUCN conservation status. If the `place_id` parameter is also specified, this will only consider statuses specific to that place  |  |
 **geoprivacy** | Option<[**Vec<String>**](String.md)> | Must have this geoprivacy setting |  |
 **taxon_geoprivacy** | Option<[**Vec<String>**](String.md)> | Filter observations by the most conservative geoprivacy applied by a conservation status associated with one of the taxa proposed in the current identifications.  |  |
+**obscuration** | Option<[**Vec<String>**](String.md)> | Must have `geoprivacy` or `taxon_geoprivacy` fields matching these values  |  |
 **hrank** | Option<**String**> | Taxon must have this rank or lower |  |
 **lrank** | Option<**String**> | Taxon must have this rank or higher |  |
 **iconic_taxa** | Option<[**Vec<String>**](String.md)> | Taxon must by within this iconic taxon |  |
@@ -327,6 +353,7 @@ Name | Type | Description  | Required | Notes
 **list_id** | Option<**i32**> | Taxon must be in the list with this ID |  |
 **not_in_project** | Option<**String**> | Must not be in the project with this ID or slug |  |
 **not_matching_project_rules_for** | Option<**String**> | Must not match the rules of the project with this ID or slug |  |
+**observation_accuracy_experiment_id** | Option<[**Vec<i32>**](i32.md)> | Must included in this observation accuracy experiment |  |
 **q** | Option<**String**> | Search observation properties. Can be combined with `search_on` |  |
 **search_on** | Option<**String**> | Properties to search on, when combined with `q`. Searches across all properties by default  |  |
 **quality_grade** | Option<**String**> | Must have this quality grade |  |
@@ -336,7 +363,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::UtfGridResponse**](UTFGridResponse.md)
+[**models::UtfGridResponse**](UTFGridResponse.md)
 
 ### Authorization
 
@@ -352,7 +379,7 @@ No authorization required
 
 ## points_zoom_xy_grid_json_get
 
-> crate::models::UtfGridResponse points_zoom_xy_grid_json_get(zoom, x, y, color, acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, day, month, year, term_id, term_value_id, without_term_id, without_term_value_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, q, search_on, quality_grade, updated_since, viewer_id, reviewed)
+> models::UtfGridResponse points_zoom_xy_grid_json_get(zoom, x, y, color, acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, expected_nearby, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, hour, day, month, year, created_day, created_month, created_year, term_id, term_value_id, without_term_id, without_term_value_id, term_id_or_unknown, annotation_user_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, obscuration, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, observation_accuracy_experiment_id, q, search_on, quality_grade, updated_since, viewer_id, reviewed)
 Points Tiles UTFGrid
 
 Given zero to many of following parameters, returns a JSON file following the UTFGrid spec, representing observations matching the search criteria 
@@ -385,6 +412,7 @@ Name | Type | Description  | Required | Notes
 **verifiable** | Option<**bool**> | Observations with a `quality_grade` of either `needs_id` or `research`. Equivalent to `quality_grade=needs_id,research`  |  |
 **licensed** | Option<**bool**> | License attribute of an observation must not be null |  |
 **photo_licensed** | Option<**bool**> | License attribute of at least one photo of an observation must not be null |  |
+**expected_nearby** | Option<**bool**> | Observation taxon is expected nearby |  |
 **id** | Option<[**Vec<String>**](String.md)> | Must have this ID |  |
 **not_id** | Option<[**Vec<String>**](String.md)> | Must not have this ID |  |
 **license** | Option<[**Vec<String>**](String.md)> | Observation must have this license |  |
@@ -401,13 +429,19 @@ Name | Type | Description  | Required | Notes
 **user_id** | Option<[**Vec<String>**](String.md)> | User must have this ID or login |  |
 **user_login** | Option<[**Vec<String>**](String.md)> | User must have this login |  |
 **ident_user_id** | Option<**i32**> | Observations identified by a particular user |  |
+**hour** | Option<[**Vec<String>**](String.md)> | Must be observed within this hour of the day |  |
 **day** | Option<[**Vec<String>**](String.md)> | Must be observed within this day of the month |  |
 **month** | Option<[**Vec<String>**](String.md)> | Must be observed within this month |  |
 **year** | Option<[**Vec<String>**](String.md)> | Must be observed within this year |  |
+**created_day** | Option<[**Vec<String>**](String.md)> | Must be created within this day of the month |  |
+**created_month** | Option<[**Vec<String>**](String.md)> | Must be created within this month |  |
+**created_year** | Option<[**Vec<String>**](String.md)> | Must be created within this year |  |
 **term_id** | Option<[**Vec<i32>**](i32.md)> | Must have an annotation using this controlled term ID |  |
 **term_value_id** | Option<[**Vec<i32>**](i32.md)> | Must have an annotation using this controlled value ID. Must be combined with the `term_id` parameter  |  |
 **without_term_id** | Option<**i32**> | Exclude observations with annotations using this controlled value ID.  |  |
 **without_term_value_id** | Option<[**Vec<i32>**](i32.md)> | Exclude observations with annotations using this controlled value ID. Must be combined with the `term_id` parameter  |  |
+**term_id_or_unknown** | Option<[**Vec<i32>**](i32.md)> | Must be combined with the `term_value_id` or the `without_term_value_id` parameter. Must have an annotation using this controlled term ID and associated term value IDs or be missing this annotation.  |  |
+**annotation_user_id** | Option<[**Vec<String>**](String.md)> | Must have an annotation created by this user  |  |
 **acc_above** | Option<**String**> | Must have a positional accuracy above this value (meters) |  |
 **acc_below** | Option<**String**> | Must have a positional accuracy below this value (meters) |  |
 **acc_below_or_unknown** | Option<**String**> | Positional accuracy must be below this value (in meters) or be unknown |  |
@@ -424,6 +458,7 @@ Name | Type | Description  | Required | Notes
 **csi** | Option<[**Vec<String>**](String.md)> | Taxon must have this IUCN conservation status. If the `place_id` parameter is also specified, this will only consider statuses specific to that place  |  |
 **geoprivacy** | Option<[**Vec<String>**](String.md)> | Must have this geoprivacy setting |  |
 **taxon_geoprivacy** | Option<[**Vec<String>**](String.md)> | Filter observations by the most conservative geoprivacy applied by a conservation status associated with one of the taxa proposed in the current identifications.  |  |
+**obscuration** | Option<[**Vec<String>**](String.md)> | Must have `geoprivacy` or `taxon_geoprivacy` fields matching these values  |  |
 **hrank** | Option<**String**> | Taxon must have this rank or lower |  |
 **lrank** | Option<**String**> | Taxon must have this rank or higher |  |
 **iconic_taxa** | Option<[**Vec<String>**](String.md)> | Taxon must by within this iconic taxon |  |
@@ -440,6 +475,7 @@ Name | Type | Description  | Required | Notes
 **list_id** | Option<**i32**> | Taxon must be in the list with this ID |  |
 **not_in_project** | Option<**String**> | Must not be in the project with this ID or slug |  |
 **not_matching_project_rules_for** | Option<**String**> | Must not match the rules of the project with this ID or slug |  |
+**observation_accuracy_experiment_id** | Option<[**Vec<i32>**](i32.md)> | Must included in this observation accuracy experiment |  |
 **q** | Option<**String**> | Search observation properties. Can be combined with `search_on` |  |
 **search_on** | Option<**String**> | Properties to search on, when combined with `q`. Searches across all properties by default  |  |
 **quality_grade** | Option<**String**> | Must have this quality grade |  |
@@ -449,7 +485,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::UtfGridResponse**](UTFGridResponse.md)
+[**models::UtfGridResponse**](UTFGridResponse.md)
 
 ### Authorization
 

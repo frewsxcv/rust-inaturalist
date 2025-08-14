@@ -12,33 +12,29 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
-pub struct PostPostPost {
-    #[serde(rename = "title", skip_serializing_if = "Option::is_none")]
-    pub title: Option<String>,
-    #[serde(rename = "body", skip_serializing_if = "Option::is_none")]
-    pub body: Option<String>,
+pub struct MessagesIdGet200Response {
+    #[serde(rename = "reply_to_user", skip_serializing_if = "Option::is_none")]
+    pub reply_to_user: Option<Box<models::User>>,
+    /// Identifier for this thread
+    #[serde(rename = "thread_id", skip_serializing_if = "Option::is_none")]
+    pub thread_id: Option<i32>,
+    /// Identifier for the message that should be flagged if the user chooses to flag this thread
     #[serde(
-        rename = "preferred_formatting",
+        rename = "flaggable_message_id",
         skip_serializing_if = "Option::is_none"
     )]
-    pub preferred_formatting: Option<String>,
-    #[serde(rename = "user_id", skip_serializing_if = "Option::is_none")]
-    pub user_id: Option<f64>,
-    #[serde(rename = "parent_id", skip_serializing_if = "Option::is_none")]
-    pub parent_id: Option<f64>,
-    #[serde(rename = "parent_type", skip_serializing_if = "Option::is_none")]
-    pub parent_type: Option<String>,
+    pub flaggable_message_id: Option<i32>,
+    #[serde(rename = "results", skip_serializing_if = "Option::is_none")]
+    pub results: Option<Vec<models::Message>>,
 }
 
-impl PostPostPost {
-    pub fn new() -> PostPostPost {
-        PostPostPost {
-            title: None,
-            body: None,
-            preferred_formatting: None,
-            user_id: None,
-            parent_id: None,
-            parent_type: None,
+impl MessagesIdGet200Response {
+    pub fn new() -> MessagesIdGet200Response {
+        MessagesIdGet200Response {
+            reply_to_user: None,
+            thread_id: None,
+            flaggable_message_id: None,
+            results: None,
         }
     }
 }

@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **name** | Option<**String**> |  | [optional]
 **preferred_common_name** | Option<**String**> |  | [optional]
 **rank** | Option<**String**> |  | [optional]
-**rank_level** | Option<**f32**> |  | [optional]
+**rank_level** | Option<**f64**> |  | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

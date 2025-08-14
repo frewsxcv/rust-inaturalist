@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **admin_level** | Option<**i32**> |  | [optional]
 **ancestor_place_ids** | Option<**Vec<i32>**> |  | [optional]
 **bbox_area** | Option<**f64**> |  | [optional]
-**geometry_geojson** | Option<[**crate::models::PolygonGeoJson**](PolygonGeoJson.md)> |  | [optional]
+**geometry_geojson** | Option<[**models::PolygonGeoJson**](PolygonGeoJson.md)> |  | [optional]
 **location** | Option<**String**> | in the format \"lat,lng\" | [optional]
 **place_type** | Option<**i32**> |  | [optional]
 

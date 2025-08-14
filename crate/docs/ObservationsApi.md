@@ -13,11 +13,11 @@ Method | HTTP request | Description
 [**observations_id_put**](ObservationsApi.md#observations_id_put) | **PUT** /observations/{id} | Observation Update
 [**observations_id_quality_metric_delete**](ObservationsApi.md#observations_id_quality_metric_delete) | **DELETE** /observations/{id}/quality/{metric} | Quality Metric Delete
 [**observations_id_quality_metric_post**](ObservationsApi.md#observations_id_quality_metric_post) | **POST** /observations/{id}/quality/{metric} | Quality Metric Set
+[**observations_id_review_delete**](ObservationsApi.md#observations_id_review_delete) | **DELETE** /observations/{id}/review | Observations Unreview
 [**observations_id_review_post**](ObservationsApi.md#observations_id_review_post) | **POST** /observations/{id}/review | Observations Review
 [**observations_id_subscriptions_get**](ObservationsApi.md#observations_id_subscriptions_get) | **GET** /observations/{id}/subscriptions | Observation Subscriptions
 [**observations_id_taxon_summary_get**](ObservationsApi.md#observations_id_taxon_summary_get) | **GET** /observations/{id}/taxon_summary | Observation Taxon Summary
 [**observations_id_unfave_delete**](ObservationsApi.md#observations_id_unfave_delete) | **DELETE** /observations/{id}/unfave | Observations Unfave
-[**observations_id_unreview_post**](ObservationsApi.md#observations_id_unreview_post) | **POST** /observations/{id}/unreview | Observations Unreview
 [**observations_id_viewed_updates_put**](ObservationsApi.md#observations_id_viewed_updates_put) | **PUT** /observations/{id}/viewed_updates | Observation Field Value Update
 [**observations_identifiers_get**](ObservationsApi.md#observations_identifiers_get) | **GET** /observations/identifiers | Observation Identifiers
 [**observations_observers_get**](ObservationsApi.md#observations_observers_get) | **GET** /observations/observers | Observation Observers
@@ -63,7 +63,7 @@ Name | Type | Description  | Required | Notes
 
 ## observations_get
 
-> crate::models::ObservationsResponse observations_get(acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, day, month, year, term_id, term_value_id, without_term_id, without_term_value_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, q, search_on, quality_grade, updated_since, viewer_id, reviewed, locale, preferred_place_id, ttl, page, per_page, order, order_by, only_id)
+> models::ObservationsResponse observations_get(acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, expected_nearby, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, hour, day, month, year, created_day, created_month, created_year, term_id, term_value_id, without_term_id, without_term_value_id, term_id_or_unknown, annotation_user_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, obscuration, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, observation_accuracy_experiment_id, q, search_on, quality_grade, updated_since, viewer_id, reviewed, locale, preferred_place_id, ttl, page, per_page, order, order_by, only_id)
 Observation Search
 
 Given zero to many of following parameters, returns observations matching the search criteria. The large size of the observations index prevents us from supporting the `page` parameter when retrieving records from large result sets. If you need to retrieve large numbers of records, use the `per_page` and `id_above` or `id_below` parameters instead. 
@@ -92,6 +92,7 @@ Name | Type | Description  | Required | Notes
 **verifiable** | Option<**bool**> | Observations with a `quality_grade` of either `needs_id` or `research`. Equivalent to `quality_grade=needs_id,research`  |  |
 **licensed** | Option<**bool**> | License attribute of an observation must not be null |  |
 **photo_licensed** | Option<**bool**> | License attribute of at least one photo of an observation must not be null |  |
+**expected_nearby** | Option<**bool**> | Observation taxon is expected nearby |  |
 **id** | Option<[**Vec<String>**](String.md)> | Must have this ID |  |
 **not_id** | Option<[**Vec<String>**](String.md)> | Must not have this ID |  |
 **license** | Option<[**Vec<String>**](String.md)> | Observation must have this license |  |
@@ -108,13 +109,19 @@ Name | Type | Description  | Required | Notes
 **user_id** | Option<[**Vec<String>**](String.md)> | User must have this ID or login |  |
 **user_login** | Option<[**Vec<String>**](String.md)> | User must have this login |  |
 **ident_user_id** | Option<**i32**> | Observations identified by a particular user |  |
+**hour** | Option<[**Vec<String>**](String.md)> | Must be observed within this hour of the day |  |
 **day** | Option<[**Vec<String>**](String.md)> | Must be observed within this day of the month |  |
 **month** | Option<[**Vec<String>**](String.md)> | Must be observed within this month |  |
 **year** | Option<[**Vec<String>**](String.md)> | Must be observed within this year |  |
+**created_day** | Option<[**Vec<String>**](String.md)> | Must be created within this day of the month |  |
+**created_month** | Option<[**Vec<String>**](String.md)> | Must be created within this month |  |
+**created_year** | Option<[**Vec<String>**](String.md)> | Must be created within this year |  |
 **term_id** | Option<[**Vec<i32>**](i32.md)> | Must have an annotation using this controlled term ID |  |
 **term_value_id** | Option<[**Vec<i32>**](i32.md)> | Must have an annotation using this controlled value ID. Must be combined with the `term_id` parameter  |  |
 **without_term_id** | Option<**i32**> | Exclude observations with annotations using this controlled value ID.  |  |
 **without_term_value_id** | Option<[**Vec<i32>**](i32.md)> | Exclude observations with annotations using this controlled value ID. Must be combined with the `term_id` parameter  |  |
+**term_id_or_unknown** | Option<[**Vec<i32>**](i32.md)> | Must be combined with the `term_value_id` or the `without_term_value_id` parameter. Must have an annotation using this controlled term ID and associated term value IDs or be missing this annotation.  |  |
+**annotation_user_id** | Option<[**Vec<String>**](String.md)> | Must have an annotation created by this user  |  |
 **acc_above** | Option<**String**> | Must have a positional accuracy above this value (meters) |  |
 **acc_below** | Option<**String**> | Must have a positional accuracy below this value (meters) |  |
 **acc_below_or_unknown** | Option<**String**> | Positional accuracy must be below this value (in meters) or be unknown |  |
@@ -131,6 +138,7 @@ Name | Type | Description  | Required | Notes
 **csi** | Option<[**Vec<String>**](String.md)> | Taxon must have this IUCN conservation status. If the `place_id` parameter is also specified, this will only consider statuses specific to that place  |  |
 **geoprivacy** | Option<[**Vec<String>**](String.md)> | Must have this geoprivacy setting |  |
 **taxon_geoprivacy** | Option<[**Vec<String>**](String.md)> | Filter observations by the most conservative geoprivacy applied by a conservation status associated with one of the taxa proposed in the current identifications.  |  |
+**obscuration** | Option<[**Vec<String>**](String.md)> | Must have `geoprivacy` or `taxon_geoprivacy` fields matching these values  |  |
 **hrank** | Option<**String**> | Taxon must have this rank or lower |  |
 **lrank** | Option<**String**> | Taxon must have this rank or higher |  |
 **iconic_taxa** | Option<[**Vec<String>**](String.md)> | Taxon must by within this iconic taxon |  |
@@ -147,6 +155,7 @@ Name | Type | Description  | Required | Notes
 **list_id** | Option<**i32**> | Taxon must be in the list with this ID |  |
 **not_in_project** | Option<**String**> | Must not be in the project with this ID or slug |  |
 **not_matching_project_rules_for** | Option<**String**> | Must not match the rules of the project with this ID or slug |  |
+**observation_accuracy_experiment_id** | Option<[**Vec<i32>**](i32.md)> | Must included in this observation accuracy experiment |  |
 **q** | Option<**String**> | Search observation properties. Can be combined with `search_on` |  |
 **search_on** | Option<**String**> | Properties to search on, when combined with `q`. Searches across all properties by default  |  |
 **quality_grade** | Option<**String**> | Must have this quality grade |  |
@@ -164,7 +173,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::ObservationsResponse**](ObservationsResponse.md)
+[**models::ObservationsResponse**](ObservationsResponse.md)
 
 ### Authorization
 
@@ -180,7 +189,7 @@ No authorization required
 
 ## observations_histogram_get
 
-> observations_histogram_get(acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, day, month, year, term_id, term_value_id, without_term_id, without_term_value_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, q, search_on, quality_grade, updated_since, viewer_id, reviewed, locale, preferred_place_id, ttl, date_field, interval)
+> observations_histogram_get(acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, expected_nearby, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, hour, day, month, year, created_day, created_month, created_year, term_id, term_value_id, without_term_id, without_term_value_id, term_id_or_unknown, annotation_user_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, obscuration, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, observation_accuracy_experiment_id, q, search_on, quality_grade, updated_since, viewer_id, reviewed, locale, preferred_place_id, ttl, date_field, interval)
 Observation Histogram
 
 Given zero to many of following parameters, returns histogram data about observations matching the search criteria 
@@ -209,6 +218,7 @@ Name | Type | Description  | Required | Notes
 **verifiable** | Option<**bool**> | Observations with a `quality_grade` of either `needs_id` or `research`. Equivalent to `quality_grade=needs_id,research`  |  |
 **licensed** | Option<**bool**> | License attribute of an observation must not be null |  |
 **photo_licensed** | Option<**bool**> | License attribute of at least one photo of an observation must not be null |  |
+**expected_nearby** | Option<**bool**> | Observation taxon is expected nearby |  |
 **id** | Option<[**Vec<String>**](String.md)> | Must have this ID |  |
 **not_id** | Option<[**Vec<String>**](String.md)> | Must not have this ID |  |
 **license** | Option<[**Vec<String>**](String.md)> | Observation must have this license |  |
@@ -225,13 +235,19 @@ Name | Type | Description  | Required | Notes
 **user_id** | Option<[**Vec<String>**](String.md)> | User must have this ID or login |  |
 **user_login** | Option<[**Vec<String>**](String.md)> | User must have this login |  |
 **ident_user_id** | Option<**i32**> | Observations identified by a particular user |  |
+**hour** | Option<[**Vec<String>**](String.md)> | Must be observed within this hour of the day |  |
 **day** | Option<[**Vec<String>**](String.md)> | Must be observed within this day of the month |  |
 **month** | Option<[**Vec<String>**](String.md)> | Must be observed within this month |  |
 **year** | Option<[**Vec<String>**](String.md)> | Must be observed within this year |  |
+**created_day** | Option<[**Vec<String>**](String.md)> | Must be created within this day of the month |  |
+**created_month** | Option<[**Vec<String>**](String.md)> | Must be created within this month |  |
+**created_year** | Option<[**Vec<String>**](String.md)> | Must be created within this year |  |
 **term_id** | Option<[**Vec<i32>**](i32.md)> | Must have an annotation using this controlled term ID |  |
 **term_value_id** | Option<[**Vec<i32>**](i32.md)> | Must have an annotation using this controlled value ID. Must be combined with the `term_id` parameter  |  |
 **without_term_id** | Option<**i32**> | Exclude observations with annotations using this controlled value ID.  |  |
 **without_term_value_id** | Option<[**Vec<i32>**](i32.md)> | Exclude observations with annotations using this controlled value ID. Must be combined with the `term_id` parameter  |  |
+**term_id_or_unknown** | Option<[**Vec<i32>**](i32.md)> | Must be combined with the `term_value_id` or the `without_term_value_id` parameter. Must have an annotation using this controlled term ID and associated term value IDs or be missing this annotation.  |  |
+**annotation_user_id** | Option<[**Vec<String>**](String.md)> | Must have an annotation created by this user  |  |
 **acc_above** | Option<**String**> | Must have a positional accuracy above this value (meters) |  |
 **acc_below** | Option<**String**> | Must have a positional accuracy below this value (meters) |  |
 **acc_below_or_unknown** | Option<**String**> | Positional accuracy must be below this value (in meters) or be unknown |  |
@@ -248,6 +264,7 @@ Name | Type | Description  | Required | Notes
 **csi** | Option<[**Vec<String>**](String.md)> | Taxon must have this IUCN conservation status. If the `place_id` parameter is also specified, this will only consider statuses specific to that place  |  |
 **geoprivacy** | Option<[**Vec<String>**](String.md)> | Must have this geoprivacy setting |  |
 **taxon_geoprivacy** | Option<[**Vec<String>**](String.md)> | Filter observations by the most conservative geoprivacy applied by a conservation status associated with one of the taxa proposed in the current identifications.  |  |
+**obscuration** | Option<[**Vec<String>**](String.md)> | Must have `geoprivacy` or `taxon_geoprivacy` fields matching these values  |  |
 **hrank** | Option<**String**> | Taxon must have this rank or lower |  |
 **lrank** | Option<**String**> | Taxon must have this rank or higher |  |
 **iconic_taxa** | Option<[**Vec<String>**](String.md)> | Taxon must by within this iconic taxon |  |
@@ -264,6 +281,7 @@ Name | Type | Description  | Required | Notes
 **list_id** | Option<**i32**> | Taxon must be in the list with this ID |  |
 **not_in_project** | Option<**String**> | Must not be in the project with this ID or slug |  |
 **not_matching_project_rules_for** | Option<**String**> | Must not match the rules of the project with this ID or slug |  |
+**observation_accuracy_experiment_id** | Option<[**Vec<i32>**](i32.md)> | Must included in this observation accuracy experiment |  |
 **q** | Option<**String**> | Search observation properties. Can be combined with `search_on` |  |
 **search_on** | Option<**String**> | Properties to search on, when combined with `q`. Searches across all properties by default  |  |
 **quality_grade** | Option<**String**> | Must have this quality grade |  |
@@ -354,7 +372,7 @@ Name | Type | Description  | Required | Notes
 
 ## observations_id_get
 
-> crate::models::ObservationsShowResponse observations_id_get(id)
+> models::ObservationsShowResponse observations_id_get(id)
 Observation Details
 
 Given an ID, or an array of IDs in comma-delimited format, returns corresponding observations. A maximum of 200 results will be returned 
@@ -368,7 +386,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::ObservationsShowResponse**](ObservationsShowResponse.md)
+[**models::ObservationsShowResponse**](ObservationsShowResponse.md)
 
 ### Authorization
 
@@ -459,6 +477,36 @@ Name | Type | Description  | Required | Notes
 **id** | **i32** | ID of the record | [required] |
 **metric** | **String** | Data quality category | [required] |
 **body** | Option<[**PostQuality**](PostQuality.md)> | Quality object |  |
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[api_token](../README.md#api_token)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## observations_id_review_delete
+
+> observations_id_review_delete(id)
+Observations Unreview
+
+Unreview an observation 
+
+### Parameters
+
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**id** | **i32** | ID of the record | [required] |
 
 ### Return type
 
@@ -596,36 +644,6 @@ Name | Type | Description  | Required | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 
-## observations_id_unreview_post
-
-> observations_id_unreview_post(id)
-Observations Unreview
-
-Unreview an observation 
-
-### Parameters
-
-
-Name | Type | Description  | Required | Notes
-------------- | ------------- | ------------- | ------------- | -------------
-**id** | **i32** | ID of the record | [required] |
-
-### Return type
-
- (empty response body)
-
-### Authorization
-
-[api_token](../README.md#api_token)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: Not defined
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-
 ## observations_id_viewed_updates_put
 
 > observations_id_viewed_updates_put(id)
@@ -658,7 +676,7 @@ Name | Type | Description  | Required | Notes
 
 ## observations_identifiers_get
 
-> crate::models::UserCountsResponse observations_identifiers_get(acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, day, month, year, term_id, term_value_id, without_term_id, without_term_value_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, q, search_on, quality_grade, updated_since, viewer_id, reviewed, locale, preferred_place_id, ttl)
+> models::UserCountsResponse observations_identifiers_get(acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, expected_nearby, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, hour, day, month, year, created_day, created_month, created_year, term_id, term_value_id, without_term_id, without_term_value_id, term_id_or_unknown, annotation_user_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, obscuration, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, observation_accuracy_experiment_id, q, search_on, quality_grade, updated_since, viewer_id, reviewed, locale, preferred_place_id, ttl)
 Observation Identifiers
 
 Given zero to many of following parameters, returns identifiers of observations matching the search criteria and the count of observations they have identified, ordered by count descending. A maximum of 500 results will be returned 
@@ -687,6 +705,7 @@ Name | Type | Description  | Required | Notes
 **verifiable** | Option<**bool**> | Observations with a `quality_grade` of either `needs_id` or `research`. Equivalent to `quality_grade=needs_id,research`  |  |
 **licensed** | Option<**bool**> | License attribute of an observation must not be null |  |
 **photo_licensed** | Option<**bool**> | License attribute of at least one photo of an observation must not be null |  |
+**expected_nearby** | Option<**bool**> | Observation taxon is expected nearby |  |
 **id** | Option<[**Vec<String>**](String.md)> | Must have this ID |  |
 **not_id** | Option<[**Vec<String>**](String.md)> | Must not have this ID |  |
 **license** | Option<[**Vec<String>**](String.md)> | Observation must have this license |  |
@@ -703,13 +722,19 @@ Name | Type | Description  | Required | Notes
 **user_id** | Option<[**Vec<String>**](String.md)> | User must have this ID or login |  |
 **user_login** | Option<[**Vec<String>**](String.md)> | User must have this login |  |
 **ident_user_id** | Option<**i32**> | Observations identified by a particular user |  |
+**hour** | Option<[**Vec<String>**](String.md)> | Must be observed within this hour of the day |  |
 **day** | Option<[**Vec<String>**](String.md)> | Must be observed within this day of the month |  |
 **month** | Option<[**Vec<String>**](String.md)> | Must be observed within this month |  |
 **year** | Option<[**Vec<String>**](String.md)> | Must be observed within this year |  |
+**created_day** | Option<[**Vec<String>**](String.md)> | Must be created within this day of the month |  |
+**created_month** | Option<[**Vec<String>**](String.md)> | Must be created within this month |  |
+**created_year** | Option<[**Vec<String>**](String.md)> | Must be created within this year |  |
 **term_id** | Option<[**Vec<i32>**](i32.md)> | Must have an annotation using this controlled term ID |  |
 **term_value_id** | Option<[**Vec<i32>**](i32.md)> | Must have an annotation using this controlled value ID. Must be combined with the `term_id` parameter  |  |
 **without_term_id** | Option<**i32**> | Exclude observations with annotations using this controlled value ID.  |  |
 **without_term_value_id** | Option<[**Vec<i32>**](i32.md)> | Exclude observations with annotations using this controlled value ID. Must be combined with the `term_id` parameter  |  |
+**term_id_or_unknown** | Option<[**Vec<i32>**](i32.md)> | Must be combined with the `term_value_id` or the `without_term_value_id` parameter. Must have an annotation using this controlled term ID and associated term value IDs or be missing this annotation.  |  |
+**annotation_user_id** | Option<[**Vec<String>**](String.md)> | Must have an annotation created by this user  |  |
 **acc_above** | Option<**String**> | Must have a positional accuracy above this value (meters) |  |
 **acc_below** | Option<**String**> | Must have a positional accuracy below this value (meters) |  |
 **acc_below_or_unknown** | Option<**String**> | Positional accuracy must be below this value (in meters) or be unknown |  |
@@ -726,6 +751,7 @@ Name | Type | Description  | Required | Notes
 **csi** | Option<[**Vec<String>**](String.md)> | Taxon must have this IUCN conservation status. If the `place_id` parameter is also specified, this will only consider statuses specific to that place  |  |
 **geoprivacy** | Option<[**Vec<String>**](String.md)> | Must have this geoprivacy setting |  |
 **taxon_geoprivacy** | Option<[**Vec<String>**](String.md)> | Filter observations by the most conservative geoprivacy applied by a conservation status associated with one of the taxa proposed in the current identifications.  |  |
+**obscuration** | Option<[**Vec<String>**](String.md)> | Must have `geoprivacy` or `taxon_geoprivacy` fields matching these values  |  |
 **hrank** | Option<**String**> | Taxon must have this rank or lower |  |
 **lrank** | Option<**String**> | Taxon must have this rank or higher |  |
 **iconic_taxa** | Option<[**Vec<String>**](String.md)> | Taxon must by within this iconic taxon |  |
@@ -742,6 +768,7 @@ Name | Type | Description  | Required | Notes
 **list_id** | Option<**i32**> | Taxon must be in the list with this ID |  |
 **not_in_project** | Option<**String**> | Must not be in the project with this ID or slug |  |
 **not_matching_project_rules_for** | Option<**String**> | Must not match the rules of the project with this ID or slug |  |
+**observation_accuracy_experiment_id** | Option<[**Vec<i32>**](i32.md)> | Must included in this observation accuracy experiment |  |
 **q** | Option<**String**> | Search observation properties. Can be combined with `search_on` |  |
 **search_on** | Option<**String**> | Properties to search on, when combined with `q`. Searches across all properties by default  |  |
 **quality_grade** | Option<**String**> | Must have this quality grade |  |
@@ -754,7 +781,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::UserCountsResponse**](UserCountsResponse.md)
+[**models::UserCountsResponse**](UserCountsResponse.md)
 
 ### Authorization
 
@@ -770,7 +797,7 @@ No authorization required
 
 ## observations_observers_get
 
-> crate::models::ObservationsObserversResponse observations_observers_get(acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, day, month, year, term_id, term_value_id, without_term_id, without_term_value_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, q, search_on, quality_grade, updated_since, viewer_id, reviewed, locale, preferred_place_id, ttl)
+> models::ObservationsObserversResponse observations_observers_get(acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, expected_nearby, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, hour, day, month, year, created_day, created_month, created_year, term_id, term_value_id, without_term_id, without_term_value_id, term_id_or_unknown, annotation_user_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, obscuration, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, observation_accuracy_experiment_id, q, search_on, quality_grade, updated_since, viewer_id, reviewed, locale, preferred_place_id, ttl)
 Observation Observers
 
 Given zero to many of following parameters, returns observers of observations matching the search criteria and the count of observations and distinct taxa of rank `species` they have observed. A maximum of 500 results will be returned 
@@ -799,6 +826,7 @@ Name | Type | Description  | Required | Notes
 **verifiable** | Option<**bool**> | Observations with a `quality_grade` of either `needs_id` or `research`. Equivalent to `quality_grade=needs_id,research`  |  |
 **licensed** | Option<**bool**> | License attribute of an observation must not be null |  |
 **photo_licensed** | Option<**bool**> | License attribute of at least one photo of an observation must not be null |  |
+**expected_nearby** | Option<**bool**> | Observation taxon is expected nearby |  |
 **id** | Option<[**Vec<String>**](String.md)> | Must have this ID |  |
 **not_id** | Option<[**Vec<String>**](String.md)> | Must not have this ID |  |
 **license** | Option<[**Vec<String>**](String.md)> | Observation must have this license |  |
@@ -815,13 +843,19 @@ Name | Type | Description  | Required | Notes
 **user_id** | Option<[**Vec<String>**](String.md)> | User must have this ID or login |  |
 **user_login** | Option<[**Vec<String>**](String.md)> | User must have this login |  |
 **ident_user_id** | Option<**i32**> | Observations identified by a particular user |  |
+**hour** | Option<[**Vec<String>**](String.md)> | Must be observed within this hour of the day |  |
 **day** | Option<[**Vec<String>**](String.md)> | Must be observed within this day of the month |  |
 **month** | Option<[**Vec<String>**](String.md)> | Must be observed within this month |  |
 **year** | Option<[**Vec<String>**](String.md)> | Must be observed within this year |  |
+**created_day** | Option<[**Vec<String>**](String.md)> | Must be created within this day of the month |  |
+**created_month** | Option<[**Vec<String>**](String.md)> | Must be created within this month |  |
+**created_year** | Option<[**Vec<String>**](String.md)> | Must be created within this year |  |
 **term_id** | Option<[**Vec<i32>**](i32.md)> | Must have an annotation using this controlled term ID |  |
 **term_value_id** | Option<[**Vec<i32>**](i32.md)> | Must have an annotation using this controlled value ID. Must be combined with the `term_id` parameter  |  |
 **without_term_id** | Option<**i32**> | Exclude observations with annotations using this controlled value ID.  |  |
 **without_term_value_id** | Option<[**Vec<i32>**](i32.md)> | Exclude observations with annotations using this controlled value ID. Must be combined with the `term_id` parameter  |  |
+**term_id_or_unknown** | Option<[**Vec<i32>**](i32.md)> | Must be combined with the `term_value_id` or the `without_term_value_id` parameter. Must have an annotation using this controlled term ID and associated term value IDs or be missing this annotation.  |  |
+**annotation_user_id** | Option<[**Vec<String>**](String.md)> | Must have an annotation created by this user  |  |
 **acc_above** | Option<**String**> | Must have a positional accuracy above this value (meters) |  |
 **acc_below** | Option<**String**> | Must have a positional accuracy below this value (meters) |  |
 **acc_below_or_unknown** | Option<**String**> | Positional accuracy must be below this value (in meters) or be unknown |  |
@@ -838,6 +872,7 @@ Name | Type | Description  | Required | Notes
 **csi** | Option<[**Vec<String>**](String.md)> | Taxon must have this IUCN conservation status. If the `place_id` parameter is also specified, this will only consider statuses specific to that place  |  |
 **geoprivacy** | Option<[**Vec<String>**](String.md)> | Must have this geoprivacy setting |  |
 **taxon_geoprivacy** | Option<[**Vec<String>**](String.md)> | Filter observations by the most conservative geoprivacy applied by a conservation status associated with one of the taxa proposed in the current identifications.  |  |
+**obscuration** | Option<[**Vec<String>**](String.md)> | Must have `geoprivacy` or `taxon_geoprivacy` fields matching these values  |  |
 **hrank** | Option<**String**> | Taxon must have this rank or lower |  |
 **lrank** | Option<**String**> | Taxon must have this rank or higher |  |
 **iconic_taxa** | Option<[**Vec<String>**](String.md)> | Taxon must by within this iconic taxon |  |
@@ -854,6 +889,7 @@ Name | Type | Description  | Required | Notes
 **list_id** | Option<**i32**> | Taxon must be in the list with this ID |  |
 **not_in_project** | Option<**String**> | Must not be in the project with this ID or slug |  |
 **not_matching_project_rules_for** | Option<**String**> | Must not match the rules of the project with this ID or slug |  |
+**observation_accuracy_experiment_id** | Option<[**Vec<i32>**](i32.md)> | Must included in this observation accuracy experiment |  |
 **q** | Option<**String**> | Search observation properties. Can be combined with `search_on` |  |
 **search_on** | Option<**String**> | Properties to search on, when combined with `q`. Searches across all properties by default  |  |
 **quality_grade** | Option<**String**> | Must have this quality grade |  |
@@ -866,7 +902,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::ObservationsObserversResponse**](ObservationsObserversResponse.md)
+[**models::ObservationsObserversResponse**](ObservationsObserversResponse.md)
 
 ### Authorization
 
@@ -882,7 +918,7 @@ No authorization required
 
 ## observations_popular_field_values_get
 
-> observations_popular_field_values_get(acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, day, month, year, term_id, term_value_id, without_term_id, without_term_value_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, q, search_on, quality_grade, updated_since, viewer_id, reviewed, locale, preferred_place_id, ttl)
+> observations_popular_field_values_get(acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, expected_nearby, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, hour, day, month, year, created_day, created_month, created_year, term_id, term_value_id, without_term_id, without_term_value_id, term_id_or_unknown, annotation_user_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, obscuration, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, observation_accuracy_experiment_id, q, search_on, quality_grade, updated_since, viewer_id, reviewed, locale, preferred_place_id, ttl)
 Observation Popular Field Values
 
 Given zero to many of following parameters, returns an array of relevant controlled terms values and a monthly histogram 
@@ -911,6 +947,7 @@ Name | Type | Description  | Required | Notes
 **verifiable** | Option<**bool**> | Observations with a `quality_grade` of either `needs_id` or `research`. Equivalent to `quality_grade=needs_id,research`  |  |
 **licensed** | Option<**bool**> | License attribute of an observation must not be null |  |
 **photo_licensed** | Option<**bool**> | License attribute of at least one photo of an observation must not be null |  |
+**expected_nearby** | Option<**bool**> | Observation taxon is expected nearby |  |
 **id** | Option<[**Vec<String>**](String.md)> | Must have this ID |  |
 **not_id** | Option<[**Vec<String>**](String.md)> | Must not have this ID |  |
 **license** | Option<[**Vec<String>**](String.md)> | Observation must have this license |  |
@@ -927,13 +964,19 @@ Name | Type | Description  | Required | Notes
 **user_id** | Option<[**Vec<String>**](String.md)> | User must have this ID or login |  |
 **user_login** | Option<[**Vec<String>**](String.md)> | User must have this login |  |
 **ident_user_id** | Option<**i32**> | Observations identified by a particular user |  |
+**hour** | Option<[**Vec<String>**](String.md)> | Must be observed within this hour of the day |  |
 **day** | Option<[**Vec<String>**](String.md)> | Must be observed within this day of the month |  |
 **month** | Option<[**Vec<String>**](String.md)> | Must be observed within this month |  |
 **year** | Option<[**Vec<String>**](String.md)> | Must be observed within this year |  |
+**created_day** | Option<[**Vec<String>**](String.md)> | Must be created within this day of the month |  |
+**created_month** | Option<[**Vec<String>**](String.md)> | Must be created within this month |  |
+**created_year** | Option<[**Vec<String>**](String.md)> | Must be created within this year |  |
 **term_id** | Option<[**Vec<i32>**](i32.md)> | Must have an annotation using this controlled term ID |  |
 **term_value_id** | Option<[**Vec<i32>**](i32.md)> | Must have an annotation using this controlled value ID. Must be combined with the `term_id` parameter  |  |
 **without_term_id** | Option<**i32**> | Exclude observations with annotations using this controlled value ID.  |  |
 **without_term_value_id** | Option<[**Vec<i32>**](i32.md)> | Exclude observations with annotations using this controlled value ID. Must be combined with the `term_id` parameter  |  |
+**term_id_or_unknown** | Option<[**Vec<i32>**](i32.md)> | Must be combined with the `term_value_id` or the `without_term_value_id` parameter. Must have an annotation using this controlled term ID and associated term value IDs or be missing this annotation.  |  |
+**annotation_user_id** | Option<[**Vec<String>**](String.md)> | Must have an annotation created by this user  |  |
 **acc_above** | Option<**String**> | Must have a positional accuracy above this value (meters) |  |
 **acc_below** | Option<**String**> | Must have a positional accuracy below this value (meters) |  |
 **acc_below_or_unknown** | Option<**String**> | Positional accuracy must be below this value (in meters) or be unknown |  |
@@ -950,6 +993,7 @@ Name | Type | Description  | Required | Notes
 **csi** | Option<[**Vec<String>**](String.md)> | Taxon must have this IUCN conservation status. If the `place_id` parameter is also specified, this will only consider statuses specific to that place  |  |
 **geoprivacy** | Option<[**Vec<String>**](String.md)> | Must have this geoprivacy setting |  |
 **taxon_geoprivacy** | Option<[**Vec<String>**](String.md)> | Filter observations by the most conservative geoprivacy applied by a conservation status associated with one of the taxa proposed in the current identifications.  |  |
+**obscuration** | Option<[**Vec<String>**](String.md)> | Must have `geoprivacy` or `taxon_geoprivacy` fields matching these values  |  |
 **hrank** | Option<**String**> | Taxon must have this rank or lower |  |
 **lrank** | Option<**String**> | Taxon must have this rank or higher |  |
 **iconic_taxa** | Option<[**Vec<String>**](String.md)> | Taxon must by within this iconic taxon |  |
@@ -966,6 +1010,7 @@ Name | Type | Description  | Required | Notes
 **list_id** | Option<**i32**> | Taxon must be in the list with this ID |  |
 **not_in_project** | Option<**String**> | Must not be in the project with this ID or slug |  |
 **not_matching_project_rules_for** | Option<**String**> | Must not match the rules of the project with this ID or slug |  |
+**observation_accuracy_experiment_id** | Option<[**Vec<i32>**](i32.md)> | Must included in this observation accuracy experiment |  |
 **q** | Option<**String**> | Search observation properties. Can be combined with `search_on` |  |
 **search_on** | Option<**String**> | Properties to search on, when combined with `q`. Searches across all properties by default  |  |
 **quality_grade** | Option<**String**> | Must have this quality grade |  |
@@ -1024,7 +1069,7 @@ Name | Type | Description  | Required | Notes
 
 ## observations_species_counts_get
 
-> crate::models::SpeciesCountsResponse observations_species_counts_get(acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, day, month, year, term_id, term_value_id, without_term_id, without_term_value_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, q, search_on, quality_grade, updated_since, viewer_id, reviewed, locale, preferred_place_id, ttl)
+> models::SpeciesCountsResponse observations_species_counts_get(acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, expected_nearby, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, hour, day, month, year, created_day, created_month, created_year, term_id, term_value_id, without_term_id, without_term_value_id, term_id_or_unknown, annotation_user_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, obscuration, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, observation_accuracy_experiment_id, q, search_on, quality_grade, updated_since, viewer_id, reviewed, locale, preferred_place_id, ttl, include_ancestors, page, per_page)
 Observation Species Counts
 
 Given zero to many of following parameters, returns `leaf taxa` associated with observations matching the search criteria and the count of observations they are associated with, ordered by count descending. `Leaf taxa` are the leaves of the taxonomic tree containing only the taxa associated with observations matching the search criteria. 
@@ -1053,6 +1098,7 @@ Name | Type | Description  | Required | Notes
 **verifiable** | Option<**bool**> | Observations with a `quality_grade` of either `needs_id` or `research`. Equivalent to `quality_grade=needs_id,research`  |  |
 **licensed** | Option<**bool**> | License attribute of an observation must not be null |  |
 **photo_licensed** | Option<**bool**> | License attribute of at least one photo of an observation must not be null |  |
+**expected_nearby** | Option<**bool**> | Observation taxon is expected nearby |  |
 **id** | Option<[**Vec<String>**](String.md)> | Must have this ID |  |
 **not_id** | Option<[**Vec<String>**](String.md)> | Must not have this ID |  |
 **license** | Option<[**Vec<String>**](String.md)> | Observation must have this license |  |
@@ -1069,13 +1115,19 @@ Name | Type | Description  | Required | Notes
 **user_id** | Option<[**Vec<String>**](String.md)> | User must have this ID or login |  |
 **user_login** | Option<[**Vec<String>**](String.md)> | User must have this login |  |
 **ident_user_id** | Option<**i32**> | Observations identified by a particular user |  |
+**hour** | Option<[**Vec<String>**](String.md)> | Must be observed within this hour of the day |  |
 **day** | Option<[**Vec<String>**](String.md)> | Must be observed within this day of the month |  |
 **month** | Option<[**Vec<String>**](String.md)> | Must be observed within this month |  |
 **year** | Option<[**Vec<String>**](String.md)> | Must be observed within this year |  |
+**created_day** | Option<[**Vec<String>**](String.md)> | Must be created within this day of the month |  |
+**created_month** | Option<[**Vec<String>**](String.md)> | Must be created within this month |  |
+**created_year** | Option<[**Vec<String>**](String.md)> | Must be created within this year |  |
 **term_id** | Option<[**Vec<i32>**](i32.md)> | Must have an annotation using this controlled term ID |  |
 **term_value_id** | Option<[**Vec<i32>**](i32.md)> | Must have an annotation using this controlled value ID. Must be combined with the `term_id` parameter  |  |
 **without_term_id** | Option<**i32**> | Exclude observations with annotations using this controlled value ID.  |  |
 **without_term_value_id** | Option<[**Vec<i32>**](i32.md)> | Exclude observations with annotations using this controlled value ID. Must be combined with the `term_id` parameter  |  |
+**term_id_or_unknown** | Option<[**Vec<i32>**](i32.md)> | Must be combined with the `term_value_id` or the `without_term_value_id` parameter. Must have an annotation using this controlled term ID and associated term value IDs or be missing this annotation.  |  |
+**annotation_user_id** | Option<[**Vec<String>**](String.md)> | Must have an annotation created by this user  |  |
 **acc_above** | Option<**String**> | Must have a positional accuracy above this value (meters) |  |
 **acc_below** | Option<**String**> | Must have a positional accuracy below this value (meters) |  |
 **acc_below_or_unknown** | Option<**String**> | Positional accuracy must be below this value (in meters) or be unknown |  |
@@ -1092,6 +1144,7 @@ Name | Type | Description  | Required | Notes
 **csi** | Option<[**Vec<String>**](String.md)> | Taxon must have this IUCN conservation status. If the `place_id` parameter is also specified, this will only consider statuses specific to that place  |  |
 **geoprivacy** | Option<[**Vec<String>**](String.md)> | Must have this geoprivacy setting |  |
 **taxon_geoprivacy** | Option<[**Vec<String>**](String.md)> | Filter observations by the most conservative geoprivacy applied by a conservation status associated with one of the taxa proposed in the current identifications.  |  |
+**obscuration** | Option<[**Vec<String>**](String.md)> | Must have `geoprivacy` or `taxon_geoprivacy` fields matching these values  |  |
 **hrank** | Option<**String**> | Taxon must have this rank or lower |  |
 **lrank** | Option<**String**> | Taxon must have this rank or higher |  |
 **iconic_taxa** | Option<[**Vec<String>**](String.md)> | Taxon must by within this iconic taxon |  |
@@ -1108,6 +1161,7 @@ Name | Type | Description  | Required | Notes
 **list_id** | Option<**i32**> | Taxon must be in the list with this ID |  |
 **not_in_project** | Option<**String**> | Must not be in the project with this ID or slug |  |
 **not_matching_project_rules_for** | Option<**String**> | Must not match the rules of the project with this ID or slug |  |
+**observation_accuracy_experiment_id** | Option<[**Vec<i32>**](i32.md)> | Must included in this observation accuracy experiment |  |
 **q** | Option<**String**> | Search observation properties. Can be combined with `search_on` |  |
 **search_on** | Option<**String**> | Properties to search on, when combined with `q`. Searches across all properties by default  |  |
 **quality_grade** | Option<**String**> | Must have this quality grade |  |
@@ -1117,10 +1171,13 @@ Name | Type | Description  | Required | Notes
 **locale** | Option<**String**> | Locale preference for taxon common names  |  |
 **preferred_place_id** | Option<**i32**> | Place preference for regional taxon common names  |  |
 **ttl** | Option<**String**> | Set the `Cache-Control` HTTP header with this value as `max-age`, in seconds. This means subsequent identical requests will be cached on iNaturalist servers, and commonly within web browsers  |  |
+**include_ancestors** | Option<**bool**> | Include taxon ancestors in the response |  |[default to false]
+**page** | Option<**String**> | Pagination `page` number |  |
+**per_page** | Option<**String**> | Number of results to return in a `page`. The maximum value is 500  |  |
 
 ### Return type
 
-[**crate::models::SpeciesCountsResponse**](SpeciesCountsResponse.md)
+[**models::SpeciesCountsResponse**](SpeciesCountsResponse.md)
 
 ### Authorization
 

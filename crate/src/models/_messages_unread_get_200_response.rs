@@ -12,33 +12,14 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
-pub struct PostPostPost {
-    #[serde(rename = "title", skip_serializing_if = "Option::is_none")]
-    pub title: Option<String>,
-    #[serde(rename = "body", skip_serializing_if = "Option::is_none")]
-    pub body: Option<String>,
-    #[serde(
-        rename = "preferred_formatting",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub preferred_formatting: Option<String>,
-    #[serde(rename = "user_id", skip_serializing_if = "Option::is_none")]
-    pub user_id: Option<f64>,
-    #[serde(rename = "parent_id", skip_serializing_if = "Option::is_none")]
-    pub parent_id: Option<f64>,
-    #[serde(rename = "parent_type", skip_serializing_if = "Option::is_none")]
-    pub parent_type: Option<String>,
+pub struct MessagesUnreadGet200Response {
+    /// Number of unread messages
+    #[serde(rename = "count", skip_serializing_if = "Option::is_none")]
+    pub count: Option<i32>,
 }
 
-impl PostPostPost {
-    pub fn new() -> PostPostPost {
-        PostPostPost {
-            title: None,
-            body: None,
-            preferred_formatting: None,
-            user_id: None,
-            parent_id: None,
-            parent_type: None,
-        }
+impl MessagesUnreadGet200Response {
+    pub fn new() -> MessagesUnreadGet200Response {
+        MessagesUnreadGet200Response { count: None }
     }
 }

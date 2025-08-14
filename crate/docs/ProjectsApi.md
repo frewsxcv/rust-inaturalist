@@ -20,7 +20,7 @@ Method | HTTP request | Description
 
 ## projects_autocomplete_get
 
-> crate::models::ProjectsResponse projects_autocomplete_get(q, id, not_id, lat, lng, place_id, radius, featured, noteworthy, site_id, rule_details, r#type, member_id, has_params, has_posts, per_page)
+> models::ProjectsResponse projects_autocomplete_get(q, id, not_id, lat, lng, place_id, radius, featured, noteworthy, site_id, rule_details, r#type, member_id, has_params, has_posts, per_page)
 Project Autocomplete
 
 Given an string, returns projects with titles starting with the search term 
@@ -30,7 +30,7 @@ Given an string, returns projects with titles starting with the search term
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**q** | **String** | Name must begin with this value | [required] |
+**q** | **String** | Search by name (must start with this value) or by ID (exact match). | [required] |
 **id** | Option<[**Vec<String>**](String.md)> | Must have this ID |  |
 **not_id** | Option<[**Vec<String>**](String.md)> | Must not have this ID |  |
 **lat** | Option<**f64**> | Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius)  |  |
@@ -49,7 +49,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::ProjectsResponse**](ProjectsResponse.md)
+[**models::ProjectsResponse**](ProjectsResponse.md)
 
 ### Authorization
 
@@ -65,7 +65,7 @@ No authorization required
 
 ## projects_get
 
-> crate::models::ProjectsResponse projects_get(q, id, not_id, lat, lng, place_id, radius, featured, noteworthy, site_id, rule_details, r#type, member_id, has_params, has_posts, per_page, order_by)
+> models::ProjectsResponse projects_get(q, id, not_id, lat, lng, place_id, radius, featured, noteworthy, site_id, rule_details, r#type, member_id, has_params, has_posts, per_page, order_by)
 Project Search
 
 Given zero to many of following parameters, returns projects matching the search criteria 
@@ -75,7 +75,7 @@ Given zero to many of following parameters, returns projects matching the search
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**q** | Option<**String**> | Name must begin with this value |  |
+**q** | Option<**String**> | Search by name (must start with this value) or by ID (exact match). |  |
 **id** | Option<[**Vec<String>**](String.md)> | Must have this ID |  |
 **not_id** | Option<[**Vec<String>**](String.md)> | Must not have this ID |  |
 **lat** | Option<**f64**> | Must be within a {`radius`} kilometer circle around this lat/lng (*lat, *lng, radius)  |  |
@@ -95,7 +95,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::ProjectsResponse**](ProjectsResponse.md)
+[**models::ProjectsResponse**](ProjectsResponse.md)
 
 ### Authorization
 
@@ -142,7 +142,7 @@ Name | Type | Description  | Required | Notes
 
 ## projects_id_get
 
-> crate::models::ProjectsResponse projects_id_get(id, rule_details)
+> models::ProjectsResponse projects_id_get(id, rule_details)
 Project Details
 
 Given an ID, or an array of IDs in comma-delimited format, returns corresponding projects. A maximum of 100 results will be returned 
@@ -157,7 +157,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::ProjectsResponse**](ProjectsResponse.md)
+[**models::ProjectsResponse**](ProjectsResponse.md)
 
 ### Authorization
 
@@ -233,7 +233,7 @@ Name | Type | Description  | Required | Notes
 
 ## projects_id_members_get
 
-> crate::models::ProjectMembersResponse projects_id_members_get(id, role, page, per_page)
+> models::ProjectMembersResponse projects_id_members_get(id, role, skip_counts, page, per_page)
 Project Members
 
 Given an ID, return members of the project 
@@ -245,12 +245,13 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **id** | **i32** | ID of the record | [required] |
 **role** | Option<**String**> | Membership role |  |
+**skip_counts** | Option<**bool**> | If counts are not needed, consider setting this to true to save on processing time, resulting in faster responses  |  |[default to false]
 **page** | Option<**String**> | Pagination `page` number |  |
 **per_page** | Option<**String**> | Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted  |  |
 
 ### Return type
 
-[**crate::models::ProjectMembersResponse**](ProjectMembersResponse.md)
+[**models::ProjectMembersResponse**](ProjectMembersResponse.md)
 
 ### Authorization
 
@@ -269,14 +270,14 @@ No authorization required
 > projects_id_membership_get(id)
 Membership of current user
 
-Given a project ID, return the details of the authenticated user's membership in that project 
+Given an ID, or an array of IDs in comma-delimited format, return the details of the authenticated user's membership in these projects 
 
 ### Parameters
 
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**id** | **i32** | ID of the record | [required] |
+**id** | [**Vec<i32>**](i32.md) | Must have this ID | [required] |
 
 ### Return type
 

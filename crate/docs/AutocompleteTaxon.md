@@ -11,8 +11,8 @@ Name | Type | Description | Notes
 **name** | Option<**String**> |  | [optional]
 **preferred_common_name** | Option<**String**> |  | [optional]
 **rank** | Option<**String**> |  | [optional]
-**rank_level** | Option<**f32**> |  | [optional]
-**default_photo** | Option<[**crate::models::TaxonPhoto**](TaxonPhoto.md)> |  | [optional]
+**rank_level** | Option<**f64**> |  | [optional]
+**default_photo** | Option<[**models::TaxonPhoto**](TaxonPhoto.md)> |  | [optional]
 **matched_term** | Option<**String**> |  | [optional]
 **observations_count** | Option<**i32**> |  | [optional]
 

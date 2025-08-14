@@ -20,7 +20,7 @@ Method | HTTP request | Description
 
 ## identifications_categories_get
 
-> identifications_categories_get(current_taxon, own_observation, is_change, taxon_active, observation_taxon_active, id, rank, observation_rank, user_id, user_login, current, category, place_id, quality_grade, taxon_id, observation_taxon_id, iconic_taxon_id, observation_iconic_taxon_id, lrank, hrank, observation_lrank, observation_hrank, without_taxon_id, without_observation_taxon_id, d1, d2, observation_created_d1, observation_created_d2, observed_d1, observed_d2, id_above, id_below, page, per_page, order, order_by, only_id)
+> identifications_categories_get(current_taxon, own_observation, is_change, taxon_active, observation_taxon_active, id, rank, observation_rank, user_id, user_login, current, category, place_id, quality_grade, taxon_change_id, taxon_id, observation_taxon_id, iconic_taxon_id, observation_iconic_taxon_id, lrank, hrank, observation_lrank, observation_hrank, without_taxon_id, without_observation_taxon_id, d1, d2, observation_created_d1, observation_created_d2, observed_d1, observed_d2, id_above, id_below, page, per_page, order, order_by, only_id)
 Identification Categories
 
 Given zero to many of following parameters, return counts of the categories of identifications matching the search criteria 
@@ -44,6 +44,7 @@ Name | Type | Description  | Required | Notes
 **category** | Option<[**Vec<String>**](String.md)> | Type of identification |  |
 **place_id** | Option<[**Vec<String>**](String.md)> | Observation must occur in this place |  |
 **quality_grade** | Option<[**Vec<String>**](String.md)> | Observation must have this quality grade |  |
+**taxon_change_id** | Option<[**Vec<String>**](String.md)> | Only return identifications that were created as part of the specified taxon change |  |
 **taxon_id** | Option<[**Vec<String>**](String.md)> | ID taxa must match the given taxa or their descendants |  |
 **observation_taxon_id** | Option<[**Vec<String>**](String.md)> | Observation taxa must match the given taxa or their descendants |  |
 **iconic_taxon_id** | Option<[**Vec<String>**](String.md)> | ID iconic taxon ID |  |
@@ -86,7 +87,7 @@ No authorization required
 
 ## identifications_get
 
-> identifications_get(current_taxon, own_observation, is_change, taxon_active, observation_taxon_active, id, rank, observation_rank, user_id, user_login, current, category, place_id, quality_grade, taxon_id, observation_taxon_id, iconic_taxon_id, observation_iconic_taxon_id, lrank, hrank, observation_lrank, observation_hrank, without_taxon_id, without_observation_taxon_id, d1, d2, observation_created_d1, observation_created_d2, observed_d1, observed_d2, id_above, id_below, page, per_page, order, order_by, only_id)
+> identifications_get(current_taxon, own_observation, is_change, taxon_active, observation_taxon_active, id, rank, observation_rank, user_id, user_login, current, category, place_id, quality_grade, taxon_change_id, taxon_id, observation_taxon_id, iconic_taxon_id, observation_iconic_taxon_id, lrank, hrank, observation_lrank, observation_hrank, without_taxon_id, without_observation_taxon_id, d1, d2, observation_created_d1, observation_created_d2, observed_d1, observed_d2, id_above, id_below, page, per_page, order, order_by, only_id)
 Identification Search
 
 Given zero to many of following parameters, returns identifications matching the search criteria 
@@ -110,6 +111,7 @@ Name | Type | Description  | Required | Notes
 **category** | Option<[**Vec<String>**](String.md)> | Type of identification |  |
 **place_id** | Option<[**Vec<String>**](String.md)> | Observation must occur in this place |  |
 **quality_grade** | Option<[**Vec<String>**](String.md)> | Observation must have this quality grade |  |
+**taxon_change_id** | Option<[**Vec<String>**](String.md)> | Only return identifications that were created as part of the specified taxon change |  |
 **taxon_id** | Option<[**Vec<String>**](String.md)> | ID taxa must match the given taxa or their descendants |  |
 **observation_taxon_id** | Option<[**Vec<String>**](String.md)> | Observation taxa must match the given taxa or their descendants |  |
 **iconic_taxon_id** | Option<[**Vec<String>**](String.md)> | ID iconic taxon ID |  |
@@ -243,10 +245,10 @@ Name | Type | Description  | Required | Notes
 
 ## identifications_identifiers_get
 
-> crate::models::UserCountsResponse identifications_identifiers_get(current_taxon, own_observation, is_change, taxon_active, observation_taxon_active, id, rank, observation_rank, user_id, user_login, current, category, place_id, quality_grade, taxon_id, observation_taxon_id, iconic_taxon_id, observation_iconic_taxon_id, lrank, hrank, observation_lrank, observation_hrank, without_taxon_id, without_observation_taxon_id, d1, d2, observation_created_d1, observation_created_d2, observed_d1, observed_d2, id_above, id_below, page, per_page, order, order_by, only_id)
+> models::UserCountsResponse identifications_identifiers_get(current_taxon, own_observation, is_change, taxon_active, observation_taxon_active, id, rank, observation_rank, user_id, user_login, current, category, place_id, quality_grade, taxon_change_id, taxon_id, observation_taxon_id, iconic_taxon_id, observation_iconic_taxon_id, lrank, hrank, observation_lrank, observation_hrank, without_taxon_id, without_observation_taxon_id, d1, d2, observation_created_d1, observation_created_d2, observed_d1, observed_d2, id_above, id_below, page, per_page, order, order_by, only_id)
 Identification Identifiers
 
-Given zero to many of following parameters, returns creators of identifications matching the search criteria and the count of matching identifications, ordered by count descending 
+Given zero to many of following parameters, returns creators of identifications matching the search criteria and the count of matching identifications, ordered by count descending. A maximum of 500 results will be returned 
 
 ### Parameters
 
@@ -267,6 +269,7 @@ Name | Type | Description  | Required | Notes
 **category** | Option<[**Vec<String>**](String.md)> | Type of identification |  |
 **place_id** | Option<[**Vec<String>**](String.md)> | Observation must occur in this place |  |
 **quality_grade** | Option<[**Vec<String>**](String.md)> | Observation must have this quality grade |  |
+**taxon_change_id** | Option<[**Vec<String>**](String.md)> | Only return identifications that were created as part of the specified taxon change |  |
 **taxon_id** | Option<[**Vec<String>**](String.md)> | ID taxa must match the given taxa or their descendants |  |
 **observation_taxon_id** | Option<[**Vec<String>**](String.md)> | Observation taxa must match the given taxa or their descendants |  |
 **iconic_taxon_id** | Option<[**Vec<String>**](String.md)> | ID iconic taxon ID |  |
@@ -293,7 +296,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::UserCountsResponse**](UserCountsResponse.md)
+[**models::UserCountsResponse**](UserCountsResponse.md)
 
 ### Authorization
 
@@ -309,7 +312,7 @@ No authorization required
 
 ## identifications_observers_get
 
-> crate::models::UserCountsResponse identifications_observers_get(current_taxon, own_observation, is_change, taxon_active, observation_taxon_active, id, rank, observation_rank, user_id, user_login, current, category, place_id, quality_grade, taxon_id, observation_taxon_id, iconic_taxon_id, observation_iconic_taxon_id, lrank, hrank, observation_lrank, observation_hrank, without_taxon_id, without_observation_taxon_id, d1, d2, observation_created_d1, observation_created_d2, observed_d1, observed_d2, id_above, id_below, page, per_page, order, order_by, only_id)
+> models::UserCountsResponse identifications_observers_get(current_taxon, own_observation, is_change, taxon_active, observation_taxon_active, id, rank, observation_rank, user_id, user_login, current, category, place_id, quality_grade, taxon_change_id, taxon_id, observation_taxon_id, iconic_taxon_id, observation_iconic_taxon_id, lrank, hrank, observation_lrank, observation_hrank, without_taxon_id, without_observation_taxon_id, d1, d2, observation_created_d1, observation_created_d2, observed_d1, observed_d2, id_above, id_below, page, per_page, order, order_by, only_id)
 Identification Observers
 
 Given zero to many of following parameters, returns creators of observations of identifications matching the search criteria and the count of matching observations, ordered by count descending 
@@ -333,6 +336,7 @@ Name | Type | Description  | Required | Notes
 **category** | Option<[**Vec<String>**](String.md)> | Type of identification |  |
 **place_id** | Option<[**Vec<String>**](String.md)> | Observation must occur in this place |  |
 **quality_grade** | Option<[**Vec<String>**](String.md)> | Observation must have this quality grade |  |
+**taxon_change_id** | Option<[**Vec<String>**](String.md)> | Only return identifications that were created as part of the specified taxon change |  |
 **taxon_id** | Option<[**Vec<String>**](String.md)> | ID taxa must match the given taxa or their descendants |  |
 **observation_taxon_id** | Option<[**Vec<String>**](String.md)> | Observation taxa must match the given taxa or their descendants |  |
 **iconic_taxon_id** | Option<[**Vec<String>**](String.md)> | ID iconic taxon ID |  |
@@ -359,7 +363,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::UserCountsResponse**](UserCountsResponse.md)
+[**models::UserCountsResponse**](UserCountsResponse.md)
 
 ### Authorization
 
@@ -405,7 +409,7 @@ Name | Type | Description  | Required | Notes
 
 ## identifications_recent_taxa_get
 
-> identifications_recent_taxa_get(current_taxon, own_observation, is_change, taxon_active, observation_taxon_active, id, rank, observation_rank, user_id, user_login, current, category, place_id, quality_grade, taxon_id, observation_taxon_id, iconic_taxon_id, observation_iconic_taxon_id, lrank, hrank, observation_lrank, observation_hrank, without_taxon_id, without_observation_taxon_id, d1, d2, observation_created_d1, observation_created_d2, observed_d1, observed_d2, id_above, id_below, page, per_page, order, order_by, only_id)
+> identifications_recent_taxa_get(current_taxon, own_observation, is_change, taxon_active, observation_taxon_active, id, rank, observation_rank, user_id, user_login, current, category, place_id, quality_grade, taxon_change_id, taxon_id, observation_taxon_id, iconic_taxon_id, observation_iconic_taxon_id, lrank, hrank, observation_lrank, observation_hrank, without_taxon_id, without_observation_taxon_id, d1, d2, observation_created_d1, observation_created_d2, observed_d1, observed_d2, id_above, id_below, page, per_page, order, order_by, only_id)
 Identification Recent Taxa
 
 Returns an array of objects each containing an identification and a taxon. Returns IDs representing the earliest occurrence of taxa associated with identifications in the filtered set of results 
@@ -429,6 +433,7 @@ Name | Type | Description  | Required | Notes
 **category** | Option<[**Vec<String>**](String.md)> | Type of identification |  |
 **place_id** | Option<[**Vec<String>**](String.md)> | Observation must occur in this place |  |
 **quality_grade** | Option<[**Vec<String>**](String.md)> | Observation must have this quality grade |  |
+**taxon_change_id** | Option<[**Vec<String>**](String.md)> | Only return identifications that were created as part of the specified taxon change |  |
 **taxon_id** | Option<[**Vec<String>**](String.md)> | ID taxa must match the given taxa or their descendants |  |
 **observation_taxon_id** | Option<[**Vec<String>**](String.md)> | Observation taxa must match the given taxa or their descendants |  |
 **iconic_taxon_id** | Option<[**Vec<String>**](String.md)> | ID iconic taxon ID |  |
@@ -471,7 +476,7 @@ No authorization required
 
 ## identifications_similar_species_get
 
-> identifications_similar_species_get(taxon_id, acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, day, month, year, term_id, term_value_id, without_term_id, without_term_value_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, q, search_on, quality_grade, updated_since, viewer_id, reviewed)
+> identifications_similar_species_get(taxon_id, acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, expected_nearby, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, hour, day, month, year, created_day, created_month, created_year, term_id, term_value_id, without_term_id, without_term_value_id, term_id_or_unknown, annotation_user_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, obscuration, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, observation_accuracy_experiment_id, q, search_on, quality_grade, updated_since, viewer_id, reviewed)
 Identification Similar Species
 
 Returns species attached to IDs of observations of this taxon, or attached to observations identified as this species, ordered by combined frequency descending. This will only return species in the same iconic taxon, and will never return descendants of the chosen taxon 
@@ -501,6 +506,7 @@ Name | Type | Description  | Required | Notes
 **verifiable** | Option<**bool**> | Observations with a `quality_grade` of either `needs_id` or `research`. Equivalent to `quality_grade=needs_id,research`  |  |
 **licensed** | Option<**bool**> | License attribute of an observation must not be null |  |
 **photo_licensed** | Option<**bool**> | License attribute of at least one photo of an observation must not be null |  |
+**expected_nearby** | Option<**bool**> | Observation taxon is expected nearby |  |
 **id** | Option<[**Vec<String>**](String.md)> | Must have this ID |  |
 **not_id** | Option<[**Vec<String>**](String.md)> | Must not have this ID |  |
 **license** | Option<[**Vec<String>**](String.md)> | Observation must have this license |  |
@@ -516,13 +522,19 @@ Name | Type | Description  | Required | Notes
 **user_id** | Option<[**Vec<String>**](String.md)> | User must have this ID or login |  |
 **user_login** | Option<[**Vec<String>**](String.md)> | User must have this login |  |
 **ident_user_id** | Option<**i32**> | Observations identified by a particular user |  |
+**hour** | Option<[**Vec<String>**](String.md)> | Must be observed within this hour of the day |  |
 **day** | Option<[**Vec<String>**](String.md)> | Must be observed within this day of the month |  |
 **month** | Option<[**Vec<String>**](String.md)> | Must be observed within this month |  |
 **year** | Option<[**Vec<String>**](String.md)> | Must be observed within this year |  |
+**created_day** | Option<[**Vec<String>**](String.md)> | Must be created within this day of the month |  |
+**created_month** | Option<[**Vec<String>**](String.md)> | Must be created within this month |  |
+**created_year** | Option<[**Vec<String>**](String.md)> | Must be created within this year |  |
 **term_id** | Option<[**Vec<i32>**](i32.md)> | Must have an annotation using this controlled term ID |  |
 **term_value_id** | Option<[**Vec<i32>**](i32.md)> | Must have an annotation using this controlled value ID. Must be combined with the `term_id` parameter  |  |
 **without_term_id** | Option<**i32**> | Exclude observations with annotations using this controlled value ID.  |  |
 **without_term_value_id** | Option<[**Vec<i32>**](i32.md)> | Exclude observations with annotations using this controlled value ID. Must be combined with the `term_id` parameter  |  |
+**term_id_or_unknown** | Option<[**Vec<i32>**](i32.md)> | Must be combined with the `term_value_id` or the `without_term_value_id` parameter. Must have an annotation using this controlled term ID and associated term value IDs or be missing this annotation.  |  |
+**annotation_user_id** | Option<[**Vec<String>**](String.md)> | Must have an annotation created by this user  |  |
 **acc_above** | Option<**String**> | Must have a positional accuracy above this value (meters) |  |
 **acc_below** | Option<**String**> | Must have a positional accuracy below this value (meters) |  |
 **acc_below_or_unknown** | Option<**String**> | Positional accuracy must be below this value (in meters) or be unknown |  |
@@ -539,6 +551,7 @@ Name | Type | Description  | Required | Notes
 **csi** | Option<[**Vec<String>**](String.md)> | Taxon must have this IUCN conservation status. If the `place_id` parameter is also specified, this will only consider statuses specific to that place  |  |
 **geoprivacy** | Option<[**Vec<String>**](String.md)> | Must have this geoprivacy setting |  |
 **taxon_geoprivacy** | Option<[**Vec<String>**](String.md)> | Filter observations by the most conservative geoprivacy applied by a conservation status associated with one of the taxa proposed in the current identifications.  |  |
+**obscuration** | Option<[**Vec<String>**](String.md)> | Must have `geoprivacy` or `taxon_geoprivacy` fields matching these values  |  |
 **hrank** | Option<**String**> | Taxon must have this rank or lower |  |
 **lrank** | Option<**String**> | Taxon must have this rank or higher |  |
 **iconic_taxa** | Option<[**Vec<String>**](String.md)> | Taxon must by within this iconic taxon |  |
@@ -555,6 +568,7 @@ Name | Type | Description  | Required | Notes
 **list_id** | Option<**i32**> | Taxon must be in the list with this ID |  |
 **not_in_project** | Option<**String**> | Must not be in the project with this ID or slug |  |
 **not_matching_project_rules_for** | Option<**String**> | Must not match the rules of the project with this ID or slug |  |
+**observation_accuracy_experiment_id** | Option<[**Vec<i32>**](i32.md)> | Must included in this observation accuracy experiment |  |
 **q** | Option<**String**> | Search observation properties. Can be combined with `search_on` |  |
 **search_on** | Option<**String**> | Properties to search on, when combined with `q`. Searches across all properties by default  |  |
 **quality_grade** | Option<**String**> | Must have this quality grade |  |
@@ -580,7 +594,7 @@ No authorization required
 
 ## identifications_species_counts_get
 
-> crate::models::SpeciesCountsResponse identifications_species_counts_get(current_taxon, own_observation, is_change, taxon_active, observation_taxon_active, id, rank, observation_rank, user_id, user_login, current, category, place_id, quality_grade, taxon_id, observation_taxon_id, iconic_taxon_id, observation_iconic_taxon_id, lrank, hrank, observation_lrank, observation_hrank, without_taxon_id, without_observation_taxon_id, d1, d2, observation_created_d1, observation_created_d2, observed_d1, observed_d2, id_above, id_below, page, per_page, order, order_by, only_id, taxon_of)
+> models::SpeciesCountsResponse identifications_species_counts_get(current_taxon, own_observation, is_change, taxon_active, observation_taxon_active, id, rank, observation_rank, user_id, user_login, current, category, place_id, quality_grade, taxon_change_id, taxon_id, observation_taxon_id, iconic_taxon_id, observation_iconic_taxon_id, lrank, hrank, observation_lrank, observation_hrank, without_taxon_id, without_observation_taxon_id, d1, d2, observation_created_d1, observation_created_d2, observed_d1, observed_d2, id_above, id_below, page, per_page, order_by, only_id, taxon_of, order)
 Identification Species Counts
 
 Given zero to many of following parameters, returns `leaf taxa` associated with identifications matching the search criteria and the count of identifications they are associated with, ordered by count descending. `Leaf taxa` are the leaves of the taxonomic tree containing only the taxa associated with observations matching the search criteria. 
@@ -604,6 +618,7 @@ Name | Type | Description  | Required | Notes
 **category** | Option<[**Vec<String>**](String.md)> | Type of identification |  |
 **place_id** | Option<[**Vec<String>**](String.md)> | Observation must occur in this place |  |
 **quality_grade** | Option<[**Vec<String>**](String.md)> | Observation must have this quality grade |  |
+**taxon_change_id** | Option<[**Vec<String>**](String.md)> | Only return identifications that were created as part of the specified taxon change |  |
 **taxon_id** | Option<[**Vec<String>**](String.md)> | ID taxa must match the given taxa or their descendants |  |
 **observation_taxon_id** | Option<[**Vec<String>**](String.md)> | Observation taxa must match the given taxa or their descendants |  |
 **iconic_taxon_id** | Option<[**Vec<String>**](String.md)> | ID iconic taxon ID |  |
@@ -624,14 +639,14 @@ Name | Type | Description  | Required | Notes
 **id_below** | Option<**String**> | Must have an ID below this value |  |
 **page** | Option<**String**> | Pagination `page` number |  |
 **per_page** | Option<**String**> | Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted  |  |
-**order** | Option<**String**> | Sort order |  |[default to desc]
 **order_by** | Option<**String**> | Sort field |  |[default to created_at]
 **only_id** | Option<**bool**> | Return only the record IDs |  |
 **taxon_of** | Option<**String**> | Source of the taxon for counting |  |[default to identification]
+**order** | Option<**String**> | Sort order |  |[default to desc]
 
 ### Return type
 
-[**crate::models::SpeciesCountsResponse**](SpeciesCountsResponse.md)
+[**models::SpeciesCountsResponse**](SpeciesCountsResponse.md)
 
 ### Authorization
 

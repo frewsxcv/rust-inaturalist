@@ -11,6 +11,7 @@ Method | HTTP request | Description
 [**users_id_projects_get**](UsersApi.md#users_id_projects_get) | **GET** /users/{id}/projects | User Projects
 [**users_id_put**](UsersApi.md#users_id_put) | **PUT** /users/{id} | User Update
 [**users_me_get**](UsersApi.md#users_me_get) | **GET** /users/me | Users Me
+[**users_resend_confirmation_post**](UsersApi.md#users_resend_confirmation_post) | **POST** /users/resend_confirmation | User Resend Confirmation
 [**users_update_session_put**](UsersApi.md#users_update_session_put) | **PUT** /users/update_session | User Update Session
 
 
@@ -27,7 +28,7 @@ Given an string, returns users with names or logins starting with the search ter
 
 Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
-**q** | **String** | Name must begin with this value | [required] |
+**q** | **String** | Search by name (must start with this value) or by ID (exact match). | [required] |
 **project_id** | Option<**i32**> | Only show users with memberships to this project |  |
 **per_page** | Option<**String**> | Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted  |  |
 
@@ -207,6 +208,33 @@ Name | Type | Description  | Required | Notes
 Users Me
 
 Fetch the logged-in user
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+ (empty response body)
+
+### Authorization
+
+[api_token](../README.md#api_token)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+
+## users_resend_confirmation_post
+
+> users_resend_confirmation_post()
+User Resend Confirmation
+
+Resend an email confirmation
 
 ### Parameters
 

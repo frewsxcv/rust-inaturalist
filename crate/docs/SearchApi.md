@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 ## search_get
 
-> search_get(q, sources, place_id, per_page, locale, preferred_place_id)
+> search_get(q, sources, place_id, include_taxon_ancestors, per_page, locale, preferred_place_id)
 Site Search
 
 Given zero to many of following parameters, returns object matching the search criteria 
@@ -23,6 +23,7 @@ Name | Type | Description  | Required | Notes
 **q** | Option<**String**> | Search object properties |  |
 **sources** | Option<[**Vec<String>**](String.md)> | Must be of this type |  |
 **place_id** | Option<[**Vec<String>**](String.md)> | Must be associated with this place |  |
+**include_taxon_ancestors** | Option<**bool**> | Include taxon ancestors in the response |  |[default to false]
 **per_page** | Option<**String**> | Number of results to return in a `page`. The maximum value is generally 200 unless otherwise noted  |  |
 **locale** | Option<**String**> | Locale preference for taxon common names  |  |
 **preferred_place_id** | Option<**i32**> | Place preference for regional taxon common names  |  |

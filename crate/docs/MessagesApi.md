@@ -78,7 +78,7 @@ Name | Type | Description  | Required | Notes
 
 ## messages_id_get
 
-> serde_json::Value messages_id_get(id)
+> models::MessagesIdGet200Response messages_id_get(id)
 Retrieve messages in a thread
 
 Retrieves all messages in the thread the specified message belongs to and marks them all as read. 
@@ -92,7 +92,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**serde_json::Value**](serde_json::Value.md)
+[**models::MessagesIdGet200Response**](_messages__id__get_200_response.md)
 
 ### Authorization
 
@@ -108,7 +108,7 @@ Name | Type | Description  | Required | Notes
 
 ## messages_post
 
-> crate::models::Message messages_post(body)
+> models::Message messages_post(body)
 Create a new message
 
 Create and deliver a new message to another user
@@ -122,7 +122,7 @@ Name | Type | Description  | Required | Notes
 
 ### Return type
 
-[**crate::models::Message**](Message.md)
+[**models::Message**](Message.md)
 
 ### Authorization
 
@@ -138,7 +138,7 @@ Name | Type | Description  | Required | Notes
 
 ## messages_unread_get
 
-> serde_json::Value messages_unread_get()
+> models::MessagesUnreadGet200Response messages_unread_get()
 Gets a count of messages the authenticated user has not read
 
 ### Parameters
@@ -147,7 +147,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**serde_json::Value**](serde_json::Value.md)
+[**models::MessagesUnreadGet200Response**](_messages_unread_get_200_response.md)
 
 ### Authorization
 
