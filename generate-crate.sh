@@ -5,4 +5,3 @@ rm -rf crate
 openapi-generator generate -i swagger.json -g rust -o ./crate -c config.json
 rm swagger.json
 (cd crate && cargo fmt)
-
