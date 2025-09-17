@@ -13,6 +13,8 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Observation {
+    #[serde(rename = "annotations", skip_serializing_if = "Option::is_none")]
+    pub annotations: Option<Vec<models::Annotation>>,
     #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
     pub id: Option<i32>,
     #[serde(rename = "cached_votes_total", skip_serializing_if = "Option::is_none")]
@@ -103,6 +105,13 @@ pub struct Observation {
     pub place_guess: Option<String>,
     #[serde(rename = "place_ids", skip_serializing_if = "Option::is_none")]
     pub place_ids: Option<Vec<i32>>,
+    #[serde(
+        rename = "positional_accuracy",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub positional_accuracy: Option<i32>,
+    #[serde(rename = "private_geojson", skip_serializing_if = "Option::is_none")]
+    pub private_geojson: Option<Box<models::PointGeoJson>>,
     #[serde(rename = "project_ids", skip_serializing_if = "Option::is_none")]
     pub project_ids: Option<Vec<i32>>,
     #[serde(
@@ -115,6 +124,11 @@ pub struct Observation {
         skip_serializing_if = "Option::is_none"
     )]
     pub project_ids_without_curator_id: Option<Vec<i32>>,
+    #[serde(
+        rename = "public_positional_accuracy",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub public_positional_accuracy: Option<i32>,
     #[serde(rename = "quality_grade", skip_serializing_if = "Option::is_none")]
     pub quality_grade: Option<String>,
     #[serde(rename = "reviewed_by", skip_serializing_if = "Option::is_none")]
@@ -139,13 +153,60 @@ pub struct Observation {
     pub uri: Option<String>,
     #[serde(rename = "user", skip_serializing_if = "Option::is_none")]
     pub user: Option<Box<models::User>>,
+    #[serde(rename = "uuid", skip_serializing_if = "Option::is_none")]
+    pub uuid: Option<String>,
     #[serde(rename = "verifiable", skip_serializing_if = "Option::is_none")]
     pub verifiable: Option<bool>,
+    #[serde(rename = "observation_photos", skip_serializing_if = "Option::is_none")]
+    pub observation_photos: Option<Vec<models::ObservationPhoto>>,
+    #[serde(rename = "quality_metrics", skip_serializing_if = "Option::is_none")]
+    pub quality_metrics: Option<Vec<models::QualityMetric>>,
+    #[serde(rename = "flags", skip_serializing_if = "Option::is_none")]
+    pub flags: Option<Vec<models::Flag>>,
+    #[serde(rename = "community_taxon_id", skip_serializing_if = "Option::is_none")]
+    pub community_taxon_id: Option<i32>,
+    #[serde(rename = "faves", skip_serializing_if = "Option::is_none")]
+    pub faves: Option<Vec<models::Fave>>,
+    #[serde(rename = "identifications", skip_serializing_if = "Option::is_none")]
+    pub identifications: Option<Vec<models::Identification>>,
+    #[serde(
+        rename = "oauth_application_id",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub oauth_application_id: Option<i32>,
+    #[serde(rename = "outlinks", skip_serializing_if = "Option::is_none")]
+    pub outlinks: Option<Vec<models::Outlink>>,
+    #[serde(
+        rename = "owners_identification_from_vision",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub owners_identification_from_vision: Option<bool>,
+    #[serde(rename = "preferences", skip_serializing_if = "Option::is_none")]
+    pub preferences: Option<serde_json::Value>,
+    #[serde(
+        rename = "project_observations",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub project_observations: Option<Vec<models::ProjectObservation>>,
+    #[serde(rename = "spam", skip_serializing_if = "Option::is_none")]
+    pub spam: Option<bool>,
+    #[serde(rename = "votes", skip_serializing_if = "Option::is_none")]
+    pub votes: Option<Vec<models::Vote>>,
+    #[serde(
+        rename = "identification_disagreements_count",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub identification_disagreements_count: Option<i32>,
+    #[serde(rename = "ident_taxon_ids", skip_serializing_if = "Option::is_none")]
+    pub ident_taxon_ids: Option<Vec<i32>>,
+    #[serde(rename = "map_scale", skip_serializing_if = "Option::is_none")]
+    pub map_scale: Option<i32>,
 }
 
 impl Observation {
     pub fn new() -> Observation {
         Observation {
+            annotations: None,
             id: None,
             cached_votes_total: None,
             captive: None,
@@ -180,9 +241,12 @@ impl Observation {
             photos: None,
             place_guess: None,
             place_ids: None,
+            positional_accuracy: None,
+            private_geojson: None,
             project_ids: None,
             project_ids_with_curator_id: None,
             project_ids_without_curator_id: None,
+            public_positional_accuracy: None,
             quality_grade: None,
             reviewed_by: None,
             site_id: None,
@@ -195,7 +259,24 @@ impl Observation {
             updated_at: None,
             uri: None,
             user: None,
+            uuid: None,
             verifiable: None,
+            observation_photos: None,
+            quality_metrics: None,
+            flags: None,
+            community_taxon_id: None,
+            faves: None,
+            identifications: None,
+            oauth_application_id: None,
+            outlinks: None,
+            owners_identification_from_vision: None,
+            preferences: None,
+            project_observations: None,
+            spam: None,
+            votes: None,
+            identification_disagreements_count: None,
+            ident_taxon_ids: None,
+            map_scale: None,
         }
     }
 }

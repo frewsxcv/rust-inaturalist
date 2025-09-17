@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**annotations** | Option<[**Vec<models::Annotation>**](Annotation.md)> |  | [optional]
 **id** | Option<**i32**> |  | [optional]
 **cached_votes_total** | Option<**i32**> |  | [optional]
 **captive** | Option<**bool**> |  | [optional]
@@ -38,9 +39,12 @@ Name | Type | Description | Notes
 **photos** | Option<[**Vec<models::Photo>**](Photo.md)> |  | [optional]
 **place_guess** | Option<**String**> |  | [optional]
 **place_ids** | Option<**Vec<i32>**> |  | [optional]
+**positional_accuracy** | Option<**i32**> |  | [optional]
+**private_geojson** | Option<[**models::PointGeoJson**](PointGeoJson.md)> |  | [optional]
 **project_ids** | Option<**Vec<i32>**> |  | [optional]
 **project_ids_with_curator_id** | Option<**Vec<i32>**> |  | [optional]
 **project_ids_without_curator_id** | Option<**Vec<i32>**> |  | [optional]
+**public_positional_accuracy** | Option<**i32**> |  | [optional]
 **quality_grade** | Option<**String**> |  | [optional]
 **reviewed_by** | Option<**Vec<i32>**> |  | [optional]
 **site_id** | Option<**i32**> |  | [optional]
@@ -53,7 +57,24 @@ Name | Type | Description | Notes
 **updated_at** | Option<**String**> |  | [optional]
 **uri** | Option<**String**> |  | [optional]
 **user** | Option<[**models::User**](User.md)> |  | [optional]
+**uuid** | Option<**String**> |  | [optional]
 **verifiable** | Option<**bool**> |  | [optional]
+**observation_photos** | Option<[**Vec<models::ObservationPhoto>**](ObservationPhoto.md)> |  | [optional]
+**quality_metrics** | Option<[**Vec<models::QualityMetric>**](QualityMetric.md)> |  | [optional]
+**flags** | Option<[**Vec<models::Flag>**](Flag.md)> |  | [optional]
+**community_taxon_id** | Option<**i32**> |  | [optional]
+**faves** | Option<[**Vec<models::Fave>**](Fave.md)> |  | [optional]
+**identifications** | Option<[**Vec<models::Identification>**](Identification.md)> |  | [optional]
+**oauth_application_id** | Option<**i32**> |  | [optional]
+**outlinks** | Option<[**Vec<models::Outlink>**](Outlink.md)> |  | [optional]
+**owners_identification_from_vision** | Option<**bool**> |  | [optional]
+**preferences** | Option<[**serde_json::Value**](.md)> |  | [optional]
+**project_observations** | Option<[**Vec<models::ProjectObservation>**](ProjectObservation.md)> |  | [optional]
+**spam** | Option<**bool**> |  | [optional]
+**votes** | Option<[**Vec<models::Vote>**](Vote.md)> |  | [optional]
+**identification_disagreements_count** | Option<**i32**> |  | [optional]
+**ident_taxon_ids** | Option<**Vec<i32>**> |  | [optional]
+**map_scale** | Option<**i32**> |  | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
