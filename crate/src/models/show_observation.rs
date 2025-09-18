@@ -68,6 +68,9 @@ pub struct ShowObservation {
     /// in the format \"lat,lng\"
     #[serde(rename = "location", skip_serializing_if = "Option::is_none")]
     pub location: Option<String>,
+    /// in the format \"lat,lng\"
+    #[serde(rename = "private_location", skip_serializing_if = "Option::is_none")]
+    pub private_location: Option<String>,
     #[serde(rename = "mappable", skip_serializing_if = "Option::is_none")]
     pub mappable: Option<bool>,
     #[serde(rename = "non_owner_ids", skip_serializing_if = "Option::is_none")]
@@ -103,8 +106,15 @@ pub struct ShowObservation {
     pub photos: Option<Vec<models::Photo>>,
     #[serde(rename = "place_guess", skip_serializing_if = "Option::is_none")]
     pub place_guess: Option<String>,
+    #[serde(
+        rename = "private_place_guess",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub private_place_guess: Option<String>,
     #[serde(rename = "place_ids", skip_serializing_if = "Option::is_none")]
     pub place_ids: Option<Vec<i32>>,
+    #[serde(rename = "private_place_ids", skip_serializing_if = "Option::is_none")]
+    pub private_place_ids: Option<Vec<i32>>,
     #[serde(
         rename = "positional_accuracy",
         skip_serializing_if = "Option::is_none"
@@ -227,6 +237,7 @@ impl ShowObservation {
             identifications_some_agree: None,
             license_code: None,
             location: None,
+            private_location: None,
             mappable: None,
             non_owner_ids: None,
             num_identification_agreements: None,
@@ -240,7 +251,9 @@ impl ShowObservation {
             out_of_range: None,
             photos: None,
             place_guess: None,
+            private_place_guess: None,
             place_ids: None,
+            private_place_ids: None,
             positional_accuracy: None,
             private_geojson: None,
             project_ids: None,
