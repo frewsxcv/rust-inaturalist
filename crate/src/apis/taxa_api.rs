@@ -43,8 +43,8 @@ pub struct TaxaGetParams {
     pub q: Option<String>,
     /// Taxon is `active`
     pub is_active: Option<bool>,
-    /// Only show taxa with this ID, or its descendants
-    pub taxon_id: Option<Vec<String>>,
+    /// Comma-separated list of taxon IDs
+    pub id: Option<Vec<i32>>,
     /// Taxon's parent must have this ID
     pub parent_id: Option<i32>,
     /// Taxon must have this rank
@@ -216,16 +216,16 @@ pub async fn taxa_get(
     if let Some(ref param_value) = params.is_active {
         req_builder = req_builder.query(&[("is_active", &param_value.to_string())]);
     }
-    if let Some(ref param_value) = params.taxon_id {
+    if let Some(ref param_value) = params.id {
         req_builder = match "csv" {
             "multi" => req_builder.query(
                 &param_value
                     .into_iter()
-                    .map(|p| ("taxon_id".to_owned(), p.to_string()))
+                    .map(|p| ("id".to_owned(), p.to_string()))
                     .collect::<Vec<(std::string::String, std::string::String)>>(),
             ),
             _ => req_builder.query(&[(
-                "taxon_id",
+                "id",
                 &param_value
                     .into_iter()
                     .map(|p| p.to_string())

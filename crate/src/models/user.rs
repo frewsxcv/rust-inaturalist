@@ -13,32 +13,75 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
 pub struct User {
+    #[serde(rename = "created_at", skip_serializing_if = "Option::is_none")]
+    pub created_at: Option<String>,
     #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
     pub id: Option<i32>,
-    #[serde(rename = "icon_content_type", skip_serializing_if = "Option::is_none")]
-    pub icon_content_type: Option<String>,
-    #[serde(rename = "icon_file_name", skip_serializing_if = "Option::is_none")]
-    pub icon_file_name: Option<String>,
     #[serde(rename = "icon", skip_serializing_if = "Option::is_none")]
     pub icon: Option<String>,
-    #[serde(rename = "icon_url", skip_serializing_if = "Option::is_none")]
-    pub icon_url: Option<String>,
+    #[serde(
+        rename = "identifications_count",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub identifications_count: Option<i32>,
+    #[serde(
+        rename = "journal_posts_count",
+        skip_serializing_if = "Option::is_none"
+    )]
+    pub journal_posts_count: Option<i32>,
     #[serde(rename = "login", skip_serializing_if = "Option::is_none")]
     pub login: Option<String>,
     #[serde(rename = "name", skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
+    #[serde(rename = "observations_count", skip_serializing_if = "Option::is_none")]
+    pub observations_count: Option<i32>,
+    #[serde(rename = "orcid", skip_serializing_if = "Option::is_none")]
+    pub orcid: Option<String>,
+    #[serde(rename = "roles", skip_serializing_if = "Option::is_none")]
+    pub roles: Option<Vec<Roles>>,
+    #[serde(rename = "site_id", skip_serializing_if = "Option::is_none")]
+    pub site_id: Option<i32>,
+    #[serde(rename = "species_count", skip_serializing_if = "Option::is_none")]
+    pub species_count: Option<i32>,
+    #[serde(rename = "spam", skip_serializing_if = "Option::is_none")]
+    pub spam: Option<bool>,
+    #[serde(rename = "suspended", skip_serializing_if = "Option::is_none")]
+    pub suspended: Option<bool>,
 }
 
 impl User {
     pub fn new() -> User {
         User {
+            created_at: None,
             id: None,
-            icon_content_type: None,
-            icon_file_name: None,
             icon: None,
-            icon_url: None,
+            identifications_count: None,
+            journal_posts_count: None,
             login: None,
             name: None,
+            observations_count: None,
+            orcid: None,
+            roles: None,
+            site_id: None,
+            species_count: None,
+            spam: None,
+            suspended: None,
         }
+    }
+}
+///
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
+pub enum Roles {
+    #[serde(rename = "admin")]
+    Admin,
+    #[serde(rename = "app owner")]
+    AppOwner,
+    #[serde(rename = "curator")]
+    Curator,
+}
+
+impl Default for Roles {
+    fn default() -> Roles {
+        Self::Admin
     }
 }
