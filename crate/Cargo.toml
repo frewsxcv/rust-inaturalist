@@ -1,6 +1,6 @@
 [package]
 name = "inaturalist"
-version = "0.7.0"
+version = "0.8.0"
 authors = ["Corey Farwell", "OpenAPI Generator team and contributors"]
 license = "MIT/Apache-2.0"
 repository = "https://github.com/frewsxcv/rust-inaturalist"

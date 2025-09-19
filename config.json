@@ -1,5 +1,5 @@
 {
   "packageName": "inaturalist",
-  "packageVersion": "0.7.0",
+  "packageVersion": "0.8.0",
   "useSingleRequestParameter": true
 }
