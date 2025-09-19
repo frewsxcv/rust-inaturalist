@@ -74,6 +74,8 @@ impl User {
 pub enum Roles {
     #[serde(rename = "admin")]
     Admin,
+    #[serde(rename = "app owner")]
+    AppOwner,
     #[serde(rename = "curator")]
     Curator,
 }
