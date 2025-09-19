@@ -50,7 +50,7 @@ No authorization required
 
 ## taxa_get
 
-> models::TaxaShowResponse taxa_get(q, is_active, taxon_id, parent_id, rank, rank_level, id_above, id_below, per_page, locale, preferred_place_id, only_id, all_names, order, order_by)
+> models::TaxaShowResponse taxa_get(q, is_active, id, parent_id, rank, rank_level, id_above, id_below, per_page, locale, preferred_place_id, only_id, all_names, order, order_by)
 Taxon Search
 
 Given zero to many of following parameters, returns taxa matching the search criteria 
@@ -62,7 +62,7 @@ Name | Type | Description  | Required | Notes
 ------------- | ------------- | ------------- | ------------- | -------------
 **q** | Option<**String**> | Search by name (must start with this value) or by ID (exact match). |  |
 **is_active** | Option<**bool**> | Taxon is `active` |  |
-**taxon_id** | Option<[**Vec<String>**](String.md)> | Only show taxa with this ID, or its descendants |  |
+**id** | Option<[**Vec<i32>**](i32.md)> | Comma-separated list of taxon IDs |  |
 **parent_id** | Option<**i32**> | Taxon's parent must have this ID |  |
 **rank** | Option<[**Vec<String>**](String.md)> | Taxon must have this rank |  |
 **rank_level** | Option<**f64**> | Taxon must have this rank level. Some example values are 70 (kingdom), 60 (phylum), 50 (class), 40 (order), 30 (family), 20 (genus), 10 (species), 5 (subspecies)  |  |
