@@ -27,6 +27,8 @@ pub struct Identification {
     pub current: Option<bool>,
     #[serde(rename = "taxon", skip_serializing_if = "Option::is_none")]
     pub taxon: Option<Box<models::ObservationTaxon>>,
+    #[serde(rename = "user", skip_serializing_if = "Option::is_none")]
+    pub user: Option<Box<models::User>>,
 }
 
 impl Identification {
@@ -39,6 +41,7 @@ impl Identification {
             updated_at: None,
             current: None,
             taxon: None,
+            user: None,
         }
     }
 }
