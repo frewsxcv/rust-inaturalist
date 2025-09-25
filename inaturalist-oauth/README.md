@@ -23,7 +23,7 @@ Add this to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-inaturalist-oauth = { path = "../inaturalist-oauth" }
+inaturalist-oauth = "*"
 ```
 
 Then, you can use it in your code like this:
