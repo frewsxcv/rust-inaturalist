@@ -183,7 +183,7 @@ impl Authenticator {
         &self,
         buffer: &[u8],
     ) -> Result<AuthorizationCode, Box<dyn std::error::Error>> {
-        let mut headers = [httparse::EMPTY_HEADER; 16];
+        let mut headers = [httparse::EMPTY_HEADER; 64];
         let mut req = httparse::Request::new(&mut headers);
         req.parse(buffer)?;
 
