@@ -189,6 +189,22 @@ pub struct ObservationsGetParams {
     pub not_matching_project_rules_for: Option<String>,
     /// Must included in this observation accuracy experiment
     pub observation_accuracy_experiment_id: Option<Vec<i32>>,
+    /// Must be voted as not accurately depicting an organism or scene
+    pub fails_dqa_accurate: Option<bool>,
+    /// Must be voted as not having an accurate date
+    pub fails_dqa_date: Option<bool>,
+    /// Must be voted as not evidence of an organism
+    pub fails_dqa_evidence: Option<bool>,
+    /// Must be voted as not having an accurate location
+    pub fails_dqa_location: Option<bool>,
+    /// Must be voted as the community ID cannot be improved
+    pub fails_dqa_needs_id: Option<bool>,
+    /// Must be voted as not recent evidence of an organism
+    pub fails_dqa_recent: Option<bool>,
+    /// Must be voted as not having evidence related to a single subject
+    pub fails_dqa_subject: Option<bool>,
+    /// Must be voted as not wild
+    pub fails_dqa_wild: Option<bool>,
     /// Search observation properties. Can be combined with `search_on`
     pub q: Option<String>,
     /// Properties to search on, when combined with `q`. Searches across all properties by default
@@ -388,6 +404,22 @@ pub struct ObservationsHistogramGetParams {
     pub not_matching_project_rules_for: Option<String>,
     /// Must included in this observation accuracy experiment
     pub observation_accuracy_experiment_id: Option<Vec<i32>>,
+    /// Must be voted as not accurately depicting an organism or scene
+    pub fails_dqa_accurate: Option<bool>,
+    /// Must be voted as not having an accurate date
+    pub fails_dqa_date: Option<bool>,
+    /// Must be voted as not evidence of an organism
+    pub fails_dqa_evidence: Option<bool>,
+    /// Must be voted as not having an accurate location
+    pub fails_dqa_location: Option<bool>,
+    /// Must be voted as the community ID cannot be improved
+    pub fails_dqa_needs_id: Option<bool>,
+    /// Must be voted as not recent evidence of an organism
+    pub fails_dqa_recent: Option<bool>,
+    /// Must be voted as not having evidence related to a single subject
+    pub fails_dqa_subject: Option<bool>,
+    /// Must be voted as not wild
+    pub fails_dqa_wild: Option<bool>,
     /// Search observation properties. Can be combined with `search_on`
     pub q: Option<String>,
     /// Properties to search on, when combined with `q`. Searches across all properties by default
@@ -673,6 +705,22 @@ pub struct ObservationsIdentifiersGetParams {
     pub not_matching_project_rules_for: Option<String>,
     /// Must included in this observation accuracy experiment
     pub observation_accuracy_experiment_id: Option<Vec<i32>>,
+    /// Must be voted as not accurately depicting an organism or scene
+    pub fails_dqa_accurate: Option<bool>,
+    /// Must be voted as not having an accurate date
+    pub fails_dqa_date: Option<bool>,
+    /// Must be voted as not evidence of an organism
+    pub fails_dqa_evidence: Option<bool>,
+    /// Must be voted as not having an accurate location
+    pub fails_dqa_location: Option<bool>,
+    /// Must be voted as the community ID cannot be improved
+    pub fails_dqa_needs_id: Option<bool>,
+    /// Must be voted as not recent evidence of an organism
+    pub fails_dqa_recent: Option<bool>,
+    /// Must be voted as not having evidence related to a single subject
+    pub fails_dqa_subject: Option<bool>,
+    /// Must be voted as not wild
+    pub fails_dqa_wild: Option<bool>,
     /// Search observation properties. Can be combined with `search_on`
     pub q: Option<String>,
     /// Properties to search on, when combined with `q`. Searches across all properties by default
@@ -862,6 +910,22 @@ pub struct ObservationsObserversGetParams {
     pub not_matching_project_rules_for: Option<String>,
     /// Must included in this observation accuracy experiment
     pub observation_accuracy_experiment_id: Option<Vec<i32>>,
+    /// Must be voted as not accurately depicting an organism or scene
+    pub fails_dqa_accurate: Option<bool>,
+    /// Must be voted as not having an accurate date
+    pub fails_dqa_date: Option<bool>,
+    /// Must be voted as not evidence of an organism
+    pub fails_dqa_evidence: Option<bool>,
+    /// Must be voted as not having an accurate location
+    pub fails_dqa_location: Option<bool>,
+    /// Must be voted as the community ID cannot be improved
+    pub fails_dqa_needs_id: Option<bool>,
+    /// Must be voted as not recent evidence of an organism
+    pub fails_dqa_recent: Option<bool>,
+    /// Must be voted as not having evidence related to a single subject
+    pub fails_dqa_subject: Option<bool>,
+    /// Must be voted as not wild
+    pub fails_dqa_wild: Option<bool>,
     /// Search observation properties. Can be combined with `search_on`
     pub q: Option<String>,
     /// Properties to search on, when combined with `q`. Searches across all properties by default
@@ -1051,6 +1115,22 @@ pub struct ObservationsPopularFieldValuesGetParams {
     pub not_matching_project_rules_for: Option<String>,
     /// Must included in this observation accuracy experiment
     pub observation_accuracy_experiment_id: Option<Vec<i32>>,
+    /// Must be voted as not accurately depicting an organism or scene
+    pub fails_dqa_accurate: Option<bool>,
+    /// Must be voted as not having an accurate date
+    pub fails_dqa_date: Option<bool>,
+    /// Must be voted as not evidence of an organism
+    pub fails_dqa_evidence: Option<bool>,
+    /// Must be voted as not having an accurate location
+    pub fails_dqa_location: Option<bool>,
+    /// Must be voted as the community ID cannot be improved
+    pub fails_dqa_needs_id: Option<bool>,
+    /// Must be voted as not recent evidence of an organism
+    pub fails_dqa_recent: Option<bool>,
+    /// Must be voted as not having evidence related to a single subject
+    pub fails_dqa_subject: Option<bool>,
+    /// Must be voted as not wild
+    pub fails_dqa_wild: Option<bool>,
     /// Search observation properties. Can be combined with `search_on`
     pub q: Option<String>,
     /// Properties to search on, when combined with `q`. Searches across all properties by default
@@ -1247,6 +1327,22 @@ pub struct ObservationsSpeciesCountsGetParams {
     pub not_matching_project_rules_for: Option<String>,
     /// Must included in this observation accuracy experiment
     pub observation_accuracy_experiment_id: Option<Vec<i32>>,
+    /// Must be voted as not accurately depicting an organism or scene
+    pub fails_dqa_accurate: Option<bool>,
+    /// Must be voted as not having an accurate date
+    pub fails_dqa_date: Option<bool>,
+    /// Must be voted as not evidence of an organism
+    pub fails_dqa_evidence: Option<bool>,
+    /// Must be voted as not having an accurate location
+    pub fails_dqa_location: Option<bool>,
+    /// Must be voted as the community ID cannot be improved
+    pub fails_dqa_needs_id: Option<bool>,
+    /// Must be voted as not recent evidence of an organism
+    pub fails_dqa_recent: Option<bool>,
+    /// Must be voted as not having evidence related to a single subject
+    pub fails_dqa_subject: Option<bool>,
+    /// Must be voted as not wild
+    pub fails_dqa_wild: Option<bool>,
     /// Search observation properties. Can be combined with `search_on`
     pub q: Option<String>,
     /// Properties to search on, when combined with `q`. Searches across all properties by default
@@ -2317,6 +2413,30 @@ pub async fn observations_get(
             )]),
         };
     }
+    if let Some(ref param_value) = params.fails_dqa_accurate {
+        req_builder = req_builder.query(&[("fails_dqa_accurate", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_date {
+        req_builder = req_builder.query(&[("fails_dqa_date", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_evidence {
+        req_builder = req_builder.query(&[("fails_dqa_evidence", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_location {
+        req_builder = req_builder.query(&[("fails_dqa_location", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_needs_id {
+        req_builder = req_builder.query(&[("fails_dqa_needs_id", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_recent {
+        req_builder = req_builder.query(&[("fails_dqa_recent", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_subject {
+        req_builder = req_builder.query(&[("fails_dqa_subject", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_wild {
+        req_builder = req_builder.query(&[("fails_dqa_wild", &param_value.to_string())]);
+    }
     if let Some(ref param_value) = params.q {
         req_builder = req_builder.query(&[("q", &param_value.to_string())]);
     }
@@ -3191,6 +3311,30 @@ pub async fn observations_histogram_get(
             )]),
         };
     }
+    if let Some(ref param_value) = params.fails_dqa_accurate {
+        req_builder = req_builder.query(&[("fails_dqa_accurate", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_date {
+        req_builder = req_builder.query(&[("fails_dqa_date", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_evidence {
+        req_builder = req_builder.query(&[("fails_dqa_evidence", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_location {
+        req_builder = req_builder.query(&[("fails_dqa_location", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_needs_id {
+        req_builder = req_builder.query(&[("fails_dqa_needs_id", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_recent {
+        req_builder = req_builder.query(&[("fails_dqa_recent", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_subject {
+        req_builder = req_builder.query(&[("fails_dqa_subject", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_wild {
+        req_builder = req_builder.query(&[("fails_dqa_wild", &param_value.to_string())]);
+    }
     if let Some(ref param_value) = params.q {
         req_builder = req_builder.query(&[("q", &param_value.to_string())]);
     }
@@ -3342,18 +3486,21 @@ pub async fn observations_id_get(
     let uri_str = format!(
         "{}/observations/{id}",
         configuration.base_path,
-        id = params
-            .id
-            .into_iter()
-            .map(|p| p.to_string())
-            .collect::<Vec<_>>()
-            .join(",")
+        id = params.id.iter().map(|i| i.to_string()).collect::<Vec<_>>().join(",")
     );
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
     if let Some(ref user_agent) = configuration.user_agent {
         req_builder = req_builder.header(reqwest::header::USER_AGENT, user_agent.clone());
     }
+    if let Some(ref apikey) = configuration.api_key {
+        let key = apikey.key.clone();
+        let value = match apikey.prefix {
+            Some(ref prefix) => format!("{} {}", prefix, key),
+            None => key,
+        };
+        req_builder = req_builder.header("Authorization", value);
+    };
 
     let req = req_builder.build()?;
     let resp = configuration.client.execute(req).await?;
@@ -4564,6 +4711,30 @@ pub async fn observations_identifiers_get(
             )]),
         };
     }
+    if let Some(ref param_value) = params.fails_dqa_accurate {
+        req_builder = req_builder.query(&[("fails_dqa_accurate", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_date {
+        req_builder = req_builder.query(&[("fails_dqa_date", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_evidence {
+        req_builder = req_builder.query(&[("fails_dqa_evidence", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_location {
+        req_builder = req_builder.query(&[("fails_dqa_location", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_needs_id {
+        req_builder = req_builder.query(&[("fails_dqa_needs_id", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_recent {
+        req_builder = req_builder.query(&[("fails_dqa_recent", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_subject {
+        req_builder = req_builder.query(&[("fails_dqa_subject", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_wild {
+        req_builder = req_builder.query(&[("fails_dqa_wild", &param_value.to_string())]);
+    }
     if let Some(ref param_value) = params.q {
         req_builder = req_builder.query(&[("q", &param_value.to_string())]);
     }
@@ -5414,6 +5585,30 @@ pub async fn observations_observers_get(
                     .to_string(),
             )]),
         };
+    }
+    if let Some(ref param_value) = params.fails_dqa_accurate {
+        req_builder = req_builder.query(&[("fails_dqa_accurate", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_date {
+        req_builder = req_builder.query(&[("fails_dqa_date", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_evidence {
+        req_builder = req_builder.query(&[("fails_dqa_evidence", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_location {
+        req_builder = req_builder.query(&[("fails_dqa_location", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_needs_id {
+        req_builder = req_builder.query(&[("fails_dqa_needs_id", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_recent {
+        req_builder = req_builder.query(&[("fails_dqa_recent", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_subject {
+        req_builder = req_builder.query(&[("fails_dqa_subject", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_wild {
+        req_builder = req_builder.query(&[("fails_dqa_wild", &param_value.to_string())]);
     }
     if let Some(ref param_value) = params.q {
         req_builder = req_builder.query(&[("q", &param_value.to_string())]);
@@ -6268,6 +6463,30 @@ pub async fn observations_popular_field_values_get(
                     .to_string(),
             )]),
         };
+    }
+    if let Some(ref param_value) = params.fails_dqa_accurate {
+        req_builder = req_builder.query(&[("fails_dqa_accurate", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_date {
+        req_builder = req_builder.query(&[("fails_dqa_date", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_evidence {
+        req_builder = req_builder.query(&[("fails_dqa_evidence", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_location {
+        req_builder = req_builder.query(&[("fails_dqa_location", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_needs_id {
+        req_builder = req_builder.query(&[("fails_dqa_needs_id", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_recent {
+        req_builder = req_builder.query(&[("fails_dqa_recent", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_subject {
+        req_builder = req_builder.query(&[("fails_dqa_subject", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_wild {
+        req_builder = req_builder.query(&[("fails_dqa_wild", &param_value.to_string())]);
     }
     if let Some(ref param_value) = params.q {
         req_builder = req_builder.query(&[("q", &param_value.to_string())]);
@@ -7150,6 +7369,30 @@ pub async fn observations_species_counts_get(
                     .to_string(),
             )]),
         };
+    }
+    if let Some(ref param_value) = params.fails_dqa_accurate {
+        req_builder = req_builder.query(&[("fails_dqa_accurate", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_date {
+        req_builder = req_builder.query(&[("fails_dqa_date", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_evidence {
+        req_builder = req_builder.query(&[("fails_dqa_evidence", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_location {
+        req_builder = req_builder.query(&[("fails_dqa_location", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_needs_id {
+        req_builder = req_builder.query(&[("fails_dqa_needs_id", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_recent {
+        req_builder = req_builder.query(&[("fails_dqa_recent", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_subject {
+        req_builder = req_builder.query(&[("fails_dqa_subject", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_wild {
+        req_builder = req_builder.query(&[("fails_dqa_wild", &param_value.to_string())]);
     }
     if let Some(ref param_value) = params.q {
         req_builder = req_builder.query(&[("q", &param_value.to_string())]);

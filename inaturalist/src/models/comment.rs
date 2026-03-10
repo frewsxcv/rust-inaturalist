@@ -15,21 +15,36 @@ use serde::{Deserialize, Serialize};
 pub struct Comment {
     #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
     pub id: Option<i32>,
+    #[serde(rename = "body", skip_serializing_if = "Option::is_none")]
+    pub body: Option<String>,
     #[serde(rename = "created_at", skip_serializing_if = "Option::is_none")]
     pub created_at: Option<String>,
     #[serde(rename = "created_at_details", skip_serializing_if = "Option::is_none")]
     pub created_at_details: Option<Box<models::DateDetails>>,
     #[serde(rename = "user", skip_serializing_if = "Option::is_none")]
     pub user: Option<Box<models::User>>,
+    #[serde(rename = "flags", skip_serializing_if = "Option::is_none")]
+    pub flags: Option<Vec<models::Flag>>,
+    #[serde(rename = "hidden", skip_serializing_if = "Option::is_none")]
+    pub hidden: Option<bool>,
+    #[serde(rename = "moderator_actions", skip_serializing_if = "Option::is_none")]
+    pub moderator_actions: Option<Vec<models::ModeratorAction>>,
+    #[serde(rename = "uuid", skip_serializing_if = "Option::is_none")]
+    pub uuid: Option<String>,
 }
 
 impl Comment {
     pub fn new() -> Comment {
         Comment {
             id: None,
+            body: None,
             created_at: None,
             created_at_details: None,
             user: None,
+            flags: None,
+            hidden: None,
+            moderator_actions: None,
+            uuid: None,
         }
     }
 }

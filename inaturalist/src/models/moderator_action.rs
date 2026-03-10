@@ -12,99 +12,50 @@ use crate::models;
 use serde::{Deserialize, Serialize};
 
 #[derive(Clone, Default, Debug, PartialEq, Serialize, Deserialize)]
-pub struct Identification {
+pub struct ModeratorAction {
     #[serde(rename = "id", skip_serializing_if = "Option::is_none")]
     pub id: Option<i32>,
-    #[serde(rename = "observation_id", skip_serializing_if = "Option::is_none")]
-    pub observation_id: Option<i32>,
-    #[serde(rename = "body", skip_serializing_if = "Option::is_none")]
-    pub body: Option<String>,
-    #[serde(rename = "category", skip_serializing_if = "Option::is_none")]
-    pub category: Option<Category>,
     #[serde(rename = "created_at", skip_serializing_if = "Option::is_none")]
     pub created_at: Option<String>,
-    #[serde(rename = "updated_at", skip_serializing_if = "Option::is_none")]
-    pub updated_at: Option<String>,
-    #[serde(rename = "current", skip_serializing_if = "Option::is_none")]
-    pub current: Option<bool>,
-    #[serde(rename = "taxon", skip_serializing_if = "Option::is_none")]
-    pub taxon: Option<Box<models::ObservationTaxon>>,
-    #[serde(
-        rename = "previous_observation_taxon",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub previous_observation_taxon: Option<Box<models::ObservationTaxon>>,
-    #[serde(rename = "user", skip_serializing_if = "Option::is_none")]
-    pub user: Option<Box<models::User>>,
-    #[serde(rename = "uuid", skip_serializing_if = "Option::is_none")]
-    pub uuid: Option<String>,
     #[serde(rename = "created_at_details", skip_serializing_if = "Option::is_none")]
     pub created_at_details: Option<Box<models::DateDetails>>,
-    #[serde(rename = "flags", skip_serializing_if = "Option::is_none")]
-    pub flags: Option<Vec<models::Flag>>,
-    #[serde(rename = "own_observation", skip_serializing_if = "Option::is_none")]
-    pub own_observation: Option<bool>,
-    #[serde(rename = "taxon_change", skip_serializing_if = "Option::is_none")]
-    pub taxon_change: Option<Box<models::IdentificationTaxonChange>>,
-    #[serde(rename = "vision", skip_serializing_if = "Option::is_none")]
-    pub vision: Option<bool>,
-    #[serde(rename = "disagreement", skip_serializing_if = "Option::is_none")]
-    pub disagreement: Option<bool>,
-    #[serde(
-        rename = "previous_observation_taxon_id",
-        skip_serializing_if = "Option::is_none"
-    )]
-    pub previous_observation_taxon_id: Option<i32>,
-    #[serde(rename = "spam", skip_serializing_if = "Option::is_none")]
-    pub spam: Option<bool>,
-    #[serde(rename = "hidden", skip_serializing_if = "Option::is_none")]
-    pub hidden: Option<bool>,
-    #[serde(rename = "moderator_actions", skip_serializing_if = "Option::is_none")]
-    pub moderator_actions: Option<Vec<models::ModeratorAction>>,
+    #[serde(rename = "user", skip_serializing_if = "Option::is_none")]
+    pub user: Option<Box<models::User>>,
+    #[serde(rename = "action", skip_serializing_if = "Option::is_none")]
+    pub action: Option<Action>,
+    #[serde(rename = "reason", skip_serializing_if = "Option::is_none")]
+    pub reason: Option<String>,
 }
 
-impl Identification {
-    pub fn new() -> Identification {
-        Identification {
+impl ModeratorAction {
+    pub fn new() -> ModeratorAction {
+        ModeratorAction {
             id: None,
-            observation_id: None,
-            body: None,
-            category: None,
             created_at: None,
-            updated_at: None,
-            current: None,
-            taxon: None,
-            previous_observation_taxon: None,
-            user: None,
-            uuid: None,
             created_at_details: None,
-            flags: None,
-            own_observation: None,
-            taxon_change: None,
-            vision: None,
-            disagreement: None,
-            previous_observation_taxon_id: None,
-            spam: None,
-            hidden: None,
-            moderator_actions: None,
+            user: None,
+            action: None,
+            reason: None,
         }
     }
 }
 ///
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Ord, PartialOrd, Hash, Serialize, Deserialize)]
-pub enum Category {
-    #[serde(rename = "improving")]
-    Improving,
-    #[serde(rename = "leading")]
-    Leading,
-    #[serde(rename = "maverick")]
-    Maverick,
-    #[serde(rename = "supporting")]
-    Supporting,
+pub enum Action {
+    #[serde(rename = "hide")]
+    Hide,
+    #[serde(rename = "rename")]
+    Rename,
+    #[serde(rename = "unhide")]
+    Unhide,
+    #[serde(rename = "suspend")]
+    Suspend,
+    #[serde(rename = "unsuspend")]
+    Unsuspend,
 }
 
-impl Default for Category {
-    fn default() -> Category {
-        Self::Improving
+impl Default for Action {
+    fn default() -> Action {
+        Self::Hide
     }
 }

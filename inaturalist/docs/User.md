@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **created_at** | Option<**String**> |  | [optional]
 **id** | Option<**i32**> |  | [optional]
 **icon** | Option<**String**> |  | [optional]
+**icon_url** | Option<**String**> |  | [optional]
 **identifications_count** | Option<**i32**> |  | [optional]
 **journal_posts_count** | Option<**i32**> |  | [optional]
 **login** | Option<**String**> |  | [optional]

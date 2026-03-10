@@ -1,5 +1,4 @@
 .gitignore
-.openapi-generator-ignore
 .travis.yml
 Cargo.toml
 README.md
@@ -22,6 +21,7 @@ docs/FieldValue.md
 docs/Flag.md
 docs/FlagsApi.md
 docs/Identification.md
+docs/IdentificationTaxonChange.md
 docs/IdentificationsApi.md
 docs/IdentificationsResponse.md
 docs/Message.md
@@ -29,6 +29,7 @@ docs/MessagesApi.md
 docs/MessagesIdGet200Response.md
 docs/MessagesResponse.md
 docs/MessagesUnreadGet200Response.md
+docs/ModeratorAction.md
 docs/NearbyPlacesResponse.md
 docs/NearbyPlacesResponseAllOfResults.md
 docs/NonOwnerIdentification.md
@@ -151,10 +152,12 @@ src/models/fave.rs
 src/models/field_value.rs
 src/models/flag.rs
 src/models/identification.rs
+src/models/identification_taxon_change.rs
 src/models/identifications_response.rs
 src/models/message.rs
 src/models/messages_response.rs
 src/models/mod.rs
+src/models/moderator_action.rs
 src/models/nearby_places_response.rs
 src/models/nearby_places_response_all_of_results.rs
 src/models/non_owner_identification.rs

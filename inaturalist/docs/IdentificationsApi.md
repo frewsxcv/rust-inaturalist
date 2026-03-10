@@ -476,7 +476,7 @@ No authorization required
 
 ## identifications_similar_species_get
 
-> identifications_similar_species_get(taxon_id, acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, expected_nearby, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, hour, day, month, year, created_day, created_month, created_year, term_id, term_value_id, without_term_id, without_term_value_id, term_id_or_unknown, annotation_user_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, obscuration, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, observation_accuracy_experiment_id, q, search_on, quality_grade, updated_since, viewer_id, reviewed)
+> identifications_similar_species_get(taxon_id, acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, expected_nearby, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, hour, day, month, year, created_day, created_month, created_year, term_id, term_value_id, without_term_id, without_term_value_id, term_id_or_unknown, annotation_user_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, obscuration, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, observation_accuracy_experiment_id, fails_dqa_accurate, fails_dqa_date, fails_dqa_evidence, fails_dqa_location, fails_dqa_needs_id, fails_dqa_recent, fails_dqa_subject, fails_dqa_wild, q, search_on, quality_grade, updated_since, viewer_id, reviewed)
 Identification Similar Species
 
 Returns species attached to IDs of observations of this taxon, or attached to observations identified as this species, ordered by combined frequency descending. This will only return species in the same iconic taxon, and will never return descendants of the chosen taxon 
@@ -569,6 +569,14 @@ Name | Type | Description  | Required | Notes
 **not_in_project** | Option<**String**> | Must not be in the project with this ID or slug |  |
 **not_matching_project_rules_for** | Option<**String**> | Must not match the rules of the project with this ID or slug |  |
 **observation_accuracy_experiment_id** | Option<[**Vec<i32>**](i32.md)> | Must included in this observation accuracy experiment |  |
+**fails_dqa_accurate** | Option<**bool**> | Must be voted as not accurately depicting an organism or scene |  |
+**fails_dqa_date** | Option<**bool**> | Must be voted as not having an accurate date |  |
+**fails_dqa_evidence** | Option<**bool**> | Must be voted as not evidence of an organism |  |
+**fails_dqa_location** | Option<**bool**> | Must be voted as not having an accurate location |  |
+**fails_dqa_needs_id** | Option<**bool**> | Must be voted as the community ID cannot be improved |  |
+**fails_dqa_recent** | Option<**bool**> | Must be voted as not recent evidence of an organism |  |
+**fails_dqa_subject** | Option<**bool**> | Must be voted as not having evidence related to a single subject |  |
+**fails_dqa_wild** | Option<**bool**> | Must be voted as not wild |  |
 **q** | Option<**String**> | Search observation properties. Can be combined with `search_on` |  |
 **search_on** | Option<**String**> | Properties to search on, when combined with `q`. Searches across all properties by default  |  |
 **quality_grade** | Option<**String**> | Must have this quality grade |  |

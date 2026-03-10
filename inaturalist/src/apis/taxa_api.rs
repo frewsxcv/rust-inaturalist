@@ -328,12 +328,7 @@ pub async fn taxa_id_get(
     let uri_str = format!(
         "{}/taxa/{id}",
         configuration.base_path,
-        id = params
-            .id
-            .into_iter()
-            .map(|p| p.to_string())
-            .collect::<Vec<_>>()
-            .join(",")
+        id = params.id.iter().map(|i| i.to_string()).collect::<Vec<_>>().join(",")
     );
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 

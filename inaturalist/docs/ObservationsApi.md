@@ -63,7 +63,7 @@ Name | Type | Description  | Required | Notes
 
 ## observations_get
 
-> models::ObservationsResponse observations_get(acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, expected_nearby, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, hour, day, month, year, created_day, created_month, created_year, term_id, term_value_id, without_term_id, without_term_value_id, term_id_or_unknown, annotation_user_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, obscuration, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, observation_accuracy_experiment_id, q, search_on, quality_grade, updated_since, viewer_id, reviewed, locale, preferred_place_id, ttl, page, per_page, order, order_by, only_id)
+> models::ObservationsResponse observations_get(acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, expected_nearby, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, hour, day, month, year, created_day, created_month, created_year, term_id, term_value_id, without_term_id, without_term_value_id, term_id_or_unknown, annotation_user_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, obscuration, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, observation_accuracy_experiment_id, fails_dqa_accurate, fails_dqa_date, fails_dqa_evidence, fails_dqa_location, fails_dqa_needs_id, fails_dqa_recent, fails_dqa_subject, fails_dqa_wild, q, search_on, quality_grade, updated_since, viewer_id, reviewed, locale, preferred_place_id, ttl, page, per_page, order, order_by, only_id)
 Observation Search
 
 Given zero to many of following parameters, returns observations matching the search criteria. The large size of the observations index prevents us from supporting the `page` parameter when retrieving records from large result sets. If you need to retrieve large numbers of records, use the `per_page` and `id_above` or `id_below` parameters instead. 
@@ -156,6 +156,14 @@ Name | Type | Description  | Required | Notes
 **not_in_project** | Option<**String**> | Must not be in the project with this ID or slug |  |
 **not_matching_project_rules_for** | Option<**String**> | Must not match the rules of the project with this ID or slug |  |
 **observation_accuracy_experiment_id** | Option<[**Vec<i32>**](i32.md)> | Must included in this observation accuracy experiment |  |
+**fails_dqa_accurate** | Option<**bool**> | Must be voted as not accurately depicting an organism or scene |  |
+**fails_dqa_date** | Option<**bool**> | Must be voted as not having an accurate date |  |
+**fails_dqa_evidence** | Option<**bool**> | Must be voted as not evidence of an organism |  |
+**fails_dqa_location** | Option<**bool**> | Must be voted as not having an accurate location |  |
+**fails_dqa_needs_id** | Option<**bool**> | Must be voted as the community ID cannot be improved |  |
+**fails_dqa_recent** | Option<**bool**> | Must be voted as not recent evidence of an organism |  |
+**fails_dqa_subject** | Option<**bool**> | Must be voted as not having evidence related to a single subject |  |
+**fails_dqa_wild** | Option<**bool**> | Must be voted as not wild |  |
 **q** | Option<**String**> | Search observation properties. Can be combined with `search_on` |  |
 **search_on** | Option<**String**> | Properties to search on, when combined with `q`. Searches across all properties by default  |  |
 **quality_grade** | Option<**String**> | Must have this quality grade |  |
@@ -189,7 +197,7 @@ Name | Type | Description  | Required | Notes
 
 ## observations_histogram_get
 
-> observations_histogram_get(acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, expected_nearby, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, hour, day, month, year, created_day, created_month, created_year, term_id, term_value_id, without_term_id, without_term_value_id, term_id_or_unknown, annotation_user_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, obscuration, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, observation_accuracy_experiment_id, q, search_on, quality_grade, updated_since, viewer_id, reviewed, locale, preferred_place_id, ttl, date_field, interval)
+> observations_histogram_get(acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, expected_nearby, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, hour, day, month, year, created_day, created_month, created_year, term_id, term_value_id, without_term_id, without_term_value_id, term_id_or_unknown, annotation_user_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, obscuration, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, observation_accuracy_experiment_id, fails_dqa_accurate, fails_dqa_date, fails_dqa_evidence, fails_dqa_location, fails_dqa_needs_id, fails_dqa_recent, fails_dqa_subject, fails_dqa_wild, q, search_on, quality_grade, updated_since, viewer_id, reviewed, locale, preferred_place_id, ttl, date_field, interval)
 Observation Histogram
 
 Given zero to many of following parameters, returns histogram data about observations matching the search criteria 
@@ -282,6 +290,14 @@ Name | Type | Description  | Required | Notes
 **not_in_project** | Option<**String**> | Must not be in the project with this ID or slug |  |
 **not_matching_project_rules_for** | Option<**String**> | Must not match the rules of the project with this ID or slug |  |
 **observation_accuracy_experiment_id** | Option<[**Vec<i32>**](i32.md)> | Must included in this observation accuracy experiment |  |
+**fails_dqa_accurate** | Option<**bool**> | Must be voted as not accurately depicting an organism or scene |  |
+**fails_dqa_date** | Option<**bool**> | Must be voted as not having an accurate date |  |
+**fails_dqa_evidence** | Option<**bool**> | Must be voted as not evidence of an organism |  |
+**fails_dqa_location** | Option<**bool**> | Must be voted as not having an accurate location |  |
+**fails_dqa_needs_id** | Option<**bool**> | Must be voted as the community ID cannot be improved |  |
+**fails_dqa_recent** | Option<**bool**> | Must be voted as not recent evidence of an organism |  |
+**fails_dqa_subject** | Option<**bool**> | Must be voted as not having evidence related to a single subject |  |
+**fails_dqa_wild** | Option<**bool**> | Must be voted as not wild |  |
 **q** | Option<**String**> | Search observation properties. Can be combined with `search_on` |  |
 **search_on** | Option<**String**> | Properties to search on, when combined with `q`. Searches across all properties by default  |  |
 **quality_grade** | Option<**String**> | Must have this quality grade |  |
@@ -390,7 +406,7 @@ Name | Type | Description  | Required | Notes
 
 ### Authorization
 
-No authorization required
+[api_token](../README.md#api_token)
 
 ### HTTP request headers
 
@@ -676,7 +692,7 @@ Name | Type | Description  | Required | Notes
 
 ## observations_identifiers_get
 
-> models::UserCountsResponse observations_identifiers_get(acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, expected_nearby, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, hour, day, month, year, created_day, created_month, created_year, term_id, term_value_id, without_term_id, without_term_value_id, term_id_or_unknown, annotation_user_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, obscuration, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, observation_accuracy_experiment_id, q, search_on, quality_grade, updated_since, viewer_id, reviewed, locale, preferred_place_id, ttl)
+> models::UserCountsResponse observations_identifiers_get(acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, expected_nearby, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, hour, day, month, year, created_day, created_month, created_year, term_id, term_value_id, without_term_id, without_term_value_id, term_id_or_unknown, annotation_user_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, obscuration, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, observation_accuracy_experiment_id, fails_dqa_accurate, fails_dqa_date, fails_dqa_evidence, fails_dqa_location, fails_dqa_needs_id, fails_dqa_recent, fails_dqa_subject, fails_dqa_wild, q, search_on, quality_grade, updated_since, viewer_id, reviewed, locale, preferred_place_id, ttl)
 Observation Identifiers
 
 Given zero to many of following parameters, returns identifiers of observations matching the search criteria and the count of observations they have identified, ordered by count descending. A maximum of 500 results will be returned 
@@ -769,6 +785,14 @@ Name | Type | Description  | Required | Notes
 **not_in_project** | Option<**String**> | Must not be in the project with this ID or slug |  |
 **not_matching_project_rules_for** | Option<**String**> | Must not match the rules of the project with this ID or slug |  |
 **observation_accuracy_experiment_id** | Option<[**Vec<i32>**](i32.md)> | Must included in this observation accuracy experiment |  |
+**fails_dqa_accurate** | Option<**bool**> | Must be voted as not accurately depicting an organism or scene |  |
+**fails_dqa_date** | Option<**bool**> | Must be voted as not having an accurate date |  |
+**fails_dqa_evidence** | Option<**bool**> | Must be voted as not evidence of an organism |  |
+**fails_dqa_location** | Option<**bool**> | Must be voted as not having an accurate location |  |
+**fails_dqa_needs_id** | Option<**bool**> | Must be voted as the community ID cannot be improved |  |
+**fails_dqa_recent** | Option<**bool**> | Must be voted as not recent evidence of an organism |  |
+**fails_dqa_subject** | Option<**bool**> | Must be voted as not having evidence related to a single subject |  |
+**fails_dqa_wild** | Option<**bool**> | Must be voted as not wild |  |
 **q** | Option<**String**> | Search observation properties. Can be combined with `search_on` |  |
 **search_on** | Option<**String**> | Properties to search on, when combined with `q`. Searches across all properties by default  |  |
 **quality_grade** | Option<**String**> | Must have this quality grade |  |
@@ -797,7 +821,7 @@ No authorization required
 
 ## observations_observers_get
 
-> models::ObservationsObserversResponse observations_observers_get(acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, expected_nearby, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, hour, day, month, year, created_day, created_month, created_year, term_id, term_value_id, without_term_id, without_term_value_id, term_id_or_unknown, annotation_user_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, obscuration, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, observation_accuracy_experiment_id, q, search_on, quality_grade, updated_since, viewer_id, reviewed, locale, preferred_place_id, ttl)
+> models::ObservationsObserversResponse observations_observers_get(acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, expected_nearby, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, hour, day, month, year, created_day, created_month, created_year, term_id, term_value_id, without_term_id, without_term_value_id, term_id_or_unknown, annotation_user_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, obscuration, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, observation_accuracy_experiment_id, fails_dqa_accurate, fails_dqa_date, fails_dqa_evidence, fails_dqa_location, fails_dqa_needs_id, fails_dqa_recent, fails_dqa_subject, fails_dqa_wild, q, search_on, quality_grade, updated_since, viewer_id, reviewed, locale, preferred_place_id, ttl)
 Observation Observers
 
 Given zero to many of following parameters, returns observers of observations matching the search criteria and the count of observations and distinct taxa of rank `species` they have observed. A maximum of 500 results will be returned 
@@ -890,6 +914,14 @@ Name | Type | Description  | Required | Notes
 **not_in_project** | Option<**String**> | Must not be in the project with this ID or slug |  |
 **not_matching_project_rules_for** | Option<**String**> | Must not match the rules of the project with this ID or slug |  |
 **observation_accuracy_experiment_id** | Option<[**Vec<i32>**](i32.md)> | Must included in this observation accuracy experiment |  |
+**fails_dqa_accurate** | Option<**bool**> | Must be voted as not accurately depicting an organism or scene |  |
+**fails_dqa_date** | Option<**bool**> | Must be voted as not having an accurate date |  |
+**fails_dqa_evidence** | Option<**bool**> | Must be voted as not evidence of an organism |  |
+**fails_dqa_location** | Option<**bool**> | Must be voted as not having an accurate location |  |
+**fails_dqa_needs_id** | Option<**bool**> | Must be voted as the community ID cannot be improved |  |
+**fails_dqa_recent** | Option<**bool**> | Must be voted as not recent evidence of an organism |  |
+**fails_dqa_subject** | Option<**bool**> | Must be voted as not having evidence related to a single subject |  |
+**fails_dqa_wild** | Option<**bool**> | Must be voted as not wild |  |
 **q** | Option<**String**> | Search observation properties. Can be combined with `search_on` |  |
 **search_on** | Option<**String**> | Properties to search on, when combined with `q`. Searches across all properties by default  |  |
 **quality_grade** | Option<**String**> | Must have this quality grade |  |
@@ -918,7 +950,7 @@ No authorization required
 
 ## observations_popular_field_values_get
 
-> observations_popular_field_values_get(acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, expected_nearby, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, hour, day, month, year, created_day, created_month, created_year, term_id, term_value_id, without_term_id, without_term_value_id, term_id_or_unknown, annotation_user_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, obscuration, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, observation_accuracy_experiment_id, q, search_on, quality_grade, updated_since, viewer_id, reviewed, locale, preferred_place_id, ttl)
+> observations_popular_field_values_get(acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, expected_nearby, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, hour, day, month, year, created_day, created_month, created_year, term_id, term_value_id, without_term_id, without_term_value_id, term_id_or_unknown, annotation_user_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, obscuration, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, observation_accuracy_experiment_id, fails_dqa_accurate, fails_dqa_date, fails_dqa_evidence, fails_dqa_location, fails_dqa_needs_id, fails_dqa_recent, fails_dqa_subject, fails_dqa_wild, q, search_on, quality_grade, updated_since, viewer_id, reviewed, locale, preferred_place_id, ttl)
 Observation Popular Field Values
 
 Given zero to many of following parameters, returns an array of relevant controlled terms values and a monthly histogram 
@@ -1011,6 +1043,14 @@ Name | Type | Description  | Required | Notes
 **not_in_project** | Option<**String**> | Must not be in the project with this ID or slug |  |
 **not_matching_project_rules_for** | Option<**String**> | Must not match the rules of the project with this ID or slug |  |
 **observation_accuracy_experiment_id** | Option<[**Vec<i32>**](i32.md)> | Must included in this observation accuracy experiment |  |
+**fails_dqa_accurate** | Option<**bool**> | Must be voted as not accurately depicting an organism or scene |  |
+**fails_dqa_date** | Option<**bool**> | Must be voted as not having an accurate date |  |
+**fails_dqa_evidence** | Option<**bool**> | Must be voted as not evidence of an organism |  |
+**fails_dqa_location** | Option<**bool**> | Must be voted as not having an accurate location |  |
+**fails_dqa_needs_id** | Option<**bool**> | Must be voted as the community ID cannot be improved |  |
+**fails_dqa_recent** | Option<**bool**> | Must be voted as not recent evidence of an organism |  |
+**fails_dqa_subject** | Option<**bool**> | Must be voted as not having evidence related to a single subject |  |
+**fails_dqa_wild** | Option<**bool**> | Must be voted as not wild |  |
 **q** | Option<**String**> | Search observation properties. Can be combined with `search_on` |  |
 **search_on** | Option<**String**> | Properties to search on, when combined with `q`. Searches across all properties by default  |  |
 **quality_grade** | Option<**String**> | Must have this quality grade |  |
@@ -1069,7 +1109,7 @@ Name | Type | Description  | Required | Notes
 
 ## observations_species_counts_get
 
-> models::SpeciesCountsResponse observations_species_counts_get(acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, expected_nearby, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, hour, day, month, year, created_day, created_month, created_year, term_id, term_value_id, without_term_id, without_term_value_id, term_id_or_unknown, annotation_user_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, obscuration, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, observation_accuracy_experiment_id, q, search_on, quality_grade, updated_since, viewer_id, reviewed, locale, preferred_place_id, ttl, include_ancestors, page, per_page)
+> models::SpeciesCountsResponse observations_species_counts_get(acc, captive, endemic, geo, id_please, identified, introduced, mappable, native, out_of_range, pcid, photos, popular, sounds, taxon_is_active, threatened, verifiable, licensed, photo_licensed, expected_nearby, id, not_id, license, ofv_datatype, photo_license, place_id, project_id, rank, site_id, sound_license, taxon_id, without_taxon_id, taxon_name, user_id, user_login, ident_user_id, hour, day, month, year, created_day, created_month, created_year, term_id, term_value_id, without_term_id, without_term_value_id, term_id_or_unknown, annotation_user_id, acc_above, acc_below, acc_below_or_unknown, d1, d2, created_d1, created_d2, created_on, observed_on, unobserved_by_user_id, apply_project_rules_for, cs, csa, csi, geoprivacy, taxon_geoprivacy, obscuration, hrank, lrank, iconic_taxa, id_above, id_below, identifications, lat, lng, radius, nelat, nelng, swlat, swlng, list_id, not_in_project, not_matching_project_rules_for, observation_accuracy_experiment_id, fails_dqa_accurate, fails_dqa_date, fails_dqa_evidence, fails_dqa_location, fails_dqa_needs_id, fails_dqa_recent, fails_dqa_subject, fails_dqa_wild, q, search_on, quality_grade, updated_since, viewer_id, reviewed, locale, preferred_place_id, ttl, include_ancestors, page, per_page)
 Observation Species Counts
 
 Given zero to many of following parameters, returns `leaf taxa` associated with observations matching the search criteria and the count of observations they are associated with, ordered by count descending. `Leaf taxa` are the leaves of the taxonomic tree containing only the taxa associated with observations matching the search criteria. 
@@ -1162,6 +1202,14 @@ Name | Type | Description  | Required | Notes
 **not_in_project** | Option<**String**> | Must not be in the project with this ID or slug |  |
 **not_matching_project_rules_for** | Option<**String**> | Must not match the rules of the project with this ID or slug |  |
 **observation_accuracy_experiment_id** | Option<[**Vec<i32>**](i32.md)> | Must included in this observation accuracy experiment |  |
+**fails_dqa_accurate** | Option<**bool**> | Must be voted as not accurately depicting an organism or scene |  |
+**fails_dqa_date** | Option<**bool**> | Must be voted as not having an accurate date |  |
+**fails_dqa_evidence** | Option<**bool**> | Must be voted as not evidence of an organism |  |
+**fails_dqa_location** | Option<**bool**> | Must be voted as not having an accurate location |  |
+**fails_dqa_needs_id** | Option<**bool**> | Must be voted as the community ID cannot be improved |  |
+**fails_dqa_recent** | Option<**bool**> | Must be voted as not recent evidence of an organism |  |
+**fails_dqa_subject** | Option<**bool**> | Must be voted as not having evidence related to a single subject |  |
+**fails_dqa_wild** | Option<**bool**> | Must be voted as not wild |  |
 **q** | Option<**String**> | Search observation properties. Can be combined with `search_on` |  |
 **search_on** | Option<**String**> | Properties to search on, when combined with `q`. Searches across all properties by default  |  |
 **quality_grade** | Option<**String**> | Must have this quality grade |  |
