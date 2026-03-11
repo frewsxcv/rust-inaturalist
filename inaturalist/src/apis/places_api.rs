@@ -125,7 +125,12 @@ pub async fn places_id_get(
     let uri_str = format!(
         "{}/places/{id}",
         configuration.base_path,
-        id = params.id.join(",")
+        id = params
+            .id
+            .into_iter()
+            .map(|p| p.to_string())
+            .collect::<Vec<_>>()
+            .join(",")
     );
     let mut req_builder = configuration.client.request(reqwest::Method::GET, &uri_str);
 
