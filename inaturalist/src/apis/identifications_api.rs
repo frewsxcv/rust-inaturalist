@@ -617,6 +617,22 @@ pub struct IdentificationsSimilarSpeciesGetParams {
     pub not_matching_project_rules_for: Option<String>,
     /// Must included in this observation accuracy experiment
     pub observation_accuracy_experiment_id: Option<Vec<i32>>,
+    /// Must be voted as not accurately depicting an organism or scene
+    pub fails_dqa_accurate: Option<bool>,
+    /// Must be voted as not having an accurate date
+    pub fails_dqa_date: Option<bool>,
+    /// Must be voted as not evidence of an organism
+    pub fails_dqa_evidence: Option<bool>,
+    /// Must be voted as not having an accurate location
+    pub fails_dqa_location: Option<bool>,
+    /// Must be voted as the community ID cannot be improved
+    pub fails_dqa_needs_id: Option<bool>,
+    /// Must be voted as not recent evidence of an organism
+    pub fails_dqa_recent: Option<bool>,
+    /// Must be voted as not having evidence related to a single subject
+    pub fails_dqa_subject: Option<bool>,
+    /// Must be voted as not wild
+    pub fails_dqa_wild: Option<bool>,
     /// Search observation properties. Can be combined with `search_on`
     pub q: Option<String>,
     /// Properties to search on, when combined with `q`. Searches across all properties by default
@@ -3678,6 +3694,30 @@ pub async fn identifications_similar_species_get(
                     .to_string(),
             )]),
         };
+    }
+    if let Some(ref param_value) = params.fails_dqa_accurate {
+        req_builder = req_builder.query(&[("fails_dqa_accurate", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_date {
+        req_builder = req_builder.query(&[("fails_dqa_date", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_evidence {
+        req_builder = req_builder.query(&[("fails_dqa_evidence", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_location {
+        req_builder = req_builder.query(&[("fails_dqa_location", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_needs_id {
+        req_builder = req_builder.query(&[("fails_dqa_needs_id", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_recent {
+        req_builder = req_builder.query(&[("fails_dqa_recent", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_subject {
+        req_builder = req_builder.query(&[("fails_dqa_subject", &param_value.to_string())]);
+    }
+    if let Some(ref param_value) = params.fails_dqa_wild {
+        req_builder = req_builder.query(&[("fails_dqa_wild", &param_value.to_string())]);
     }
     if let Some(ref param_value) = params.q {
         req_builder = req_builder.query(&[("q", &param_value.to_string())]);

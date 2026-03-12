@@ -19,6 +19,8 @@ pub struct User {
     pub id: Option<i32>,
     #[serde(rename = "icon", skip_serializing_if = "Option::is_none")]
     pub icon: Option<String>,
+    #[serde(rename = "icon_url", skip_serializing_if = "Option::is_none")]
+    pub icon_url: Option<String>,
     #[serde(
         rename = "identifications_count",
         skip_serializing_if = "Option::is_none"
@@ -55,6 +57,7 @@ impl User {
             created_at: None,
             id: None,
             icon: None,
+            icon_url: None,
             identifications_count: None,
             journal_posts_count: None,
             login: None,
